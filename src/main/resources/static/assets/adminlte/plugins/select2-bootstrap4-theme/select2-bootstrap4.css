@@ -10,9 +10,9 @@
     width: 20px; }
     .select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow b {
       top: 60%;
-      border-color: #343a40 transparent transparent transparent;
+      border-color: #343a40 transparent transparent;
       border-style: solid;
-      border-width: 5px 4px 0 4px;
+      border-width: 5px 4px 0;
       width: 0;
       height: 0;
       left: 50%;

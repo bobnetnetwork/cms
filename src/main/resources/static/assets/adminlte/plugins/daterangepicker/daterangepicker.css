@@ -253,7 +253,7 @@
 
 .daterangepicker .calendar-time {
   text-align: center;
-  margin: 4px auto 0 auto;
+  margin: 4px auto 0;
   line-height: 30px;
   position: relative;
 }

@@ -51,7 +51,7 @@
 
 .fc-ltr .fc-dayGrid-view .fc-day-top .fc-week-number {
   float: left;
-  border-radius: 0 0 3px 0;
+  border-radius: 0 0 3px;
 }
 
 .fc-rtl .fc-dayGrid-view .fc-day-top .fc-week-number {
