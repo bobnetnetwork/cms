@@ -16,10 +16,18 @@ import express, {Request, Response} from 'express';
 dotenv.config();
 
 /**
- *  App Configuration
+ * App Variables
  */
 
+if (!process.env.PORT) {
+    process.exit(1);
+}
+
 const app = express();
+
+/**
+ *  App Configuration
+ */
 const router = express.Router();
 
 const apiUrl = '/api/v01'
