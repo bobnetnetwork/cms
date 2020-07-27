@@ -4,10 +4,6 @@
 
 import express, { Request, Response } from "express";
 import * as UserService from "../entity/user/users.service";
-// @ts-ignore
-import { User } from "./entity/user/user.interface";
-// @ts-ignore
-import { Users } from "./entity/user/users.interface";
 
 /**
  * Router Definition
@@ -21,10 +17,9 @@ export const usersRouter = express.Router();
 
 // GET users/
 
-// @ts-ignore
 usersRouter.get("/", async (req: Request, res: Response) => {
     try {
-        const users: Users = await UserService.findAll((result) => {
+        await UserService.findAll((result) => {
             res.status(200).json(result);
         });
     } catch (e) {
@@ -35,14 +30,13 @@ usersRouter.get("/", async (req: Request, res: Response) => {
 
 // GET users/:id
 
-// @ts-ignore
 usersRouter.get("/:id", async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
 
     try {
-        const user: User = await UserService.findbyId(id);
-
-        res.status(200).send(user);
+        await UserService.findById(id, (result) => {
+            res.status(200).json(result);
+        });
     } catch (e) {
         res.status(404).send(e.message);
     }
@@ -50,14 +44,11 @@ usersRouter.get("/:id", async (req: Request, res: Response) => {
 
 // POST users/
 
-// @ts-ignore
 usersRouter.post("/", async (req: Request, res: Response) => {
     try {
-        const user: User = req.body.item;
-
-        await UserService.create(user);
-
-        res.sendStatus(201);
+        await UserService.create(req.body.data, (result) => {
+            res.status(201).json(result);
+        });
     } catch (e) {
         res.status(404).send(e.message);
     }
@@ -65,14 +56,11 @@ usersRouter.post("/", async (req: Request, res: Response) => {
 
 // PUT users/
 
-// @ts-ignore
 usersRouter.put("/", async (req: Request, res: Response) => {
     try {
-        const user: User = req.body.item;
-
-        await UserService.update(user);
-
-        res.sendStatus(200);
+        await UserService.update(req.body.data, (result) => {
+            res.status(200).json(result);
+        });
     } catch (e) {
         res.status(500).send(e.message);
     }
@@ -80,13 +68,11 @@ usersRouter.put("/", async (req: Request, res: Response) => {
 
 // DELETE users/:id
 
-// @ts-ignore
 usersRouter.delete("/:id", async (req: Request, res: Response) => {
     try {
-        const id: number = parseInt(req.params.id, 10);
-        await UserService.remove(id);
-
-        res.sendStatus(200);
+        await UserService.deleteById(req.params.id, (result) => {
+            res.status(200).json(result);
+        });
     } catch (e) {
         res.status(500).send(e.message);
     }
