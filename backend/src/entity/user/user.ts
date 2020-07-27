@@ -1,4 +1,4 @@
-import {Schema, Model} from 'mongoose';
+import {Schema, model} from 'mongoose';
 
 const userSchema = new Schema({
     firstName: String,
@@ -15,4 +15,4 @@ const userSchema = new Schema({
     roles: Object,
 });
 
-export const User = new Model('User', userSchema);
+export const User = new model('User', userSchema);
