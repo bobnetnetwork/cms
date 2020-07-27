@@ -3,9 +3,11 @@
  */
 
 import express, { Request, Response } from "express";
-import * as ItemService from "./items.service";
-import { Item } from "./item.interface";
-import { Items } from "./items.interface";
+import * as UserService from "../entity/user/users.service";
+// @ts-ignore
+import { User } from "./entity/user/user.interface";
+// @ts-ignore
+import { Users } from "./entity/user/users.interface";
 
 /**
  * Router Definition
@@ -22,9 +24,9 @@ export const usersRouter = express.Router();
 // @ts-ignore
 usersRouter.get("/", async (req: Request, res: Response) => {
     try {
-        const items: Items = await ItemService.findAll();
+        const users: Users = await UserService.findAll();
 
-        res.status(200).send(items);
+        res.status(200).send(users);
     } catch (e) {
         res.status(404).send(e.message);
     }
@@ -38,9 +40,9 @@ usersRouter.get("/:id", async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
 
     try {
-        const item: Item = await ItemService.find(id);
+        const user: User = await UserService.find(id);
 
-        res.status(200).send(item);
+        res.status(200).send(user);
     } catch (e) {
         res.status(404).send(e.message);
     }
@@ -51,9 +53,9 @@ usersRouter.get("/:id", async (req: Request, res: Response) => {
 // @ts-ignore
 usersRouter.post("/", async (req: Request, res: Response) => {
     try {
-        const item: Item = req.body.item;
+        const user: User = req.body.item;
 
-        await ItemService.create(item);
+        await UserService.create(user);
 
         res.sendStatus(201);
     } catch (e) {
@@ -66,9 +68,9 @@ usersRouter.post("/", async (req: Request, res: Response) => {
 // @ts-ignore
 usersRouter.put("/", async (req: Request, res: Response) => {
     try {
-        const item: Item = req.body.item;
+        const user: User = req.body.item;
 
-        await ItemService.update(item);
+        await UserService.update(user);
 
         res.sendStatus(200);
     } catch (e) {
@@ -82,7 +84,7 @@ usersRouter.put("/", async (req: Request, res: Response) => {
 usersRouter.delete("/:id", async (req: Request, res: Response) => {
     try {
         const id: number = parseInt(req.params.id, 10);
-        await ItemService.remove(id);
+        await UserService.remove(id);
 
         res.sendStatus(200);
     } catch (e) {
