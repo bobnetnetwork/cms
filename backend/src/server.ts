@@ -22,7 +22,7 @@ const app = express();
  */
 const router = express.Router();
 
-const apiUrl = "/api/v01"
+const apiUrl = "/api/v01";
 
 app.use(helmet());
 app.use(cors());
