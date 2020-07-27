@@ -1,5 +1,5 @@
 
-import * as Mongoose from "mongoose";
+import mongoose from "mongoose";
 // @ts-ignore
 import * as Config from "../config/config";
 let connection;
@@ -7,13 +7,13 @@ const dbUri = 'mongodb://' + Config.dbServerUser + ":" + Config.dbServerPwd + '@
 const dbUriWithoutDB = 'mongodb://' + Config.dbServerUser + ":" + Config.dbServerPwd + '@' + Config.dbServerAddress + ":" + Config.dbServerPort
 
 export const connectToDB = () => {
-    Mongoose.connect(dbUri, {
+    mongoose.connect(dbUri, {
         useNewUrlParser: true,
         useFindAndModify: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
     });
-    connection = Mongoose.connection;
+    connection = mongoose.connection;
     connection.once("open", async () => {
         console.log("Connected to database");
     });
@@ -23,7 +23,7 @@ export const connectToDB = () => {
 }
 
 export const findAll = (collection) => {
-    Mongoose.connect(dbUriWithoutDB, {
+    mongoose.connect(dbUriWithoutDB, {
         useNewUrlParser: true,
         useFindAndModify: true,
         useUnifiedTopology: true,
@@ -41,7 +41,7 @@ export const findAll = (collection) => {
 }
 
 export const find = (collection, queryArray) => {
-    Mongoose.connect(dbUriWithoutDB, {
+    mongoose.connect(dbUriWithoutDB, {
         useNewUrlParser: true,
         useFindAndModify: true,
         useUnifiedTopology: true,
@@ -62,5 +62,5 @@ export const disconnect = () => {
     if (!connection) {
         return;
     }
-    Mongoose.disconnect();
+    mongoose.disconnect();
 };
