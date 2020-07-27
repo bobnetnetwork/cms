@@ -2,8 +2,8 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/backend/src"
+  - package-ecosystem: "javascript"
+    directory: "/bakend/src"
     schedule:
       interval: "daily"
     labels:
@@ -11,12 +11,12 @@ updates:
     assignees:
       - "bobesz"
     target-branch: "develop"
-  - package-ecosystem: "npm"
-      directory: "/frontend/src"
-      schedule:
-        interval: "daily"
-      labels:
-        - "dependencies"
-      assignees:
-        - "bobesz"
-      target-branch: "develop"
+  - package-ecosystem: "javascript"
+    directory: "/frontend/src"
+    schedule:
+      interval: "daily"
+    labels:
+      - "dependencies"
+    assignees:
+      - "bobesz"
+    target-branch: "develop"
