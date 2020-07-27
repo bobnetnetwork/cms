@@ -3,25 +3,17 @@
  */
 
 // import * as dotenv from 'dotenv';
-import cors from 'cors';
-import helmet from 'helmet';
-import { usersRouter } from './router/users.router';
+import cors from "cors";
+import helmet from "helmet";
+import { usersRouter } from "./router/users.router";
 import { errorHandler } from "./middleware/error.middleware";
 import {notFoundHandler} from "./middleware/notFound.middleware";
-import * as server from './service/serverService';
-import express, {Request, Response} from 'express';
-
-// dotenv.config();
+import * as server from "./service/serverService";
+import express, {Request, Response} from "express";
 
 /**
  * App Variables
  */
-/*
-if (!process.env.PORT) {
-    process.exit(1);
-}*/
-
-// https://auth0.com/blog/use-typescript-to-create-a-secure-api-with-nodejs-and-express-models-data-service/
 
 const app = express();
 
@@ -30,25 +22,21 @@ const app = express();
  */
 const router = express.Router();
 
-const apiUrl = '/api/v01'
+const apiUrl = "/api/v01"
 
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(apiUrl, router);
-app.use(apiUrl + '/users', usersRouter);
+app.use(apiUrl + "/users", usersRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);
 
 router.get('/', async (req: Request, res: Response) => {
     res.status(200).json({
-        message: 'Welcome to CMS_DEV server by BobNET Network!'
+        message: "Welcome to CMS_DEV server by BobNET Network!"
     });
 })
-
-
-
-
 
 server.startServer(app);

@@ -1,7 +1,7 @@
 // @ts-ignore
 import { Schema, Model } from "mongoose";
 
-module.exports = Model('Article', new Schema({
+module.exports = Model("Article", new Schema({
     title: String,
     headline: String,
     content: String,

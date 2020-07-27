@@ -4,7 +4,7 @@
 
 import * as database from "../../service/dbService";
 import * as Logger from "../../service/logService";
-import {User} from './user';
+import {User} from "./user";
 
 database.connectToDB();
 
@@ -16,17 +16,17 @@ export const findAll = async (callback) => {
     return User.find({}, (err, users) => {
         if (err) {
             const result = {
-                'success': false,
-                'message': 'Authentication failed or User not found.',
-                'error': err
+                "success": false,
+                "message": "Authentication failed or User not found.",
+                "error": err
             }
             Logger.error(err);
             callback(result);
         } else {
             const result = {
-                'success': true,
-                'message': 'Successful, User Found!',
-                'user': users
+                "success": true,
+                "message": "Successful, User Found!",
+                "user": users
             }
             Logger.info("Successful, User Found!");
             callback(result);
@@ -40,26 +40,26 @@ export const findById = async (Id, callback) => {
     }, (err, user) => {
         if(err) {
             const result = {
-                'success': false,
-                'message': 'Authentication failed or User not found.',
-                'error': err
+                "success": false,
+                "message": "Authentication failed or User not found.",
+                "error": err
             }
             Logger.error(err);
             callback(result);
         } else {
             if(!user) {
                 const result = {
-                    'success': false,
-                    'message': 'User Not found in database!',
-                    'error': err
+                    "success": false,
+                    "message": "User Not found in database!",
+                    "error": err
                 }
                 Logger.error(err);
                 callback(result);
             } else {
                 const result = {
-                    'success': true,
-                    'message': 'Successful, User Found!',
-                    'user': user
+                    "success": true,
+                    "message": "Successful, User Found!",
+                    "user": user
                 }
                 Logger.info("Successful, User Found!");
                 callback(result);
@@ -87,17 +87,17 @@ export const create = async (data, callback) => {
     newUser.save( (err) => {
        if(err) {
            const result = {
-               'success': false,
-               'message': 'Authentication failed or User creation failed.',
-               'error': err
+               "success": false,
+               "message": "Authentication failed or User creation failed.",
+               "error": err
            }
            Logger.error(err);
            callback(result);
        } else {
            const result = {
-               'success': true,
-               'message': 'User Register Succesful!',
-               'user': newUser
+               "success": true,
+               "message": "User Register Succesful!",
+               "user": newUser
            }
            Logger.info("User Register Succesful!");
            callback(result);
@@ -111,9 +111,9 @@ export const update = async (data, callback) => {
     }, (err, user) => {
         if(err){
             const result = {
-                'success': false,
-                'message': 'User Update Error!',
-                'error': err
+                "success": false,
+                "message": "User Update Error!",
+                "error": err
             }
             Logger.error(err);
             callback(result);
@@ -123,17 +123,17 @@ export const update = async (data, callback) => {
             user.save( (err1, updatedUser) => {
                 if(err1){
                     const result = {
-                        'success': false,
-                        'message': 'User Update Error!',
-                        'error': err1
+                        "success": false,
+                        "message": "User Update Error!",
+                        "error": err1
                     }
                     Logger.error(err1);
                     callback(result);
                 } else {
                     const result = {
-                        'success': true,
-                        'message': 'User Update Succesful!',
-                        'user': updatedUser
+                        "success": true,
+                        "message": "User Update Succesful!",
+                        "user": updatedUser
                     }
                     Logger.info("User Update Succesful!");
                     callback(result);
@@ -149,9 +149,9 @@ export const deleteById = async (Id, callback) => {
     }, (err, user) => {
         if(err) {
             const result = {
-                'success': false,
-                'message': 'User notfound!',
-                'error': err
+                "success": false,
+                "message": "User notfound!",
+                "error": err
             }
             Logger.error(err);
             callback(result);
@@ -159,18 +159,18 @@ export const deleteById = async (Id, callback) => {
             user.delete( (err1) => {
                 if(err1) {
                     const result = {
-                        'success': false,
-                        'message': 'User Delete Failed!',
-                        'error': err
+                        "success": false,
+                        "message": "User Delete Failed!",
+                        "error": err
                     }
                     Logger.error(err);
                     callback(result);
                 } else {
                     const result = {
-                        'success': false,
-                        'message': 'User Delete Succesful!',
+                        "success": false,
+                        "message": "User Delete Succesful!",
                     }
-                    Logger.info('User Delete Succesful!');
+                    Logger.info("User Delete Succesful!");
                     callback(result);
                 }
             });
