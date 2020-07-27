@@ -24,9 +24,9 @@ export const usersRouter = express.Router();
 // @ts-ignore
 usersRouter.get("/", async (req: Request, res: Response) => {
     try {
-        const users: Users = await UserService.findAll();
-
-        res.status(200).send(users);
+        const users: Users = await UserService.findAll((result) => {
+            res.status(200).json(result);
+        });
     } catch (e) {
         res.status(404).send(e.message);
     }
@@ -40,7 +40,7 @@ usersRouter.get("/:id", async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
 
     try {
-        const user: User = await UserService.find(id);
+        const user: User = await UserService.findbyId(id);
 
         res.status(200).send(user);
     } catch (e) {
