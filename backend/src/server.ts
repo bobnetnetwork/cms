@@ -2,7 +2,7 @@
  * Required External Modules
  */
 
-import * as dotenv from 'dotenv';
+// import * as dotenv from 'dotenv';
 import cors from 'cors';
 import helmet from 'helmet';
 import { usersRouter } from './router/users.router';
@@ -11,15 +11,15 @@ import {notFoundHandler} from "./middleware/notFound.middleware";
 import * as server from './service/serverService';
 import express, {Request, Response} from 'express';
 
-dotenv.config();
+// dotenv.config();
 
 /**
  * App Variables
  */
-
+/*
 if (!process.env.PORT) {
     process.exit(1);
-}
+}*/
 
 // https://auth0.com/blog/use-typescript-to-create-a-secure-api-with-nodejs-and-express-models-data-service/
 
