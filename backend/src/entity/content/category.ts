@@ -1,6 +1,5 @@
 // @ts-ignore
 import { Schema, Model } from "mongoose";
-import {Long} from "long";
 
 module.exports = Model('Category', new Schema({
     name: String,
@@ -8,7 +7,7 @@ module.exports = Model('Category', new Schema({
     featuredImage: String,
     slug: String,
     addedAt: Date,
-    id: Long,
+    id: Number,
     parent: Object,
     articles: Object
 }));

@@ -6,7 +6,6 @@ import * as dotenv from 'dotenv';
 import cors from 'cors';
 import helmet from 'helmet';
 import { usersRouter } from './router/users.router';
-import { postsRouter } from './router/posts.router';
 import { errorHandler } from "./middleware/error.middleware";
 import {notFoundHandler} from "./middleware/notFound.middleware";
 import * as server from './service/serverService';
@@ -38,7 +37,6 @@ app.use(cors());
 app.use(express.json());
 app.use(apiUrl, router);
 app.use(apiUrl + '/users', usersRouter);
-app.use(apiUrl + 'content/posts', postsRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);
