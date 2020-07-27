@@ -2,7 +2,7 @@
 
 version: 2
 updates:
-  - package-ecosystem: "javascript"
+  - package-ecosystem: "npm"
     directory: "/bakend/src"
     schedule:
       interval: "daily"
@@ -11,7 +11,7 @@ updates:
     assignees:
       - "bobesz"
     target-branch: "develop"
-  - package-ecosystem: "javascript"
+  - package-ecosystem: "npm"
     directory: "/frontend/src"
     schedule:
       interval: "daily"
