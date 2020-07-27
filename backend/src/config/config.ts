@@ -1,6 +1,6 @@
 module.exports = {
     'dbServerType': 'MNG',
-    'dbServerAddress': '127.0.0.1',
+    'dbServerAddress': 'localhost',
     'dbServerPort': '27017',
     'dbServerUser': 'cms_dev',
     'dbServerPwd': 'Almafa1.',

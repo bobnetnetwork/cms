@@ -4,6 +4,7 @@
 
 import express, { Request, Response } from "express";
 import * as UserService from "../entity/user/users.service";
+import * as Logger from "../service/logService";
 
 /**
  * Router Definition
@@ -46,11 +47,12 @@ usersRouter.get("/:id", async (req: Request, res: Response) => {
 
 usersRouter.post("/", async (req: Request, res: Response) => {
     try {
-        await UserService.create(req.body.data, (result) => {
+        await UserService.create(req.body, (result) => {
             res.status(201).json(result);
         });
     } catch (e) {
         res.status(404).send(e.message);
+        Logger.error(e.message);
     }
 });
 
@@ -58,11 +60,12 @@ usersRouter.post("/", async (req: Request, res: Response) => {
 
 usersRouter.put("/", async (req: Request, res: Response) => {
     try {
-        await UserService.update(req.body.data, (result) => {
+        await UserService.update(req.body, (result) => {
             res.status(200).json(result);
         });
     } catch (e) {
         res.status(500).send(e.message);
+        Logger.error(e.message);
     }
 });
 
@@ -75,5 +78,6 @@ usersRouter.delete("/:id", async (req: Request, res: Response) => {
         });
     } catch (e) {
         res.status(500).send(e.message);
+        Logger.error(e.message);
     }
 });
