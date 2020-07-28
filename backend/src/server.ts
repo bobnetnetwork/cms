@@ -2,13 +2,12 @@
  * Required External Modules
  */
 
-// import * as dotenv from 'dotenv';
 import cors from "cors";
 import helmet from "helmet";
-import { usersRouter } from "./router/users.router";
-import { errorHandler } from "./middleware/error.middleware";
-import {notFoundHandler} from "./middleware/notFound.middleware";
-import * as server from "./service/serverService";
+import { usersRouter } from "./router/users.router.js";
+import { errorHandler } from "./middleware/error.middleware.js";
+import {notFoundHandler} from "./middleware/notFound.middleware.js";
+import * as server from "./service/serverService.js";
 import express, {Request, Response} from "express";
 
 /**

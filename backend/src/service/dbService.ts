@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-// @ts-ignore
-import * as Config from "../config/config";
-import * as Logger from "../service/logService";
+import { Config } from "../config/config.js";
+import * as Logger from "../service/logService.js";
 
 let connection;
 const dbUri = "mongodb://" + Config.dbServerUser + ":" + Config.dbServerPwd + "@" + Config.dbServerAddress + ":" + Config.dbServerPort + "/" + Config.dbServerDataBase;

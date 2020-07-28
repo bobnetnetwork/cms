@@ -1,4 +1,4 @@
-module.exports = {
+export const Config = {
     "dbServerType": "MNG",
     "dbServerAddress": "localhost",
     "dbServerPort": "27017",

@@ -2,9 +2,9 @@
  * Data Model Interfaces
  */
 
-import * as database from "../../service/dbService";
-import * as Logger from "../../service/logService";
-import {User} from "./user";
+import * as database from "../../service/dbService.js";
+import * as Logger from "../../service/logService.js";
+import {User} from "./user.js";
 
 database.connectToDB();
 

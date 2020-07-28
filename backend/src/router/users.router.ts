@@ -3,8 +3,8 @@
  */
 
 import express, { Request, Response } from "express";
-import * as UserService from "../entity/user/users.service";
-import * as Logger from "../service/logService";
+import * as UserService from "../entity/user/users.service.js";
+import * as Logger from "../service/logService.js";
 
 /**
  * Router Definition

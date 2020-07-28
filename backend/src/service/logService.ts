@@ -1,6 +1,6 @@
-import { configure, getLogger } from "log4js";
-// @ts-ignore
-import * as Config from "../config/config";
+import pkg from "log4js";
+const {getLogger} = pkg;
+import { Config } from "../config/config.js";
 
 const logger = getLogger();
 logger.level = Config.logLevel;

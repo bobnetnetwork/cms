@@ -1,8 +1,7 @@
 import * as HTTPS from "https";
 import * as HTTP from "http";
-// @ts-ignore
-import * as Config from "../config/config";
-import * as Logger from "../service/logService";
+import { Config } from "../config/config.js";
+import * as Logger from "../service/logService.js";
 import * as fs from "fs";
 
 // const PORT: number = parseInt(process.env.PORT as string, 10);

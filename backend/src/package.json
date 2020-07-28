@@ -19,8 +19,9 @@
     "@types/helmet": "0.0.47",
     "@types/node": "^14.0.26",
     "tslint": "^6.1.2",
-    "typescript": "^3.3.3"
+    "typescript": "^3.9.7"
   },
+  "type": "module",
   "scripts": {
     "start": "tsc && node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
