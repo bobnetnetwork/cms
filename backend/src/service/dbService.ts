@@ -1,7 +1,8 @@
-
 import mongoose from "mongoose";
 // @ts-ignore
 import * as Config from "../config/config";
+import * as Logger from "../service/logService";
+
 let connection;
 const dbUri = "mongodb://" + Config.dbServerUser + ":" + Config.dbServerPwd + "@" + Config.dbServerAddress + ":" + Config.dbServerPort + "/" + Config.dbServerDataBase;
 
@@ -14,10 +15,10 @@ export const connectToDB = () => {
     });
     connection = mongoose.connection;
     connection.once("open", async () => {
-        console.log("Connected to database");
+        Logger.info("Connected to database");
     });
     connection.on("error", () => {
-        console.log("Error connecting to database");
+        Logger.error("Error connecting to database");
     });
 }
 
