@@ -1,6 +1,7 @@
 import pkg from "log4js";
+import {Config} from "../config/config.js";
+
 const {getLogger} = pkg;
-import { Config } from "../config/config.js";
 
 const logger = getLogger();
 logger.level = Config.logLevel;

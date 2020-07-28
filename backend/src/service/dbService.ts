@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Config } from "../config/config.js";
+import {Config} from "../config/config.js";
 import * as Logger from "../service/logService.js";
 
 let connection;

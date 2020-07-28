@@ -1,6 +1,6 @@
 import pkg from "mongoose";
 
-const { Schema, model } = pkg;
+const {Schema, model} = pkg;
 
 const categorySchema = new Schema({
     name: String,

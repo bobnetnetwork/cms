@@ -38,7 +38,7 @@ export const findById = async (Id, callback) => {
     return User.findOne({
         id: Id
     }, (err, user) => {
-        if(err) {
+        if (err) {
             const result = {
                 "success": false,
                 "message": "Authentication failed or User not found.",
@@ -47,7 +47,7 @@ export const findById = async (Id, callback) => {
             Logger.error(err);
             callback(result);
         } else {
-            if(!user) {
+            if (!user) {
                 const result = {
                     "success": false,
                     "message": "User Not found in database!",
@@ -84,24 +84,24 @@ export const create = async (data, callback) => {
         roles: data.roles,
     });
 
-    newUser.save( (err) => {
-       if(err) {
-           const result = {
-               "success": false,
-               "message": "Authentication failed or User creation failed.",
-               "error": err,
-           }
-           Logger.error(err);
-           callback(result);
-       } else {
-           const result = {
-               "success": true,
-               "message": "User Register Succesful!",
-               "user": newUser,
-           }
-           Logger.info("User Register Succesful!");
-           callback(result);
-       }
+    newUser.save((err) => {
+        if (err) {
+            const result = {
+                "success": false,
+                "message": "Authentication failed or User creation failed.",
+                "error": err,
+            }
+            Logger.error(err);
+            callback(result);
+        } else {
+            const result = {
+                "success": true,
+                "message": "User Register Succesful!",
+                "user": newUser,
+            }
+            Logger.info("User Register Succesful!");
+            callback(result);
+        }
     });
 }
 
@@ -109,7 +109,7 @@ export const update = async (data, callback) => {
     User.findOne({
         userName: data.userName
     }, (err, user) => {
-        if(err){
+        if (err) {
             const result = {
                 "success": false,
                 "message": "User Update Error!",
@@ -118,10 +118,10 @@ export const update = async (data, callback) => {
             Logger.error(err);
             callback(result);
         } else {
-            if(data.firstName !== undefined) user.firstName = data.firstName;
+            if (data.firstName !== undefined) user.firstName = data.firstName;
             // mindet megnézni
-            user.save( (err1, updatedUser) => {
-                if(err1){
+            user.save((err1, updatedUser) => {
+                if (err1) {
                     const result = {
                         "success": false,
                         "message": "User Update Error!",
@@ -147,7 +147,7 @@ export const deleteById = async (Id, callback) => {
     User.findOne({
         id: Id
     }, (err, user) => {
-        if(err) {
+        if (err) {
             const result = {
                 "success": false,
                 "message": "User notfound!",
@@ -156,8 +156,8 @@ export const deleteById = async (Id, callback) => {
             Logger.error(err);
             callback(result);
         } else {
-            user.delete( (err1) => {
-                if(err1) {
+            user.delete((err1) => {
+                if (err1) {
                     const result = {
                         "success": false,
                         "message": "User Delete Failed!",
