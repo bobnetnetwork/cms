@@ -1,7 +1,8 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
+import { Schema, model } from "mongoose";
 
-module.exports = Model("Role", new Schema({
+const roleSchema = new Schema({
     name: String,
-    id: Number
-}));
+    id: Number,
+});
+
+export const Role = new model("Role", roleSchema);

@@ -1,7 +1,6 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
+import { Schema, model } from "mongoose";
 
-module.exports = Model("Page", new Schema({
+const pageSchema = new Schema({
     title: String,
     headline: String,
     content: String,
@@ -10,4 +9,6 @@ module.exports = Model("Page", new Schema({
     slug: String,
     addedAt: Date,
     id: Number
-}));
+});
+
+export const Page = new model("Page", pageSchema);

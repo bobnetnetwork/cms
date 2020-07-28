@@ -1,7 +1,6 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
+import { Schema, model } from "mongoose";
 
-module.exports = Model("Category", new Schema({
+const categorySchema = new Schema({
     name: String,
     description: String,
     featuredImage: String,
@@ -9,5 +8,7 @@ module.exports = Model("Category", new Schema({
     addedAt: Date,
     id: Number,
     parent: Object,
-    articles: Object
-}));
+    articles: Object,
+});
+
+export const Category = new model("Category", categorySchema);

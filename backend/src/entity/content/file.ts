@@ -1,11 +1,12 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
+import { Schema, model } from "mongoose";
 
-module.exports = Model("File", new Schema({
+const fileSchema = new Schema({
     fileName: String,
     url: String,
     slug: String,
     mimeType: String,
     addedAt: Date,
     id: Number
-}));
+});
+
+export const File = new model("File", fileSchema);

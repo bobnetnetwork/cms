@@ -1,7 +1,8 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
+import { Schema, model } from "mongoose";
 
-module.exports = Model("Options", new Schema({
+const optionsSchema = new Schema({
     name: String,
-    value: String
-}));
+    value: String,
+});
+
+export const Options = new model("Options", optionsSchema);
