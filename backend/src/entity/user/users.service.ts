@@ -18,7 +18,7 @@ export const findAll = async (callback) => {
             const result = {
                 "success": false,
                 "message": "Authentication failed or User not found.",
-                "error": err
+                "error": err,
             }
             Logger.error(err);
             callback(result);
@@ -26,7 +26,7 @@ export const findAll = async (callback) => {
             const result = {
                 "success": true,
                 "message": "Successful, User Found!",
-                "user": users
+                "user": users,
             }
             Logger.info("Successful, User Found!");
             callback(result);
@@ -42,7 +42,7 @@ export const findById = async (Id, callback) => {
             const result = {
                 "success": false,
                 "message": "Authentication failed or User not found.",
-                "error": err
+                "error": err,
             }
             Logger.error(err);
             callback(result);
@@ -51,7 +51,7 @@ export const findById = async (Id, callback) => {
                 const result = {
                     "success": false,
                     "message": "User Not found in database!",
-                    "error": err
+                    "error": err,
                 }
                 Logger.error(err);
                 callback(result);
@@ -59,7 +59,7 @@ export const findById = async (Id, callback) => {
                 const result = {
                     "success": true,
                     "message": "Successful, User Found!",
-                    "user": user
+                    "user": user,
                 }
                 Logger.info("Successful, User Found!");
                 callback(result);
@@ -89,7 +89,7 @@ export const create = async (data, callback) => {
            const result = {
                "success": false,
                "message": "Authentication failed or User creation failed.",
-               "error": err
+               "error": err,
            }
            Logger.error(err);
            callback(result);
@@ -97,7 +97,7 @@ export const create = async (data, callback) => {
            const result = {
                "success": true,
                "message": "User Register Succesful!",
-               "user": newUser
+               "user": newUser,
            }
            Logger.info("User Register Succesful!");
            callback(result);
@@ -113,7 +113,7 @@ export const update = async (data, callback) => {
             const result = {
                 "success": false,
                 "message": "User Update Error!",
-                "error": err
+                "error": err,
             }
             Logger.error(err);
             callback(result);
@@ -125,7 +125,7 @@ export const update = async (data, callback) => {
                     const result = {
                         "success": false,
                         "message": "User Update Error!",
-                        "error": err1
+                        "error": err1,
                     }
                     Logger.error(err1);
                     callback(result);
@@ -133,7 +133,7 @@ export const update = async (data, callback) => {
                     const result = {
                         "success": true,
                         "message": "User Update Succesful!",
-                        "user": updatedUser
+                        "user": updatedUser,
                     }
                     Logger.info("User Update Succesful!");
                     callback(result);
@@ -151,7 +151,7 @@ export const deleteById = async (Id, callback) => {
             const result = {
                 "success": false,
                 "message": "User notfound!",
-                "error": err
+                "error": err,
             }
             Logger.error(err);
             callback(result);
@@ -161,7 +161,7 @@ export const deleteById = async (Id, callback) => {
                     const result = {
                         "success": false,
                         "message": "User Delete Failed!",
-                        "error": err
+                        "error": err,
                     }
                     Logger.error(err);
                     callback(result);
