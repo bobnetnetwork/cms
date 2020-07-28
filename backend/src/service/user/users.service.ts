@@ -34,9 +34,9 @@ export const findAll = async (callback) => {
     });
 };
 
-export const findById = async (Id, callback) => {
+export const findByUserName = async (UserName, callback) => {
     return User.findOne({
-        id: Id
+        userName: UserName
     }, (err, user) => {
         if (err) {
             const result = {

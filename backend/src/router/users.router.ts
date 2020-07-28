@@ -29,13 +29,11 @@ usersRouter.get("/", async (req: Request, res: Response) => {
 });
 
 
-// GET users/:id
+// GET users/:username
 
-usersRouter.get("/:id", async (req: Request, res: Response) => {
-    const id: number = parseInt(req.params.id, 10);
-
+usersRouter.get("/:username", async (req: Request, res: Response) => {
     try {
-        await UserService.findById(id, (result) => {
+        await UserService.findByUserName(req.params.username, (result) => {
             res.status(200).json(result);
         });
     } catch (e) {
