@@ -5,7 +5,7 @@
 import cors from "cors";
 import helmet from "helmet";
 import {usersRouter} from "./router/users.router.js";
-import {articlesRouter} from "./router/articles.router";
+import {articlesRouter} from "./router/articles.router.js";
 import {errorHandler} from "./middleware/error.middleware.js";
 import {notFoundHandler} from "./middleware/notFound.middleware.js";
 import * as server from "./service/serverService.js";

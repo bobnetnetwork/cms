@@ -8,7 +8,6 @@ const userSchema = new Schema({
     userName: String,
     email: String,
     pwd: String,
-    id: Number,
     accountExpired: Boolean,
     accountLocked: Boolean,
     credentialsExpired: Boolean,

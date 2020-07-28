@@ -68,20 +68,23 @@ export const findById = async (Id, callback) => {
     })
 }
 
-function isUnique(data): boolean {
-    let result: boolean;
+const isUnique = async (data, callback) => {
     User.findOne({"userName": data.userName}, {"email": data.email}, (err, user) => {
         if(err){
-            result = false;
-        } else result = user.length !== 0;
+            Logger.debug(err.message);
+            callback(false);
+        } else if(!user){
+            callback(true);
+        } else {
+            callback(false);
+        }
     });
-    return result;
 }
 
-function isContainAllRequiredData(data): boolean {
+const isContainAllRequiredData = async (data, callback) => {
     let result: boolean;
-    result = !(data.userName.length === 0 || data.pwd.length === 0 || data.email.length === 0);
-    return result;
+    result = (data.userName && data.pwd && data.email);
+    callback(result);
 }
 
 function createUser(data) {
@@ -90,35 +93,34 @@ function createUser(data) {
     user.userName = data.userName;
     user.pwd = data.pwd;
 
-    if(data.registeredAt.length === 0){
+    if(!data.registeredAt){
         user.registeredAt = Date.now();
     } else {
         user.registeredAt = data.registeredAt;
     }
-
     user.firstName = data.firstName;
     user.lastName = data.lastName;
     user.roles = data.roles;
 
-    if(data.accountExpired.length === 0) {
+    if(!data.accountExpired) {
         user.accountExpired = false;
     } else {
         user.accountExpired = data.accountExpired;
     }
 
-    if(data.accountLocked.length === 0){
+    if(!data.accountLocked){
         user.accountLocked = false;
     } else {
         user.accountLocked = data.accountLocked;
     }
 
-    if(data.credentialsExpired.length === 0){
+    if(!data.credentialsExpired){
         user.credentialsExpired = false;
     } else {
         user.credentialsExpired = data.credentialsExpired;
     }
 
-    if(data.enabled.size === 0) {
+    if(!data.enabled) {
         user.enabled = true;
     } else {
         user.enabled = data.enabled;
@@ -128,43 +130,49 @@ function createUser(data) {
 }
 
 export const create = async (data, callback) => {
-    if(!isUnique(data)){
-        const result = {
-            "success": false,
-            "message": "User is already exists!",
-        }
-        Logger.info("User is already exists!");
-        callback(result);
-    } else if(!isContainAllRequiredData(data)) {
-        const result = {
-            "success": false,
-            "message": "Not contains all required data!",
-        }
-        Logger.info("Not contains all required data!");
-        callback(result);
-    } else {
-        const newUser = createUser(data);
+    await isUnique(data, (result) => {
+        if (result) {
+            isContainAllRequiredData(data, (rst) => {
+                if(rst){
+                    const newUser = createUser(data);
 
-        newUser.save((err) => {
-            if (err) {
-                const result = {
-                    "success": false,
-                    "message": "Authentication failed or User creation failed.",
-                    "error": err,
+                    newUser.save((err) => {
+                        if (err) {
+                            const rstUser1 = {
+                                "success": false,
+                                "message": "Authentication failed or User creation failed.",
+                                "error": err,
+                            }
+                            Logger.error(err);
+                            callback(rstUser1);
+                        } else {
+                            const rstUser2 = {
+                                "success": true,
+                                "message": "User Register Succesful!",
+                                "user": newUser,
+                            }
+                            Logger.info("User Register Succesful!");
+                            callback(rstUser2);
+                        }
+                    });
+                } else {
+                    const rs2 = {
+                        "success": false,
+                        "message": "Not contains all required data!",
+                    }
+                    Logger.info("Not contains all required data!");
+                    callback(rs2);
                 }
-                Logger.error(err);
-                callback(result);
-            } else {
-                const result = {
-                    "success": true,
-                    "message": "User Register Succesful!",
-                    "user": newUser,
-                }
-                Logger.info("User Register Succesful!");
-                callback(result);
+            })
+        } else {
+            const rs = {
+                "success": false,
+                "message": "User is already exists!",
             }
-        });
-    }
+            Logger.info("User is already exists!");
+            callback(rs);
+        }
+    })
 }
 
 export const update = async (data, callback) => {
