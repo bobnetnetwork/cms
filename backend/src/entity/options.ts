@@ -1,8 +1,10 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
-import {Long} from "long";
+import pkg from "mongoose";
 
-module.exports = Model('Options', new Schema({
+const {Schema, model} = pkg;
+
+const optionsSchema = new Schema({
     name: String,
-    value: String
-}));
+    value: String,
+});
+
+export const Options = model("Options", optionsSchema);

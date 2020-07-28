@@ -1,11 +1,13 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
-import {Long} from "long";
+import pkg from "mongoose";
 
-module.exports = Model('Tag', new Schema({
+const {Schema, model} = pkg;
+
+const tagSchema = new Schema({
     title: String,
     slug: String,
     addedAt: Date,
-    id: Long,
+    id: Number,
     articles: Object
-}));
+});
+
+export const Tag = model("Tag", tagSchema);

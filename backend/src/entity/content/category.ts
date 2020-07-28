@@ -1,14 +1,16 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
-import {Long} from "long";
+import pkg from "mongoose";
 
-module.exports = Model('Category', new Schema({
+const {Schema, model} = pkg;
+
+const categorySchema = new Schema({
     name: String,
     description: String,
     featuredImage: String,
     slug: String,
     addedAt: Date,
-    id: Long,
+    id: Number,
     parent: Object,
-    articles: Object
-}));
+    articles: Object,
+});
+
+export const Category = model("Category", categorySchema);

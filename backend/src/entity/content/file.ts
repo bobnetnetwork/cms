@@ -1,12 +1,14 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
-import {Long} from "long";
+import pkg from "mongoose";
 
-module.exports = Model('File', new Schema({
+const {Schema, model} = pkg;
+
+const fileSchema = new Schema({
     fileName: String,
     url: String,
     slug: String,
     mimeType: String,
     addedAt: Date,
-    id: Long
-}));
+    id: Number
+});
+
+export const File = model("File", fileSchema);

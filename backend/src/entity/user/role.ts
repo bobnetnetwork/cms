@@ -1,8 +1,10 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
-import {Long} from "long";
+import pkg from "mongoose";
 
-module.exports = Model('Role', new Schema({
+const {Schema, model} = pkg;
+
+const roleSchema = new Schema({
     name: String,
-    id: Long
-}));
+    id: Number,
+});
+
+export const Role = model("Role", roleSchema);

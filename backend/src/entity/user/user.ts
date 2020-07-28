@@ -1,18 +1,19 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
-import {Long} from "long";
+import pkg from "mongoose";
 
-module.exports = Model('User', new Schema({
+const {Schema, model} = pkg;
+
+const userSchema = new Schema({
     firstName: String,
     lastName: String,
     userName: String,
     email: String,
     pwd: String,
-    id: Long,
     accountExpired: Boolean,
     accountLocked: Boolean,
     credentialsExpired: Boolean,
     enabled: Boolean,
     registeredAt: Date,
-    roles: Object
-}));
+    roles: Object,
+});
+
+export const User = model("User", userSchema);

@@ -1,24 +1,23 @@
-// @ts-ignore
-import * as Mongoose from "mongoose";
-// @ts-ignore
-import * as Config from "../config/config";
+import mongoose from "mongoose";
+import {Config} from "../config/config.js";
+import * as Logger from "../service/logService.js";
+
 let connection;
+const dbUri = "mongodb://" + Config.dbServerUser + ":" + Config.dbServerPwd + "@" + Config.dbServerAddress + ":" + Config.dbServerPort + "/" + Config.dbServerDataBase;
 
 export const connectToDB = () => {
-    let dbUri;
-    dbUri = 'mongodb://' + Config.dbServerUser + ":" + Config.dbServerPwd + '@' + Config.dbServerAddress + ":" + Config.dbServerPort + '/' + Config.dbServerDataBase;
-    Mongoose.connect(dbUri, {
+    mongoose.connect(dbUri, {
         useNewUrlParser: true,
         useFindAndModify: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
     });
-    connection = Mongoose.connection;
+    connection = mongoose.connection;
     connection.once("open", async () => {
-        console.log("Connected to database");
+        Logger.info("Connected to database");
     });
     connection.on("error", () => {
-        console.log("Error connecting to database");
+        Logger.error("Error connecting to database");
     });
 }
 
@@ -26,5 +25,5 @@ export const disconnect = () => {
     if (!connection) {
         return;
     }
-    Mongoose.disconnect();
+    mongoose.disconnect();
 };

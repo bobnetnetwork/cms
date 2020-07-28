@@ -3,24 +3,37 @@
  */
 
 import express, {Request, Response} from "express";
-import * as UserService from "../service/user/users.service.js";
+import * as ArticleService from "../service/content/articles.service.js";
 import * as Logger from "../service/logService.js";
 
 /**
  * Router Definition
  */
 
-export const usersRouter = express.Router();
+export const articlesRouter = express.Router();
 
 /**
  * Controller Definitions
  */
 
-// GET users/
+// GET articles/
 
-usersRouter.get("/", async (req: Request, res: Response) => {
+articlesRouter.get("/", async (req: Request, res: Response) => {
     try {
-        await UserService.findAll((result) => {
+        await ArticleService.findAll((result) => {
+            res.status(200).json(result);
+        });
+    } catch (e) {
+        res.status(404).send(e.message);
+        Logger.error(e.message);
+    }
+});
+
+// GET articles/:slug
+
+articlesRouter.get("/:slug", async (req: Request, res: Response) => {
+    try {
+        await ArticleService.findBySlug(req.params.slug, (result) => {
             res.status(200).json(result);
         });
     } catch (e) {
@@ -28,24 +41,11 @@ usersRouter.get("/", async (req: Request, res: Response) => {
     }
 });
 
+// POST articles/
 
-// GET users/:username
-
-usersRouter.get("/:username", async (req: Request, res: Response) => {
+articlesRouter.post("/", async (req: Request, res: Response) => {
     try {
-        await UserService.findByUserName(req.params.username, (result) => {
-            res.status(200).json(result);
-        });
-    } catch (e) {
-        res.status(404).send(e.message);
-    }
-});
-
-// POST users/
-
-usersRouter.post("/", async (req: Request, res: Response) => {
-    try {
-        await UserService.create(req.body, (result) => {
+        await ArticleService.create(req.body, (result) => {
             res.status(201).json(result);
         });
     } catch (e) {
@@ -54,28 +54,28 @@ usersRouter.post("/", async (req: Request, res: Response) => {
     }
 });
 
-// PUT users/
-
-usersRouter.put("/", async (req: Request, res: Response) => {
+// PUT articles/
+/*
+articlesRouter.put("/", async (req: Request, res: Response) => {
     try {
-        await UserService.update(req.body, (result) => {
+        await ArticleService.update(req.body, (result) => {
             res.status(200).json(result);
         });
     } catch (e) {
         res.status(500).send(e.message);
         Logger.error(e.message);
     }
-});
+});*/
 
-// DELETE users/:id
-
-usersRouter.delete("/:id", async (req: Request, res: Response) => {
+// DELETE articles/:slug
+/*
+articlesRouter.delete("/:slug", async (req: Request, res: Response) => {
     try {
-        await UserService.deleteById(req.params.id, (result) => {
+        await ArticleService.deleteBySlug(req.params.slug, (result) => {
             res.status(200).json(result);
         });
     } catch (e) {
         res.status(500).send(e.message);
         Logger.error(e.message);
     }
-});
+});*/

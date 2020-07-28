@@ -1,8 +1,8 @@
-// @ts-ignore
-import { Schema, Model } from "mongoose";
-import {Long} from "long";
+import pkg from "mongoose";
 
-module.exports = Model('Article', new Schema({
+const {Schema, model} = pkg;
+
+const articleSchema = new Schema({
     title: String,
     headline: String,
     content: String,
@@ -10,7 +10,8 @@ module.exports = Model('Article', new Schema({
     author: Object,
     slug: String,
     addedAt: Date,
-    id: Long,
     tags: Object,
-    categories: Object
-}));
+    categories: Object,
+});
+
+export const Article = model("Article", articleSchema);
