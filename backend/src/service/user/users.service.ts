@@ -68,41 +68,103 @@ export const findById = async (Id, callback) => {
     })
 }
 
-export const create = async (data, callback) => {
-    const newUser = new User({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        userName: data.userName,
-        email: data.email,
-        pwd: data.pwd,
-        id: data.id,
-        accountExpired: data.accountExpired,
-        accountLocked: data.accountLocked,
-        credentialsExpired: data.credentialsExpired,
-        enabled: data.enabled,
-        registeredAt: data.registeredAt,
-        roles: data.roles,
+function isUnique(data): boolean {
+    let result: boolean;
+    User.findOne({"userName": data.userName}, {"email": data.email}, (err, user) => {
+        if(err){
+            result = false;
+        } else result = user.length !== 0;
     });
+    return result;
+}
 
-    newUser.save((err) => {
-        if (err) {
-            const result = {
-                "success": false,
-                "message": "Authentication failed or User creation failed.",
-                "error": err,
-            }
-            Logger.error(err);
-            callback(result);
-        } else {
-            const result = {
-                "success": true,
-                "message": "User Register Succesful!",
-                "user": newUser,
-            }
-            Logger.info("User Register Succesful!");
-            callback(result);
+function isContainAllRequiredData(data): boolean {
+    let result: boolean;
+    result = !(data.userName.length === 0 || data.pwd.length === 0 || data.email.length === 0);
+    return result;
+}
+
+function createUser(data) {
+    const user = new User();
+    user.email = data.email;
+    user.userName = data.userName;
+    user.pwd = data.pwd;
+
+    if(data.registeredAt.length === 0){
+        user.registeredAt = Date.now();
+    } else {
+        user.registeredAt = data.registeredAt;
+    }
+
+    user.firstName = data.firstName;
+    user.lastName = data.lastName;
+    user.roles = data.roles;
+
+    if(data.accountExpired.length === 0) {
+        user.accountExpired = false;
+    } else {
+        user.accountExpired = data.accountExpired;
+    }
+
+    if(data.accountLocked.length === 0){
+        user.accountLocked = false;
+    } else {
+        user.accountLocked = data.accountLocked;
+    }
+
+    if(data.credentialsExpired.length === 0){
+        user.credentialsExpired = false;
+    } else {
+        user.credentialsExpired = data.credentialsExpired;
+    }
+
+    if(data.enabled.size === 0) {
+        user.enabled = true;
+    } else {
+        user.enabled = data.enabled;
+    }
+
+    return user;
+}
+
+export const create = async (data, callback) => {
+    if(!isUnique(data)){
+        const result = {
+            "success": false,
+            "message": "User is already exists!",
         }
-    });
+        Logger.info("User is already exists!");
+        callback(result);
+    } else if(!isContainAllRequiredData(data)) {
+        const result = {
+            "success": false,
+            "message": "Not contains all required data!",
+        }
+        Logger.info("Not contains all required data!");
+        callback(result);
+    } else {
+        const newUser = createUser(data);
+
+        newUser.save((err) => {
+            if (err) {
+                const result = {
+                    "success": false,
+                    "message": "Authentication failed or User creation failed.",
+                    "error": err,
+                }
+                Logger.error(err);
+                callback(result);
+            } else {
+                const result = {
+                    "success": true,
+                    "message": "User Register Succesful!",
+                    "user": newUser,
+                }
+                Logger.info("User Register Succesful!");
+                callback(result);
+            }
+        });
+    }
 }
 
 export const update = async (data, callback) => {
@@ -119,7 +181,15 @@ export const update = async (data, callback) => {
             callback(result);
         } else {
             if (data.firstName !== undefined) user.firstName = data.firstName;
-            // mindet megnézni
+            if (data.lastName !== undefined) user.lastName = data.lastName;
+            if (data.roles !== undefined) user.roles = data.roles;
+            if (data.email !== undefined) user.email = data.email;
+            if (data.pwd !== undefined) user.pwd = data.pwd;
+            if (data.accountExpired !== undefined) user.accountExpired = data.accountExpired;
+            if (data.accountLocked !== undefined) user.accountLocked = data.accountLocked;
+            if (data.credentialsExpired !== undefined) user.credentialsExpired = data.credentialsExpired;
+            if (data.enabled !== undefined) user.enabled = data.enabled;
+
             user.save((err1, updatedUser) => {
                 if (err1) {
                     const result = {
