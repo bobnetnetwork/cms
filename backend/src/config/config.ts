@@ -10,4 +10,10 @@ export const Config = {
 
     "serverPort": "9421",
     "httpsEnabled": false,
+
+    "slugifyReplacement": "-",
+    "slugifyRemove": undefined,
+    "slugifyLower": true,
+    "slugifyStrict": false,
+    "slugifyLocale": "vi",
 };
