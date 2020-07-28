@@ -5,6 +5,7 @@
 import cors from "cors";
 import helmet from "helmet";
 import {usersRouter} from "./router/users.router.js";
+import {articlesRouter} from "./router/articles.router";
 import {errorHandler} from "./middleware/error.middleware.js";
 import {notFoundHandler} from "./middleware/notFound.middleware.js";
 import * as server from "./service/serverService.js";
@@ -28,6 +29,7 @@ app.use(cors());
 app.use(express.json());
 app.use(apiUrl, router);
 app.use(apiUrl + "/users", usersRouter);
+app.use(apiUrl + "/content/articles", articlesRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);

@@ -3,7 +3,7 @@
  */
 
 import express, {Request, Response} from "express";
-import * as UserService from "../entity/user/users.service.js";
+import * as UserService from "../service/user/users.service.js";
 import * as Logger from "../service/logService.js";
 
 /**
