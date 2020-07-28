@@ -10,7 +10,6 @@ const articleSchema = new Schema({
     author: Object,
     slug: String,
     addedAt: Date,
-    id: Number,
     tags: Object,
     categories: Object,
 });
