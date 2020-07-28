@@ -17,4 +17,4 @@ const userSchema = new Schema({
     roles: Object,
 });
 
-export const User = new model("User", userSchema);
+export const User = model("User", userSchema);

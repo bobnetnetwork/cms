@@ -7,4 +7,4 @@ const optionsSchema = new Schema({
     value: String,
 });
 
-export const Options = new model("Options", optionsSchema);
+export const Options = model("Options", optionsSchema);

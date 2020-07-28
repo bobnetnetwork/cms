@@ -13,4 +13,4 @@ const pageSchema = new Schema({
     id: Number
 });
 
-export const Page = new model("Page", pageSchema);
+export const Page = model("Page", pageSchema);

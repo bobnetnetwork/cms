@@ -11,4 +11,4 @@ const fileSchema = new Schema({
     id: Number
 });
 
-export const File = new model("File", fileSchema);
+export const File = model("File", fileSchema);

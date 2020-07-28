@@ -15,4 +15,4 @@ const articleSchema = new Schema({
     categories: Object,
 });
 
-export const Article = new model("Article", articleSchema);
+export const Article = model("Article", articleSchema);
