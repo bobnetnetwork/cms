@@ -10,6 +10,8 @@ import { ArticleComponent } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
 import { TagComponent } from './tag/tag.component';
 import { UserComponent } from './user/user.component';
+import { MessagesComponent } from './messages/messages.component';
+import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { UserComponent } from './user/user.component';
     ArticleComponent,
     CategoryComponent,
     TagComponent,
-    UserComponent
+    UserComponent,
+    MessagesComponent,
+    HeroDetailComponent
   ],
   imports: [
     BrowserModule,
