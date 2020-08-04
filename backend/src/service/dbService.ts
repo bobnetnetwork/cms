@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
 const USER: string = process.env.DB_SERVER_USER;
 const PWD: string = process.env.DB_SERVER_PWD
 const TYPE: string = process.env.DB_SERVER_TYPE;
-const PORT: number = parseInt(process.env.DB_SERVER_PORT as string);
+const PORT: number = parseInt(process.env.DB_SERVER_PORT as string, 10);
 const ADDRESS: string = process.env.DB_SERVER_ADDRESS;
 const DATABASE: string = process.env.DB_SERVER_DATABASE;
 

@@ -8,10 +8,10 @@ if (process.env.NODE_ENV !== 'production') {
     dotenv.config();
 }
 
-const PORT: number = parseInt(process.env.APP_PORT as string);
+const PORT: number = parseInt(process.env.APP_PORT as string, 10);
 
 export const startServer = (app) => {
-    if (JSON.parse(process.env.HTTPS_ENABLED)) {
+    if (process.env.HTTPS_ENABLED === "true") {
         const privateKey = fs.readFileSync("sslcert/server.key", "utf8");
         const certificate = fs.readFileSync("sslcert/server.crt", "utf8");
 
