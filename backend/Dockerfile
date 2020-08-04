@@ -33,9 +33,8 @@ USER backend
 # Install all Packages
 RUN npm install
 
-RUN ls
 # TypeScript
-RUN tsc
+RUN npm run build
 
 EXPOSE $APP_PORT
 
