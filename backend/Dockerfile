@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:14
 # Env
 ENV TIME_ZONE=Europe/Budapest
 ENV APP_PORT=9421
