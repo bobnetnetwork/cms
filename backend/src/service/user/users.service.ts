@@ -4,7 +4,7 @@
 
 import * as database from "../dbService.js";
 import * as Logger from "../logService.js";
-import {User} from "../../entity/user/user.js";
+import {Users} from "../../model/user/user.js";
 
 database.connectToDB();
 
@@ -13,7 +13,7 @@ database.connectToDB();
  */
 
 export const findAll = async (callback) => {
-    return User.find({}, (err, users) => {
+    return Users.find({}, (err, users) => {
         if (err) {
             const result = {
                 "success": false,
@@ -35,7 +35,7 @@ export const findAll = async (callback) => {
 };
 
 export const findByUserName = async (UserName, callback) => {
-    return User.findOne({
+    return Users.findOne({
         userName: UserName
     }, (err, user) => {
         if (err) {
@@ -69,7 +69,7 @@ export const findByUserName = async (UserName, callback) => {
 }
 
 const isUnique = async (data, callback) => {
-    User.findOne({"userName": data.userName}, {"email": data.email}, (err, user) => {
+    Users.findOne({"userName": data.userName}, {"email": data.email}, (err, user) => {
         if(err){
             Logger.debug(err.message);
             callback(false);
@@ -88,7 +88,7 @@ const isContainAllRequiredData = async (data, callback) => {
 }
 
 function createUser(data) {
-    const user = new User();
+    const user = new Users();
     user.email = data.email;
     user.userName = data.userName;
     user.pwd = data.pwd;
@@ -176,7 +176,7 @@ export const create = async (data, callback) => {
 }
 
 export const update = async (data, callback) => {
-    User.findOne({
+    Users.findOne({
         userName: data.userName
     }, (err, user) => {
         if (err) {
@@ -222,7 +222,7 @@ export const update = async (data, callback) => {
 }
 
 export const deleteById = async (Id, callback) => {
-    User.findOne({
+    Users.findOne({
         id: Id
     }, (err, user) => {
         if (err) {

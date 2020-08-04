@@ -5,6 +5,7 @@
 import express, {Request, Response} from "express";
 import * as UserService from "../service/user/users.service.js";
 import * as Logger from "../service/logService.js";
+import {auth} from "./auth.js";
 
 /**
  * Router Definition
@@ -18,7 +19,7 @@ export const usersRouter = express.Router();
 
 // GET users/
 
-usersRouter.get("/", async (req: Request, res: Response) => {
+usersRouter.get("/", auth.optional, async (req: Request, res: Response) => {
     try {
         await UserService.findAll((result) => {
             res.status(200).json(result);
