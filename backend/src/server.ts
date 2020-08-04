@@ -10,6 +10,8 @@ import {errorHandler} from "./middleware/error.middleware.js";
 import {notFoundHandler} from "./middleware/notFound.middleware.js";
 import * as server from "./service/serverService.js";
 import express, {Request, Response} from "express";
+import session from "express-session";
+import "./config/passport.js";
 
 /**
  * App Variables
@@ -30,6 +32,8 @@ app.use(express.json());
 app.use(apiUrl, router);
 app.use(apiUrl + "/users", usersRouter);
 app.use(apiUrl + "/content/articles", articlesRouter);
+app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+
 
 app.use(errorHandler);
 app.use(notFoundHandler);

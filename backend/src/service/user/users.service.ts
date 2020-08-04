@@ -4,7 +4,7 @@
 
 import * as database from "../dbService.js";
 import * as Logger from "../logService.js";
-import {Users} from "../../model/user/user.js";
+import {Users} from "../../model/user/users.js";
 
 database.connectToDB();
 
@@ -92,6 +92,7 @@ function createUser(data) {
     user.email = data.email;
     user.userName = data.userName;
     user.pwd = data.pwd;
+    user.setPassword(data.pwd);
 
     if(!data.registeredAt){
         user.registeredAt = Date.now();
