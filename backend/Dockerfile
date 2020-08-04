@@ -4,10 +4,11 @@ ENV TIME_ZONE=Europe/Budapest
 ENV APP_PORT=9421
 ENV DB_SERVER_TYPE=MNG
 ENV DB_SERVER_ADDRESS=localhost
-ENV DB_SERVER_PORT=localhost
+ENV DB_SERVER_PORT=27017
 ENV DB_SERVER_USER=cms_dev
 ENV DB_SERVER_PWD=Almafa1.
 ENV DB_SERVER_DATABASE=cms_dev
+ENV NODE_ENV=production
 
 # Set the timezone in docker
 RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /etc/timezone
