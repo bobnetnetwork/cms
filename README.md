@@ -48,6 +48,11 @@ https://hub.docker.com/r/bobnetnetwork/cms
 * DB_SERVER_PWD
 * DB_SERVER_DATABASE
 * NODE_ENV
+* MAIL_SERVER_HOST
+* MAIL_SERVER_PORT
+* MAIL_SERVER_SECURE
+* MAIL_SERVER_USER
+* MAIL_SERVER_PW
 
 ## License
 This project is licensed under the GPLv3 License - see the [LICENSE.md](LICENSE.md) file for details

@@ -9,6 +9,11 @@ ENV DB_SERVER_USER=cms_dev
 ENV DB_SERVER_PWD=Almafa1.
 ENV DB_SERVER_DATABASE=cms_dev
 ENV NODE_ENV=production
+ENV MAIL_SERVER_HOST=localhost
+ENV MAIL_SERVER_PORT=587
+ENV MAIL_SERVER_SECURE=false
+ENV MAIL_SERVER_USER=cms_dev
+ENV MAIL_SERVER_PW=Almafa1.
 
 # Set the timezone in docker
 RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /etc/timezone
