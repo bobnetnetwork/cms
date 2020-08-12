@@ -2,19 +2,21 @@ import * as HTTPS from "https";
 import * as HTTP from "http";
 import * as fs from "fs";
 import dotenv from "dotenv";
-import * as database from "./dbService.js"
 import os from "os";
-import {LogService} from "./LogService";
+import {LogService} from "./LogService.js";
+import {DBService} from "./DBService.js";
 
 export class ServerService {
 
     private log = new LogService().getLogger("serverService");
-    private PORT: number = parseInt(process.env.APP_PORT as string, 10);
+    private readonly PORT;
+    private database = new DBService();
 
     constructor() {
         if (process.env.NODE_ENV !== 'production') {
             dotenv.config();
         }
+        this.PORT = parseInt(process.env.APP_PORT as string, 10);
     }
 
     public startServer(app) {
@@ -45,11 +47,11 @@ export class ServerService {
     }
 
     private connectToDB() {
-        database.connectToDB()
+        this.database.connectToDB()
     }
 
     private closeDBConnections() {
-        database.disconnect();
+        this.database.disconnect();
     }
 
     private showConnectionAddresses(serverType) {
