@@ -3,6 +3,8 @@ import {Config} from "../config/config.js";
 
 const {getLogger} = pkg;
 
+pkg.configure("./config/loggerConfig.json");
+
 const logger = getLogger();
 logger.level = Config.logLevel;
 
