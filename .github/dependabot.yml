@@ -10,7 +10,7 @@ updates:
       - "dependencies"
     assignees:
       - "bobesz"
-    target-branch: "develop"
+    target-branch: "packages-updates"
   - package-ecosystem: "npm"
     directory: "/frontend/src"
     schedule:
@@ -19,4 +19,4 @@ updates:
       - "dependencies"
     assignees:
       - "bobesz"
-    target-branch: "develop"
+    target-branch: "packages-updates"
