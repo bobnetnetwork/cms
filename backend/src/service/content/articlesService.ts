@@ -2,7 +2,7 @@
  * Data Model Interfaces
  */
 import {Article} from "../../model/content/article.js";
-import {createSlug} from "../slugifyService.js";
+import {SlugifyService} from "../SlugifyService.js";
 import {LogService} from "../LogService.js";
 
 const log = new LogService().getLogger("articlesServices");
@@ -87,13 +87,14 @@ const isContainAllRequiredData = async (data, callback) => {
 
 function createArticle (data) {
     const article = new Article();
+    const slugify = new SlugifyService();
 
     article.title = data.title;
     article.headline = data.headline;
     article.connect = data.connect;
     article.featuredImage = data.featuredImage;
     article.author = data.author;
-    article.slug = createSlug(data.title);
+    article.slug = slugify.createSlug(data.title);
 
     if(!data.addedAt){
         article.addedAt = Date.now();
