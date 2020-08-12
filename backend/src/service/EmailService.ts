@@ -1,10 +1,9 @@
 import nodemailer from "nodemailer";
-import textVersionJs from "textversionjs";
 import {LogService} from "./LogService.js";
 import dotenv from "dotenv";
+import {EmailMessage} from "../model/EmailMessage";
 
 export class EmailService {
-
     private log = new LogService().getLogger("EmailService");
 
     private readonly HOST;
@@ -13,21 +12,9 @@ export class EmailService {
     private readonly USER;
     private readonly PWD;
 
-    private sender;
-    private receivers;
-    private cc;
-    private bcc;
-
-    private subject;
-    private text;
-    private html;
-    private amp;
-    private attachments;
-
     private transporter;
-    private message;
-
     private info;
+    private _emailMessage = new EmailMessage();
 
     constructor() {
         if (process.env.NODE_ENV !== 'production') {
@@ -41,11 +28,9 @@ export class EmailService {
         this.generateTransporter();
     }
 
-    public async sendMail() {
-        this.generateMessage();
-
+    public async send() {
         try{
-            this.info = await this.transporter.sendMail(this.message);
+            this.info = await this.transporter.sendMail(this._emailMessage.generateEmailMessage());
 
             this.log.info("Message sent: %s", this.info.messageId);
         } catch (e) {
@@ -62,66 +47,15 @@ export class EmailService {
             auth: {
                 user: this.USER,
                 pass: this.PWD
-            }
+            },
         });
     }
 
-    private generateMessage() {
-        this.message = {
-            from: this.sender,
-            to: this.receivers,
-            cc: this.cc,
-            bcc: this.bcc,
-            subject: this.subject,
-            text: this.text,
-            html: this.html,
-            amp: this.amp,
-            attachments: this.attachments
-        }
+    get emailMessage(): EmailMessage {
+        return this._emailMessage;
     }
 
-    public setSender(sender) {
-        this.sender = sender;
-    }
-
-    public setReceivers(receivers) {
-        this.receivers = receivers;
-    }
-
-    public setCc(cc) {
-        this.cc = cc;
-    }
-
-    public setBcc(bcc) {
-        this.bcc = bcc;
-    }
-
-    public setSubject(subject) {
-        this.subject = subject;
-    }
-
-    public setText(text) {
-        this.text = text;
-    }
-
-    public setHtml(html) {
-        this.html = html;
-    }
-
-    public setAmp(amp) {
-        this.amp = amp;
-    }
-
-    public setAttachments(attachments) {
-        this.attachments = attachments;
-    }
-
-    public generateTextFromHtml(html?) {
-        if(!html) {
-            this.text = textVersionJs.htmlToPlainText(this.html);
-        } else {
-            this.html = html;
-            this.text = textVersionJs.htmlToPlainText(html);
-        }
+    set emailMessage(value: EmailMessage) {
+        this._emailMessage = value;
     }
 }
