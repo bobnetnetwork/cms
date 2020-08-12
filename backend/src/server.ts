@@ -5,7 +5,7 @@
 import cors from "cors";
 import helmet from "helmet";
 import {UsersRouter} from "./routes/UsersRouter.js";
-import {articlesRouter} from "./routes/articlesRouter.js";
+import {ArticlesRouter} from "./routes/ArticlesRouter.js";
 import {HealthCheckRouter} from "./routes/HealthCheckRouter.js";
 import {errorHandler} from "./middleware/errorMiddleware.js";
 import {notFoundHandler} from "./middleware/notFoundMiddleware.js";
@@ -45,7 +45,7 @@ app.use(express.json());
 app.use(API_URL, router);
 app.use(HEALTH_CHECK, new HealthCheckRouter().getHealthCheckRouter());
 app.use(USERS, new UsersRouter().getUsersRouter());
-app.use(ARTICLES, articlesRouter);
+app.use(ARTICLES, new ArticlesRouter().getArticleRouter());
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
 app.use(errorHandler);
