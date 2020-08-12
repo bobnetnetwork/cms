@@ -9,7 +9,7 @@ import {articlesRouter} from "./routes/articlesRouter.js";
 import {healthCheckRouter} from "./routes/healthCheckRouter.js";
 import {errorHandler} from "./middleware/errorMiddleware.js";
 import {notFoundHandler} from "./middleware/notFoundMiddleware.js";
-import * as server from "./service/serverService.js";
+import {ServerService} from "./service/ServerService.js";
 import express, {Request, Response} from "express";
 import session from "express-session";
 import "./config/passport.js";
@@ -56,6 +56,8 @@ router.get('/', async (req: Request, res: Response) => {
         message: "Welcome to CMS_DEV server by BobNET Network!"
     });
 })
+
+const server = new ServerService();
 
 server.startServer(app);
 
