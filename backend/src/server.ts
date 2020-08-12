@@ -6,7 +6,7 @@ import cors from "cors";
 import helmet from "helmet";
 import {usersRouter} from "./routes/users.router.js";
 import {articlesRouter} from "./routes/articles.router.js";
-import {healthcheckRouter} from "./routes/healthcheck.router.js";
+import {healthCheckRouter} from "./routes/healthCheck.router.js";
 import {errorHandler} from "./middleware/error.middleware.js";
 import {notFoundHandler} from "./middleware/notFound.middleware.js";
 import * as server from "./service/serverService.js";
@@ -25,17 +25,19 @@ const app = express();
  */
 const router = express.Router();
 
-const apiUrl = "/api/v01";
+const API_URL = "/api/v01";
+const HEALTH_CHECK = API_URL + "/health-check";
+const USERS = API_URL + "/users";
+const ARTICLES = API_URL + "/content/articles";
 
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
-app.use(apiUrl, router);
-app.use(apiUrl + "/healthcheck", healthcheckRouter);
-app.use(apiUrl + "/users", usersRouter);
-app.use(apiUrl + "/content/articles", articlesRouter);
+app.use(API_URL, router);
+app.use(HEALTH_CHECK, healthCheckRouter);
+app.use(USERS, usersRouter);
+app.use(ARTICLES, articlesRouter);
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
-
 
 app.use(errorHandler);
 app.use(notFoundHandler);

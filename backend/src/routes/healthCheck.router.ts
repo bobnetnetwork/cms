@@ -8,15 +8,15 @@ import os from "os";
 /**
  * Router Definition
  */
-export const healthcheckRouter = express.Router();
+export const healthCheckRouter = express.Router();
 
 /**
  * Controller Definitions
  */
 
-// GET healthcheck/
+// GET health-check/
 // todo: auth.required
-healthcheckRouter.get("/", async (req: Request, res: Response, _next: NextFunction) => {
+healthCheckRouter.get("/", async (req: Request, res: Response, _next: NextFunction) => {
     // todo: add further things to check (e.g. connecting to database)
     const processData = {
         uptime: process.uptime(),
@@ -35,17 +35,17 @@ healthcheckRouter.get("/", async (req: Request, res: Response, _next: NextFuncti
         version: os.version(),
         networkInterfaces: os.networkInterfaces()
     }
-    const healthcheck = {
+    const healthCheck = {
         process: processData,
         os: osData,
         message: "OK",
         timestamp: Date.now(),
     };
     try {
-        res.status(200).json(healthcheck);
+        res.status(200).json(healthCheck);
     } catch (e) {
         Logger.error(e.message);
-        healthcheck.message = e;
-        res.status(503).json(healthcheck);
+        healthCheck.message = e;
+        res.status(503).json(healthCheck);
     }
 });
