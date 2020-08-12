@@ -7,11 +7,11 @@ export class EmailService {
 
     private log = new LogService().getLogger("EmailService");
 
-    private readonly host;
-    private readonly port;
-    private readonly secure;
-    private readonly userName;
-    private readonly pwd;
+    private readonly HOST;
+    private readonly PORT;
+    private readonly SECURE;
+    private readonly USER;
+    private readonly PWD;
 
     private sender;
     private receivers;
@@ -33,11 +33,11 @@ export class EmailService {
         if (process.env.NODE_ENV !== 'production') {
             dotenv.config();
         }
-        this.host = process.env.MAIL_SERVER_HOST;
-        this.port = parseInt(process.env.MAIL_SERVER_PORT as string, 10);
-        this.secure = (process.env.MAIL_SERVER_SECURE === "true");
-        this.userName = process.env.MAIL_SERVER_USER;
-        this.pwd = process.env.MAIL_SERVER_PW;
+        this.HOST = process.env.MAIL_SERVER_HOST;
+        this.PORT = parseInt(process.env.MAIL_SERVER_PORT as string, 10);
+        this.SECURE = (process.env.MAIL_SERVER_SECURE === "true");
+        this.USER = process.env.MAIL_SERVER_USER;
+        this.PWD = process.env.MAIL_SERVER_PWD;
         this.generateTransporter();
     }
 
@@ -56,12 +56,12 @@ export class EmailService {
 
     private generateTransporter() {
         this.transporter = nodemailer.createTransport({
-            host: this.host,
-            port: this.port,
-            secure: this.secure,
+            host: this.HOST,
+            port: this.PORT,
+            secure: this.SECURE,
             auth: {
-                user: this.userName,
-                pass: this.pwd
+                user: this.USER,
+                pass: this.PWD
             }
         });
     }

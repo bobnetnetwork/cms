@@ -13,7 +13,7 @@ ENV MAIL_SERVER_HOST=localhost
 ENV MAIL_SERVER_PORT=587
 ENV MAIL_SERVER_SECURE=false
 ENV MAIL_SERVER_USER=cms_dev
-ENV MAIL_SERVER_PW=Almafa1.
+ENV MAIL_SERVER_PWD=Almafa1.
 
 # Set the timezone in docker
 RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /etc/timezone
