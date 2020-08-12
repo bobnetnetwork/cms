@@ -13,6 +13,8 @@ const PORT: number = parseInt(process.env.DB_SERVER_PORT as string, 10);
 const ADDRESS: string = process.env.DB_SERVER_ADDRESS;
 const DATABASE: string = process.env.DB_SERVER_DATABASE;
 
+const log = Logger.getLogger("dbService");
+
 let connection;
 const dbUri = "mongodb://" + USER + ":" + PWD + "@" + ADDRESS + ":" + PORT + "/" + DATABASE;
 
@@ -25,10 +27,10 @@ export const connectToDB = () => {
     });
     connection = mongoose.connection;
     connection.once("open", async () => {
-        Logger.info("Connected to database");
+        log.info("Connected to database");
     });
     connection.on("error", () => {
-        Logger.error("Error connecting to database");
+        log.error("Error connecting to database");
     });
 }
 

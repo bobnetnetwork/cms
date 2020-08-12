@@ -5,6 +5,8 @@ import * as Logger from "../logService.js";
 import {Article} from "../../model/content/article.js";
 import {createSlug} from "../slugifyService.js";
 
+const log = Logger.getLogger("articlesServices");
+
 /**
  * Service Methods
  */
@@ -16,7 +18,7 @@ export const findAll = async (callback) => {
                 "message": "Authentication failed or Article not found.",
                 "error": err,
             }
-            Logger.error(err);
+            log.error(err);
             callback(result);
         } else {
             const result = {
@@ -24,7 +26,7 @@ export const findAll = async (callback) => {
                 "message": "Successful, Article Found!",
                 "article": articles,
             }
-            Logger.info("Successful, Article Found!");
+            log.info("Successful, Article Found!");
             callback(result);
         }
     });
@@ -40,7 +42,7 @@ export const findBySlug = async (Slug, callback) => {
                 "message": "Authentication failed or Article not found.",
                 "error": err,
             }
-            Logger.error(err);
+            log.error(err);
             callback(result);
         } else {
             if (!article) {
@@ -49,7 +51,7 @@ export const findBySlug = async (Slug, callback) => {
                     "message": "Article Not found in database!",
                     "error": err,
                 }
-                Logger.error(err);
+                log.error(err);
                 callback(result);
             } else {
                 const result = {
@@ -57,7 +59,7 @@ export const findBySlug = async (Slug, callback) => {
                     "message": "Successful, Article Found!",
                     "article": article,
                 }
-                Logger.info("Successful, Article Found!");
+                log.info("Successful, Article Found!");
                 callback(result);
             }
         }
@@ -67,7 +69,7 @@ export const findBySlug = async (Slug, callback) => {
 const isUnique = async (data, callback) => {
     Article.findOne({"slug": data.slug}, (err, user) => {
         if(err){
-            Logger.debug(err.message);
+            log.debug(err.message);
             callback(false);
         } else if(!user){
             callback(true);
@@ -119,7 +121,7 @@ export const create = async (data, callback) => {
                                 "message": "Authentication failed or Article creation failed.",
                                 "error": err,
                             }
-                            Logger.error(err);
+                            log.error(err);
                             callback(rstArticle1);
                         } else {
                             const rstArticle2 = {
@@ -127,7 +129,7 @@ export const create = async (data, callback) => {
                                 "message": "Article creation Succesful!",
                                 "article": newArticle,
                             }
-                            Logger.info("Article creation Succesful!");
+                            log.info("Article creation Succesful!");
                             callback(rstArticle2);
                         }
                     });
@@ -136,7 +138,7 @@ export const create = async (data, callback) => {
                         "success": false,
                         "message": "Not contains all required data!",
                     }
-                    Logger.info("Not contains all required data!");
+                    log.info("Not contains all required data!");
                     callback(rs2);
                 }
             });
@@ -145,7 +147,7 @@ export const create = async (data, callback) => {
                 "success": false,
                 "message": "Article is already exists!",
             }
-            Logger.info("Article is already exists!");
+            log.info("Article is already exists!");
             callback(rs);
         }
     });

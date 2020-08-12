@@ -1,6 +1,8 @@
 import {NextFunction, Request, Response} from "express";
 import * as Logger from "../service/logService.js";
 
+const log = Logger.getLogger("notFoundMiddleware");
+
 export const notFoundHandler = (
     request: Request,
     response: Response,
@@ -8,7 +10,7 @@ export const notFoundHandler = (
 ) => {
 
     const message = "Resource not found";
-    Logger.error(message);
+    log.error(message);
 
     response.status(404).send(message);
 };

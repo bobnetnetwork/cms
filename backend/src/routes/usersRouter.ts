@@ -4,7 +4,7 @@
 
 import express, {Request, Response} from "express";
 import mongoose from "mongoose";
-import * as UserService from "../service/user/users.service.js";
+import * as UserService from "../service/user/usersService.js";
 import * as Logger from "../service/logService.js";
 import {auth} from "./auth.js";
 import passport from "passport";
@@ -16,6 +16,7 @@ const Users = mongoose.model("Users");
  */
 
 export const usersRouter = express.Router();
+const log = Logger.getLogger("usersRouter");
 
 /**
  * Controller Definitions
@@ -61,7 +62,7 @@ usersRouter.post("/", async (req: Request, res: Response) => {
         });
     } catch (e) {
         res.status(404).send(e.message);
-        Logger.error(e.message);
+        log.error(e.message);
     }
 });
 
@@ -74,7 +75,7 @@ usersRouter.put("/", async (req: Request, res: Response) => {
         });
     } catch (e) {
         res.status(500).send(e.message);
-        Logger.error(e.message);
+        log.error(e.message);
     }
 });
 
@@ -87,7 +88,7 @@ usersRouter.delete("/:id", async (req: Request, res: Response) => {
         });
     } catch (e) {
         res.status(500).send(e.message);
-        Logger.error(e.message);
+        log.error(e.message);
     }
 });
 

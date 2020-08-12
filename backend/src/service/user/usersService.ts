@@ -4,6 +4,8 @@
 import * as Logger from "../logService.js";
 import {Users} from "../../model/user/users.js";
 
+const log = Logger.getLogger("usersService");
+
 /**
  * Service Methods
  */
@@ -15,7 +17,7 @@ export const findAll = async (callback) => {
                 "message": "Authentication failed or User not found.",
                 "error": err,
             }
-            Logger.error(err);
+            log.error(err);
             callback(result);
         } else {
             const result = {
@@ -23,7 +25,7 @@ export const findAll = async (callback) => {
                 "message": "Successful, User Found!",
                 "user": users,
             }
-            Logger.info("Successful, User Found!");
+            log.info("Successful, User Found!");
             callback(result);
         }
     });
@@ -39,7 +41,7 @@ export const findByUserName = async (UserName, callback) => {
                 "message": "Authentication failed or User not found.",
                 "error": err,
             }
-            Logger.error(err);
+            log.error(err);
             callback(result);
         } else {
             if (!user) {
@@ -48,7 +50,7 @@ export const findByUserName = async (UserName, callback) => {
                     "message": "User Not found in database!",
                     "error": err,
                 }
-                Logger.error(err);
+                log.error(err);
                 callback(result);
             } else {
                 const result = {
@@ -56,7 +58,7 @@ export const findByUserName = async (UserName, callback) => {
                     "message": "Successful, User Found!",
                     "user": user,
                 }
-                Logger.info("Successful, User Found!");
+                log.info("Successful, User Found!");
                 callback(result);
             }
         }
@@ -66,7 +68,7 @@ export const findByUserName = async (UserName, callback) => {
 const isUnique = async (data, callback) => {
     Users.findOne({"userName": data.userName}, {"email": data.email}, (err, user) => {
         if(err){
-            Logger.debug(err.message);
+            log.debug(err.message);
             callback(false);
         } else if(!user){
             callback(true);
@@ -139,7 +141,7 @@ export const create = async (data, callback) => {
                                 "message": "Authentication failed or User creation failed.",
                                 "error": err,
                             }
-                            Logger.error(err);
+                            log.error(err);
                             callback(rstUser1);
                         } else {
                             const rstUser2 = {
@@ -147,7 +149,7 @@ export const create = async (data, callback) => {
                                 "message": "User Register Succesful!",
                                 "user": newUser,
                             }
-                            Logger.info("User Register Succesful!");
+                            log.info("User Register Succesful!");
                             callback(rstUser2);
                         }
                     });
@@ -156,7 +158,7 @@ export const create = async (data, callback) => {
                         "success": false,
                         "message": "Not contains all required data!",
                     }
-                    Logger.info("Not contains all required data!");
+                    log.info("Not contains all required data!");
                     callback(rs2);
                 }
             })
@@ -165,7 +167,7 @@ export const create = async (data, callback) => {
                 "success": false,
                 "message": "User is already exists!",
             }
-            Logger.info("User is already exists!");
+            log.info("User is already exists!");
             callback(rs);
         }
     })
@@ -181,7 +183,7 @@ export const update = async (data, callback) => {
                 "message": "User Update Error!",
                 "error": err,
             }
-            Logger.error(err);
+            log.error(err);
             callback(result);
         } else {
             if (data.firstName !== undefined) user.firstName = data.firstName;
@@ -201,7 +203,7 @@ export const update = async (data, callback) => {
                         "message": "User Update Error!",
                         "error": err1,
                     }
-                    Logger.error(err1);
+                    log.error(err1);
                     callback(result);
                 } else {
                     const result = {
@@ -209,7 +211,7 @@ export const update = async (data, callback) => {
                         "message": "User Update Succesful!",
                         "user": updatedUser,
                     }
-                    Logger.info("User Update Succesful!");
+                    log.info("User Update Succesful!");
                     callback(result);
                 }
             });
@@ -227,7 +229,7 @@ export const deleteById = async (Id, callback) => {
                 "message": "User notfound!",
                 "error": err,
             }
-            Logger.error(err);
+            log.error(err);
             callback(result);
         } else {
             user.delete((err1) => {
@@ -237,14 +239,14 @@ export const deleteById = async (Id, callback) => {
                         "message": "User Delete Failed!",
                         "error": err,
                     }
-                    Logger.error(err);
+                    log.error(err);
                     callback(result);
                 } else {
                     const result = {
                         "success": false,
                         "message": "User Delete Succesful!",
                     }
-                    Logger.info("User Delete Succesful!");
+                    log.info("User Delete Succesful!");
                     callback(result);
                 }
             });

@@ -10,6 +10,8 @@ import os from "os";
  */
 export const healthCheckRouter = express.Router();
 
+const log = Logger.getLogger("healthCheckRouter");
+
 /**
  * Controller Definitions
  */
@@ -44,7 +46,7 @@ healthCheckRouter.get("/", async (req: Request, res: Response, _next: NextFuncti
     try {
         res.status(200).json(healthCheck);
     } catch (e) {
-        Logger.error(e.message);
+        log.error(e.message);
         healthCheck.message = e;
         res.status(503).json(healthCheck);
     }

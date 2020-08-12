@@ -4,22 +4,24 @@
 
 import cors from "cors";
 import helmet from "helmet";
-import {usersRouter} from "./routes/users.router.js";
-import {articlesRouter} from "./routes/articles.router.js";
-import {healthCheckRouter} from "./routes/healthCheck.router.js";
-import {errorHandler} from "./middleware/error.middleware.js";
-import {notFoundHandler} from "./middleware/notFound.middleware.js";
+import {usersRouter} from "./routes/usersRouter.js";
+import {articlesRouter} from "./routes/articlesRouter.js";
+import {healthCheckRouter} from "./routes/healthCheckRouter.js";
+import {errorHandler} from "./middleware/errorMiddleware.js";
+import {notFoundHandler} from "./middleware/notFoundMiddleware.js";
 import * as server from "./service/serverService.js";
 import express, {Request, Response} from "express";
 import session from "express-session";
 import "./config/passport.js";
 import * as Logger from "./service/logService.js";
 
-Logger.info("Starting Application...");
-Logger.info("App version: " + process.env.npm_package_version);
-Logger.info(process.env.npm_package_description);
-Logger.info("Home page: " + process.env.npm_package_homepage);
-Logger.info("Issues Management: " + process.env.npm_package_bugs_url);
+const log = Logger.getLogger("server");
+
+log.info("Starting Application...");
+log.info("App version: " + process.env.npm_package_version);
+log.info(process.env.npm_package_description);
+log.info("Home page: " + process.env.npm_package_homepage);
+log.info("Issues Management: " + process.env.npm_package_bugs_url);
 
 /**
  * App Variables

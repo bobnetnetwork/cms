@@ -3,7 +3,7 @@
  */
 
 import express, {Request, Response} from "express";
-import * as ArticleService from "../service/content/articles.service.js";
+import * as ArticleService from "../service/content/articlesService.js";
 import * as Logger from "../service/logService.js";
 
 /**
@@ -11,6 +11,8 @@ import * as Logger from "../service/logService.js";
  */
 
 export const articlesRouter = express.Router();
+
+const log = Logger.getLogger("articlesRouter");
 
 /**
  * Controller Definitions
@@ -25,7 +27,7 @@ articlesRouter.get("/", async (req: Request, res: Response) => {
         });
     } catch (e) {
         res.status(404).send(e.message);
-        Logger.error(e.message);
+        log.error(e.message);
     }
 });
 
@@ -50,7 +52,7 @@ articlesRouter.post("/", async (req: Request, res: Response) => {
         });
     } catch (e) {
         res.status(404).send(e.message);
-        Logger.error(e.message);
+        log.error(e.message);
     }
 });
 
@@ -63,7 +65,7 @@ articlesRouter.put("/", async (req: Request, res: Response) => {
         });
     } catch (e) {
         res.status(500).send(e.message);
-        Logger.error(e.message);
+        log.error(e.message);
     }
 });*/
 
@@ -76,6 +78,6 @@ articlesRouter.delete("/:slug", async (req: Request, res: Response) => {
         });
     } catch (e) {
         res.status(500).send(e.message);
-        Logger.error(e.message);
+        log.error(e.message);
     }
 });*/
