@@ -4,6 +4,7 @@ import * as Logger from "../service/logService.js";
 import * as fs from "fs";
 import dotenv from "dotenv";
 import * as database from "./dbService.js"
+import os from "os";
 
 if (process.env.NODE_ENV !== 'production') {
     dotenv.config();
@@ -20,17 +21,17 @@ export const startServer = (app) => {
 
         const httpsServer = HTTPS.createServer(credentials, app);
         httpsServer.listen(PORT);
-        Logger.info("Server started at https://localhost:" + PORT);
+        showConnectionAddresses("https");
     } else {
         const httpServer = HTTP.createServer(app);
         httpServer.listen(PORT);
-        Logger.info("Server started at http://localhost:" + PORT);
+        showConnectionAddresses("http");
     }
     Logger.info("pid is " + process.pid);
     connectToDB();
 }
 
-function  connectToDB() {
+function connectToDB() {
     database.connectToDB()
 }
 
@@ -44,4 +45,20 @@ export const shutDown = (msg) => {
     closeDBConnections();
     Logger.info("Closing http(s) server.")
     process.exit(0);
+}
+
+function showConnectionAddresses(serverType) {
+    const networkInterfaces = os.networkInterfaces();
+    Logger.info("Server started at:");
+    Logger.info(serverType + "://localhost:" + PORT);
+    Logger.info(serverType + "://" + os.hostname() + ":" + PORT);
+
+    for (const name of Object.keys(networkInterfaces)) {
+        for (const net of networkInterfaces[name]) {
+            // skip over non-ipv4 and internal (i.e. 127.0.0.1) addresses
+            if (net.family === 'IPv4' && !net.internal) {
+                Logger.info(serverType + "://" + net.address + ":" + PORT);
+            }
+        }
+    }
 }
