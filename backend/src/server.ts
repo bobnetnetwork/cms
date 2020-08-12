@@ -13,6 +13,10 @@ import * as server from "./service/serverService.js";
 import express, {Request, Response} from "express";
 import session from "express-session";
 import "./config/passport.js";
+import * as Logger from "./service/logService.js";
+
+Logger.info("Starting Application...");
+Logger.info("App version: " + process.env.npm_package_version);
 
 /**
  * App Variables
