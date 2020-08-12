@@ -17,6 +17,9 @@ import * as Logger from "./service/logService.js";
 
 Logger.info("Starting Application...");
 Logger.info("App version: " + process.env.npm_package_version);
+Logger.info(process.env.npm_package_description);
+Logger.info("Home page: " + process.env.npm_package_homepage);
+Logger.info("Issues Management: " + process.env.npm_package_bugs_url);
 
 /**
  * App Variables
