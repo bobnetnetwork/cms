@@ -3,12 +3,12 @@ import dotenv from "dotenv";
 import {LogService} from "./LogService.js";
 
 export class DBService {
-    private USER: string = process.env.DB_SERVER_USER;
-    private PWD: string = process.env.DB_SERVER_PWD
-    private TYPE: string = process.env.DB_SERVER_TYPE;
-    private PORT: number = parseInt(process.env.DB_SERVER_PORT as string, 10);
-    private ADDRESS: string = process.env.DB_SERVER_ADDRESS;
-    private DATABASE: string = process.env.DB_SERVER_DATABASE;
+    private readonly USER: string;
+    private readonly PWD: string;
+    private readonly TYPE: string;
+    private readonly PORT: number;
+    private readonly ADDRESS: string;
+    private readonly DATABASE: string;
 
     private log = new LogService().getLogger("dbService");
 
@@ -19,7 +19,17 @@ export class DBService {
          if (process.env.NODE_ENV !== 'production') {
              dotenv.config();
          }
-         this.dbUri = "mongodb://" + this.USER + ":" + this.PWD + "@" + this.ADDRESS + ":" + this.PORT + "/" + this.DATABASE;
+         this.USER = process.env.DB_SERVER_USER;
+         this.PWD = process.env.DB_SERVER_PWD;
+         this.TYPE = process.env.DB_SERVER_TYPE;
+         this.PORT = parseInt(process.env.DB_SERVER_PORT as string, 10);
+         this.ADDRESS = process.env.DB_SERVER_ADDRESS;
+         this.DATABASE = process.env.DB_SERVER_DATABASE;
+         this.dbUri = this.getDBUri();
+    }
+
+    private getDBUri(){
+        return "mongodb://" + this.USER + ":" + this.PWD + "@" + this.ADDRESS + ":" + this.PORT + "/" + this.DATABASE;
     }
 
     public connectToDB() {
