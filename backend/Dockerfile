@@ -13,30 +13,36 @@ ENV NODE_ENV=production
 # Set the timezone in docker
 RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /etc/timezone
 
-# Create Directory for the Container
+# Create app directory
 WORKDIR /usr/src/app
-# Only copy the package.json file to work directory
-COPY src/package*.json ./
 
-#Install Typescritp
+# Bundle app source
+COPY src/. /usr/src/app
+
+#Install Typescritp for conversion
 RUN npm install -g typescript
 
 #Add App user
 RUN adduser --disabled-password backend
 
-# Copy all other source code to work directory
-COPY src/. /usr/src/app
-
 RUN chown -R backend:backend /usr/src/app
+
 USER backend
 
-# Install all Packages
-RUN npm install
+# Install production only dependencies
+RUN npm install --only=production
 
-# TypeScript
+# Convert typescript source to javascript
 RUN npm run build
+
+USER root
+
+# Remove typescript
+RUN npm uninstall -g typescript
+
+USER backend
 
 EXPOSE $APP_PORT
 
 # Start
-CMD [ "node", "dist/server.js" ]
+CMD [ "npm", "start" ]
