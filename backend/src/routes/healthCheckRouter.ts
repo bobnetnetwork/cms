@@ -2,15 +2,15 @@
  * Required External Modules and Interfaces
  */
 import express, {NextFunction, Request, Response} from "express";
-import * as Logger from "../service/logService.js";
 import os from "os";
+import {LogService} from "../service/logService.js";
 
 /**
  * Router Definition
  */
 export const healthCheckRouter = express.Router();
 
-const log = Logger.getLogger("healthCheckRouter");
+const log = new LogService().getLogger("healthCheckRouter");
 
 /**
  * Controller Definitions

@@ -4,7 +4,7 @@
 
 import express, {Request, Response} from "express";
 import * as ArticleService from "../service/content/articlesService.js";
-import * as Logger from "../service/logService.js";
+import {LogService} from "../service/logService.js";
 
 /**
  * Router Definition
@@ -12,7 +12,7 @@ import * as Logger from "../service/logService.js";
 
 export const articlesRouter = express.Router();
 
-const log = Logger.getLogger("articlesRouter");
+const log = new LogService().getLogger("articlesRouter");
 
 /**
  * Controller Definitions

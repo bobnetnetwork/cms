@@ -1,7 +1,7 @@
 import {NextFunction, Request, Response} from "express";
-import * as Logger from "../service/logService.js";
+import {LogService} from "../service/logService.js";
 
-const log = Logger.getLogger("notFoundMiddleware");
+const log = new LogService().getLogger("notFoundMiddleware");
 
 export const notFoundHandler = (
     request: Request,

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import * as Logger from "../service/logService.js";
 import dotenv from "dotenv";
+import {LogService} from "../service/logService.js";
 
 if (process.env.NODE_ENV !== 'production') {
     dotenv.config();
@@ -13,7 +13,7 @@ const PORT: number = parseInt(process.env.DB_SERVER_PORT as string, 10);
 const ADDRESS: string = process.env.DB_SERVER_ADDRESS;
 const DATABASE: string = process.env.DB_SERVER_DATABASE;
 
-const log = Logger.getLogger("dbService");
+const log = new LogService().getLogger("dbService");
 
 let connection;
 const dbUri = "mongodb://" + USER + ":" + PWD + "@" + ADDRESS + ":" + PORT + "/" + DATABASE;

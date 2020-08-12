@@ -1,10 +1,10 @@
 /**
  * Data Model Interfaces
  */
-import * as Logger from "../logService.js";
 import {Users} from "../../model/user/users.js";
+import {LogService} from "../logService.js";
 
-const log = Logger.getLogger("usersService");
+const log = new LogService().getLogger("usersService");
 
 /**
  * Service Methods

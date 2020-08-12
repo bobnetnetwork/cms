@@ -1,11 +1,11 @@
 /**
  * Data Model Interfaces
  */
-import * as Logger from "../logService.js";
 import {Article} from "../../model/content/article.js";
 import {createSlug} from "../slugifyService.js";
+import {LogService} from "../logService.js";
 
-const log = Logger.getLogger("articlesServices");
+const log = new LogService().getLogger("articlesServices");
 
 /**
  * Service Methods

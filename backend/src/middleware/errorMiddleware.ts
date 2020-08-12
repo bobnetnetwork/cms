@@ -1,8 +1,8 @@
 import HttpException from "../common/http-exception";
 import {NextFunction, Request, Response} from "express";
-import * as Logger from "../service/logService.js";
+import {LogService} from "../service/logService.js";
 
-const log = Logger.getLogger("errorMiddleware");
+const log = new LogService().getLogger("errorMiddleware");
 
 export const errorHandler = (
     error: HttpException,

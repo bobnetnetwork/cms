@@ -1,8 +1,16 @@
-import log4js from "log4js";
-import {Config} from "../config/config.js";
+import log4js, {Logger} from "log4js";
 
-log4js.configure("./config/loggerConfig.json");
+export class LogService {
 
-export const getLogger = (category?: string) => {
-    return log4js.getLogger(category);
+    constructor(){
+        LogService.setConfigure()
+    }
+
+    private static setConfigure(): void{
+        log4js.configure("./config/loggerConfig.json");
+    }
+
+    public getLogger(category?: string): Logger{
+        return log4js.getLogger(category);
+    }
 }

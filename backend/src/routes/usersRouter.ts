@@ -5,9 +5,9 @@
 import express, {Request, Response} from "express";
 import mongoose from "mongoose";
 import * as UserService from "../service/user/usersService.js";
-import * as Logger from "../service/logService.js";
 import {auth} from "./auth.js";
 import passport from "passport";
+import {LogService} from "../service/logService.js";
 
 const Users = mongoose.model("Users");
 
@@ -16,7 +16,7 @@ const Users = mongoose.model("Users");
  */
 
 export const usersRouter = express.Router();
-const log = Logger.getLogger("usersRouter");
+const log = new LogService().getLogger("usersRouter");
 
 /**
  * Controller Definitions

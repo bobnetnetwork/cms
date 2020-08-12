@@ -1,12 +1,12 @@
 import * as HTTPS from "https";
 import * as HTTP from "http";
-import * as Logger from "../service/logService.js";
 import * as fs from "fs";
 import dotenv from "dotenv";
 import * as database from "./dbService.js"
 import os from "os";
+import {LogService} from "../service/logService.js";
 
-const log = Logger.getLogger("serverService");
+const log = new LogService().getLogger("serverService");
 
 if (process.env.NODE_ENV !== 'production') {
     dotenv.config();

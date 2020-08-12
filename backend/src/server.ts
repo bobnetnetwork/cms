@@ -13,9 +13,9 @@ import * as server from "./service/serverService.js";
 import express, {Request, Response} from "express";
 import session from "express-session";
 import "./config/passport.js";
-import * as Logger from "./service/logService.js";
+import {LogService} from "./service/logService.js";
 
-const log = Logger.getLogger("server");
+const log = new LogService().getLogger("server");
 
 log.info("Starting Application...");
 log.info("App version: " + process.env.npm_package_version);
