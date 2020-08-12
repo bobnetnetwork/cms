@@ -4,7 +4,7 @@
 
 import express, {Request, Response} from "express";
 import mongoose from "mongoose";
-import * as UserService from "../service/user/usersService.js";
+import {UsersService} from "../service/user/UsersService.js";
 import {auth} from "./auth.js";
 import passport from "passport";
 import {LogService} from "../service/LogService.js";
@@ -18,20 +18,22 @@ const Users = mongoose.model("Users");
 export const usersRouter = express.Router();
 const log = new LogService().getLogger("usersRouter");
 
+const userService = new UsersService();
+
 /**
  * Controller Definitions
  */
 
 // GET users/
 
-usersRouter.get("/", auth.required, async (req: Request, res: Response) => {
+usersRouter.get("/", async (req: Request, res: Response) => {
     await Users.findById(52)
         .then((user) => {
             if(!user) {
                 res.status(400);
             }
     try {
-        UserService.findAll((result) => {
+        userService.findAll((result) => {
             res.status(200).json(result);
         });
     } catch (e) {
@@ -45,7 +47,7 @@ usersRouter.get("/", auth.required, async (req: Request, res: Response) => {
 
 usersRouter.get("/:username", async (req: Request, res: Response) => {
     try {
-        await UserService.findByUserName(req.params.username, (result) => {
+        await userService.findByUserName(req.params.username, (result) => {
             res.status(200).json(result);
         });
     } catch (e) {
@@ -57,7 +59,7 @@ usersRouter.get("/:username", async (req: Request, res: Response) => {
 
 usersRouter.post("/", async (req: Request, res: Response) => {
     try {
-        await UserService.create(req.body, (result) => {
+        await userService.create(req.body, (result) => {
             res.status(201).json(result);
         });
     } catch (e) {
@@ -70,7 +72,7 @@ usersRouter.post("/", async (req: Request, res: Response) => {
 
 usersRouter.put("/", async (req: Request, res: Response) => {
     try {
-        await UserService.update(req.body, (result) => {
+        await userService.update(req.body, (result) => {
             res.status(200).json(result);
         });
     } catch (e) {
@@ -83,7 +85,7 @@ usersRouter.put("/", async (req: Request, res: Response) => {
 
 usersRouter.delete("/:id", async (req: Request, res: Response) => {
     try {
-        await UserService.deleteById(req.params.id, (result) => {
+        await userService.deleteById(req.params.id, (result) => {
             res.status(200).json(result);
         });
     } catch (e) {
