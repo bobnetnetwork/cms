@@ -3,7 +3,7 @@
  */
 import express, {NextFunction, Request, Response} from "express";
 import os from "os";
-import {LogService} from "../service/logService.js";
+import {LogService} from "../service/LogService.js";
 
 /**
  * Router Definition

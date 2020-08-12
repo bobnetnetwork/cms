@@ -4,7 +4,7 @@
 
 import express, {Request, Response} from "express";
 import * as ArticleService from "../service/content/articlesService.js";
-import {LogService} from "../service/logService.js";
+import {LogService} from "../service/LogService.js";
 
 /**
  * Router Definition

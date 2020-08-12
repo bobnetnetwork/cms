@@ -2,7 +2,7 @@
  * Data Model Interfaces
  */
 import {Users} from "../../model/user/users.js";
-import {LogService} from "../logService.js";
+import {LogService} from "../LogService.js";
 
 const log = new LogService().getLogger("usersService");
 

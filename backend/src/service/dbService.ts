@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import {LogService} from "../service/logService.js";
+import {LogService} from "./LogService.js";
 
 if (process.env.NODE_ENV !== 'production') {
     dotenv.config();

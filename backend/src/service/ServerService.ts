@@ -4,7 +4,7 @@ import * as fs from "fs";
 import dotenv from "dotenv";
 import * as database from "./dbService.js"
 import os from "os";
-import {LogService} from "../service/logService.js";
+import {LogService} from "./LogService";
 
 export class ServerService {
 

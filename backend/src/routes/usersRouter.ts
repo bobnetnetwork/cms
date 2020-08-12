@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 import * as UserService from "../service/user/usersService.js";
 import {auth} from "./auth.js";
 import passport from "passport";
-import {LogService} from "../service/logService.js";
+import {LogService} from "../service/LogService.js";
 
 const Users = mongoose.model("Users");
 

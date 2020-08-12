@@ -3,7 +3,7 @@
  */
 import {Article} from "../../model/content/article.js";
 import {createSlug} from "../slugifyService.js";
-import {LogService} from "../logService.js";
+import {LogService} from "../LogService.js";
 
 const log = new LogService().getLogger("articlesServices");
 
