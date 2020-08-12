@@ -3,7 +3,7 @@
  */
 
 import express, {Request, Response} from "express";
-import * as ArticleService from "../service/content/articlesService.js";
+import {ArticlesService} from "../service/content/ArticlesService.js";
 import {LogService} from "../service/LogService.js";
 
 /**
@@ -14,6 +14,8 @@ export const articlesRouter = express.Router();
 
 const log = new LogService().getLogger("articlesRouter");
 
+const articlesService = new ArticlesService();
+
 /**
  * Controller Definitions
  */
@@ -22,7 +24,7 @@ const log = new LogService().getLogger("articlesRouter");
 
 articlesRouter.get("/", async (req: Request, res: Response) => {
     try {
-        await ArticleService.findAll((result) => {
+        await articlesService.findAll((result) => {
             res.status(200).json(result);
         });
     } catch (e) {
@@ -35,7 +37,7 @@ articlesRouter.get("/", async (req: Request, res: Response) => {
 
 articlesRouter.get("/:slug", async (req: Request, res: Response) => {
     try {
-        await ArticleService.findBySlug(req.params.slug, (result) => {
+        await articlesService.findBySlug(req.params.slug, (result) => {
             res.status(200).json(result);
         });
     } catch (e) {
@@ -47,7 +49,7 @@ articlesRouter.get("/:slug", async (req: Request, res: Response) => {
 
 articlesRouter.post("/", async (req: Request, res: Response) => {
     try {
-        await ArticleService.create(req.body, (result) => {
+        await articlesService.create(req.body, (result) => {
             res.status(201).json(result);
         });
     } catch (e) {
@@ -60,7 +62,7 @@ articlesRouter.post("/", async (req: Request, res: Response) => {
 /*
 articlesRouter.put("/", async (req: Request, res: Response) => {
     try {
-        await ArticleService.update(req.body, (result) => {
+        await articlesService.update(req.body, (result) => {
             res.status(200).json(result);
         });
     } catch (e) {
@@ -73,7 +75,7 @@ articlesRouter.put("/", async (req: Request, res: Response) => {
 /*
 articlesRouter.delete("/:slug", async (req: Request, res: Response) => {
     try {
-        await ArticleService.deleteBySlug(req.params.slug, (result) => {
+        await articlesService.deleteBySlug(req.params.slug, (result) => {
             res.status(200).json(result);
         });
     } catch (e) {
