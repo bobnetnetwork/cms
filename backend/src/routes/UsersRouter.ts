@@ -40,7 +40,7 @@ export class UsersRouter {
      */
 
     // GET users/
-    public getUsers() {
+    private getUsers() {
         this.usersRouter.get("/", async (req: Request, res: Response) => {
             await this.Users.findById(52)
                 .then((user) => {
@@ -59,7 +59,7 @@ export class UsersRouter {
     }
 
     // GET users/:username
-    public getUser() {
+    private getUser() {
         this.usersRouter.get("/:username", async (req: Request, res: Response) => {
             try {
                 await this.userService.findByUserName(req.params.username, (result) => {
@@ -72,7 +72,7 @@ export class UsersRouter {
     }
 
     // POST users/
-    public createUser() {
+    private createUser() {
         this.usersRouter.post("/", async (req: Request, res: Response) => {
             try {
                 await this.userService.create(req.body, (result) => {
@@ -86,7 +86,7 @@ export class UsersRouter {
     }
 
     // PUT users/
-    public updateUser(){
+    private updateUser(){
         this.usersRouter.put("/", async (req: Request, res: Response) => {
             try {
                 await this.userService.update(req.body, (result) => {
@@ -100,7 +100,7 @@ export class UsersRouter {
     }
 
     // DELETE users/:id
-    public deleteUser(){
+    private deleteUser(){
         this.usersRouter.delete("/:id", async (req: Request, res: Response) => {
             try {
                 await this.userService.deleteById(req.params.id, (result) => {
@@ -114,7 +114,7 @@ export class UsersRouter {
     }
 
     // POST login route (optional, everyone has access)
-    public login(){
+    private login(){
         this.usersRouter.post('/login', auth.optional, (req, res, next) => {
             const { body: { user } } = req;
 
@@ -152,7 +152,7 @@ export class UsersRouter {
     }
 
     // GET current route (required, only authenticated users have access)
-    public getCurrent(){
+    private getCurrent(){
         this.usersRouter.get('/current', auth.required, (req, res, next) => {
             // const { payload: { id } } = req;
 

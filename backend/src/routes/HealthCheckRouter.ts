@@ -24,7 +24,7 @@ export class HealthCheckRouter {
     /**
      * Controller Definitions
      */
-    public healthCheckGet(){
+    private healthCheckGet(){
         this.healthCheckRouter.get("/", async (req: Request, res: Response, _next: NextFunction) => {
             const processData = {
                 uptime: process.uptime(),
