@@ -1,17 +1,12 @@
 /**
  * Data Model Interfaces
  */
-
-import * as database from "../dbService.js";
 import * as Logger from "../logService.js";
 import {Users} from "../../model/user/users.js";
-
-database.connectToDB();
 
 /**
  * Service Methods
  */
-
 export const findAll = async (callback) => {
     return Users.find({}, (err, users) => {
         if (err) {

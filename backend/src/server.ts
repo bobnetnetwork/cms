@@ -9,6 +9,7 @@ import {articlesRouter} from "./routes/articles.router.js";
 import {errorHandler} from "./middleware/error.middleware.js";
 import {notFoundHandler} from "./middleware/notFound.middleware.js";
 import * as server from "./service/serverService.js";
+import * as Logger from "./service/logService.js";
 import express, {Request, Response} from "express";
 import session from "express-session";
 import "./config/passport.js";
@@ -45,3 +46,15 @@ router.get('/', async (req: Request, res: Response) => {
 })
 
 server.startServer(app);
+
+process.on('SIGTERM', () => {
+    server.shutDown("SIGTERM signal received.");
+});
+
+process.on('SIGINT', () =>{
+    server.shutDown("SIGINT signal received.");
+});
+
+process.on('SIGQUIT', () => {
+    server.shutDown("SIGQUIT signal received.");
+});

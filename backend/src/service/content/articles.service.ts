@@ -1,17 +1,13 @@
 /**
  * Data Model Interfaces
  */
-
-import * as database from "../dbService.js";
 import * as Logger from "../logService.js";
 import {Article} from "../../model/content/article.js";
 import {createSlug} from "../slugifyService.js";
-database.connectToDB();
 
 /**
  * Service Methods
  */
-
 export const findAll = async (callback) => {
     return Article.find({}, (err, articles) => {
         if (err) {

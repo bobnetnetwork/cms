@@ -3,6 +3,7 @@ import * as HTTP from "http";
 import * as Logger from "../service/logService.js";
 import * as fs from "fs";
 import dotenv from "dotenv";
+import * as database from "./dbService.js"
 
 if (process.env.NODE_ENV !== 'production') {
     dotenv.config();
@@ -25,8 +26,22 @@ export const startServer = (app) => {
         httpServer.listen(PORT);
         Logger.info("Server started at http://localhost:" + PORT);
     }
+    Logger.info("pid is " + process.pid);
+    connectToDB();
 }
 
-export const shutDown = () => {
-    process.exit();
+function  connectToDB() {
+    database.connectToDB()
+}
+
+function closeDBConnections() {
+    database.disconnect();
+}
+
+export const shutDown = (msg) => {
+    Logger.info(msg);
+    Logger.info("Closing DB connection(s).")
+    closeDBConnections();
+    Logger.info("Closing http(s) server.")
+    process.exit(0);
 }
