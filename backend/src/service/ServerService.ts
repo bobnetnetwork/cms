@@ -5,21 +5,22 @@ import dotenv from "dotenv";
 import os from "os";
 import {LogService} from "./LogService.js";
 import {DBService} from "./DBService.js";
+import { Express } from "express-serve-static-core";
 
 export class ServerService {
 
     private log = new LogService().getLogger("serverService");
-    private readonly PORT;
+    private readonly PORT: number;
     private database = new DBService();
 
     constructor() {
         if (process.env.NODE_ENV !== 'production') {
             dotenv.config();
         }
-        this.PORT = parseInt(process.env.APP_PORT as string, 10);
+        this.PORT = parseInt(process.env.APP_PORT, 10);
     }
 
-    public startServer(app) {
+    public startServer(app: Express) {
         if (process.env.HTTPS_ENABLED === "true") {
             const privateKey = fs.readFileSync("sslcert/server.key", "utf8");
             const certificate = fs.readFileSync("sslcert/server.crt", "utf8");
@@ -38,7 +39,7 @@ export class ServerService {
         this.connectToDB();
     }
 
-    public shutDown(msg) {
+    public shutDown(msg: string) {
         this.log.info(msg);
         this.log.info("Closing DB connection(s).")
         this.closeDBConnections();
@@ -54,7 +55,7 @@ export class ServerService {
         this.database.disconnect();
     }
 
-    private showConnectionAddresses(serverType) {
+    private showConnectionAddresses(serverType: string) {
         const networkInterfaces = os.networkInterfaces();
         this.log.info("Server started at:");
         this.log.info(serverType + "://localhost:" + this.PORT);

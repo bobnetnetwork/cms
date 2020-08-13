@@ -11,8 +11,8 @@ export class ArticlesService {
     /**
      * Service Methods
      */
-    public async findAll(callback) {
-        return Article.find({}, (err, articles) => {
+    public async findAll(callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; article?: any; }): void; }) {
+        return Article.find({}, (err: any, articles: any) => {
             if (err) {
                 const result = {
                     "success": false,
@@ -33,10 +33,10 @@ export class ArticlesService {
         });
     }
 
-    public async findBySlug(Slug, callback) {
+    public async findBySlug(Slug: string, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; article?: any; }): void; }) {
         return Article.findOne({
             slug: Slug
-        }, (err, article) => {
+        }, (err: any, article: any) => {
             if(err) {
                 const result = {
                     "success": false,
@@ -67,8 +67,8 @@ export class ArticlesService {
         });
     }
 
-    private async isUnique (data, callback) {
-        Article.findOne({"slug": data.slug}, (err, user) => {
+    private async isUnique (data: { slug: any; }, callback: { (result: any): void; (arg0: boolean): void; }) {
+        Article.findOne({"slug": data.slug}, (err: { message: any; }, user: any) => {
             if(err){
                 this.log.debug(err.message);
                 callback(false);
@@ -80,13 +80,13 @@ export class ArticlesService {
         });
     }
 
-    private static async isContainAllRequiredData (data, callback) {
+    private static async isContainAllRequiredData (data: { title: any; content: any; }, callback: { (rst: any): void; (arg0: boolean): void; }) {
         let result: boolean;
         result = (data.title && data.content);
         callback(result);
     }
 
-    private static createArticle(data) {
+    private static createArticle(data: { title: string; headline: any; connect: any; featuredImage: any; author: any; addedAt: any; tags: any; categories: any; }) {
         const article = new Article();
         const slugify = new SlugifyService();
 
@@ -109,14 +109,14 @@ export class ArticlesService {
         return article;
     }
 
-    public async create(data, callback) {
-        await  this.isUnique(data, (result) => {
+    public async create(data: any, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; article?: any; }): void; }) {
+        await  this.isUnique(data, (result: any) => {
             if(result) {
-                ArticlesService.isContainAllRequiredData(data, (rst) => {
+                ArticlesService.isContainAllRequiredData(data, (rst: any) => {
                     if(rst) {
                         const newArticle = ArticlesService.createArticle(data);
 
-                        newArticle.save((err) => {
+                        newArticle.save((err: any) => {
                             if (err) {
                                 const rstArticle1 = {
                                     "success": false,

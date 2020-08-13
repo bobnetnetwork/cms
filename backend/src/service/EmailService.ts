@@ -6,14 +6,14 @@ import {EmailMessage} from "../model/EmailMessage";
 export class EmailService {
     private log = new LogService().getLogger("EmailService");
 
-    private readonly HOST;
-    private readonly PORT;
-    private readonly SECURE;
-    private readonly USER;
-    private readonly PWD;
+    private readonly HOST: string;
+    private readonly PORT: number;
+    private readonly SECURE: boolean;
+    private readonly USER: string;
+    private readonly PWD: string;
 
-    private transporter;
-    private info;
+    private transporter: import("nodemailer/lib/mailer");
+    private info: { messageId: any; };
     private _emailMessage = new EmailMessage();
 
     constructor() {
@@ -21,7 +21,7 @@ export class EmailService {
             dotenv.config();
         }
         this.HOST = process.env.MAIL_SERVER_HOST;
-        this.PORT = parseInt(process.env.MAIL_SERVER_PORT as string, 10);
+        this.PORT = parseInt(process.env.MAIL_SERVER_PORT, 10);
         this.SECURE = (process.env.MAIL_SERVER_SECURE === "true");
         this.USER = process.env.MAIL_SERVER_USER;
         this.PWD = process.env.MAIL_SERVER_PWD;

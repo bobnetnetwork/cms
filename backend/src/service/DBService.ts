@@ -12,8 +12,8 @@ export class DBService {
 
     private log = new LogService().getLogger("dbService");
 
-    private connection;
-    private readonly dbUri;
+    private connection: { once: (arg0: string, arg1: () => Promise<void>) => void; on: (arg0: string, arg1: () => void) => void; };
+    private readonly dbUri: string;
 
     constructor() {
          if (process.env.NODE_ENV !== 'production') {
@@ -22,7 +22,7 @@ export class DBService {
          this.USER = process.env.DB_SERVER_USER;
          this.PWD = process.env.DB_SERVER_PWD;
          this.TYPE = process.env.DB_SERVER_TYPE;
-         this.PORT = parseInt(process.env.DB_SERVER_PORT as string, 10);
+         this.PORT = parseInt(process.env.DB_SERVER_PORT, 10);
          this.ADDRESS = process.env.DB_SERVER_ADDRESS;
          this.DATABASE = process.env.DB_SERVER_DATABASE;
          this.dbUri = this.getDBUri();

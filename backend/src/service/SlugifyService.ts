@@ -2,7 +2,7 @@ import slugify from'slugify'
 import {Config} from "../config/config.js";
 
 export class SlugifyService {
-    private readonly conf;
+    private readonly conf: string | { replacement?: string; remove?: RegExp; lower?: boolean; strict?: boolean; locale?: string; };
 
     constructor() {
         this.conf = {
@@ -14,7 +14,7 @@ export class SlugifyService {
         }
     }
 
-    public createSlug(text) {
+    public createSlug(text: string) {
         return slugify(text, this.conf);
     }
 }

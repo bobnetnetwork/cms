@@ -15,8 +15,8 @@ export class UsersService {
     /**
      * Service Methods
      */
-    public async findAll(callback) {
-        return Users.find({}, (err, users) => {
+    public async findAll(callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; user?: any; }): void; }) {
+        return Users.find({}, (err: any, users: any) => {
             if (err) {
                 const result = {
                     "success": false,
@@ -37,10 +37,10 @@ export class UsersService {
         });
     }
 
-    public async findByUserName (UserName, callback) {
+    public async findByUserName (UserName: string, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; user?: any; }): void; }) {
         return Users.findOne({
             userName: UserName
-        }, (err, user) => {
+        }, (err: any, user: any) => {
             if (err) {
                 const result = {
                     "success": false,
@@ -71,8 +71,8 @@ export class UsersService {
         })
     }
 
-    private async isUnique(data, callback) {
-        Users.findOne({"userName": data.userName}, {"email": data.email}, (err, user) => {
+    private async isUnique(data: { userName: any; email: any; }, callback: { (result: any): void; (arg0: boolean): void; }) {
+        Users.findOne({"userName": data.userName}, {"email": data.email}, (err: { message: any; }, user: any) => {
             if(err){
                 this.log.debug(err.message);
                 callback(false);
@@ -84,13 +84,13 @@ export class UsersService {
         });
     }
 
-    private static async isContainAllRequiredData(data, callback) {
+    private static async isContainAllRequiredData(data: { userName: any; pwd: any; email: any; }, callback: { (rst: any): void; (arg0: boolean): void; }) {
         let result: boolean;
         result = (data.userName && data.pwd && data.email);
         callback(result);
     }
 
-    public createUser(data) {
+    public createUser(data: { email: any; userName: any; pwd: any; registeredAt: any; firstName: any; lastName: any; roles: any; accountExpired: any; accountLocked: any; credentialsExpired: any; enabled: any; }) {
         const user = new Users();
         user.email = data.email;
         user.userName = data.userName;
@@ -133,14 +133,14 @@ export class UsersService {
         return user;
     }
 
-    public async create(data, callback) {
-        await this.isUnique(data, (result) => {
+    public async create(data: any, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; user?: any; }): void; }) {
+        await this.isUnique(data, (result: any) => {
             if (result) {
-                UsersService.isContainAllRequiredData(data, (rst) => {
+                UsersService.isContainAllRequiredData(data, (rst: any) => {
                     if(rst){
                         const newUser = this.createUser(data);
 
-                        newUser.save((err) => {
+                        newUser.save((err: any) => {
                             if (err) {
                                 const rstUser1 = {
                                     "success": false,
@@ -179,10 +179,10 @@ export class UsersService {
         })
     }
 
-    public async update (data, callback) {
+    public async update (data: { userName: any; firstName: any; lastName: any; roles: any; email: any; pwd: any; accountExpired: any; accountLocked: any; credentialsExpired: any; enabled: any; }, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; user?: any; }): void; }) {
         Users.findOne({
             userName: data.userName
-        }, (err, user) => {
+        }, (err: any, user: { firstName: any; lastName: any; roles: any; email: any; pwd: any; accountExpired: any; accountLocked: any; credentialsExpired: any; enabled: any; save: (arg0: (err1: any, updatedUser: any) => void) => void; }) => {
             if (err) {
                 const result = {
                     "success": false,
@@ -202,7 +202,7 @@ export class UsersService {
                 if (data.credentialsExpired !== undefined) user.credentialsExpired = data.credentialsExpired;
                 if (data.enabled !== undefined) user.enabled = data.enabled;
 
-                user.save((err1, updatedUser) => {
+                user.save((err1: any, updatedUser: any) => {
                     if (err1) {
                         const result = {
                             "success": false,
@@ -225,10 +225,10 @@ export class UsersService {
         });
     }
 
-    public async deleteById(Id, callback) {
+    public async deleteById(Id: string, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; }): void; }) {
         Users.findOne({
             id: Id
-        }, (err, user) => {
+        }, (err: any, user: { delete: (arg0: (err1: any) => void) => void; }) => {
             if (err) {
                 const result = {
                     "success": false,
@@ -238,7 +238,7 @@ export class UsersService {
                 this.log.error(err);
                 callback(result);
             } else {
-                user.delete((err1) => {
+                user.delete((err1: any) => {
                     if (err1) {
                         const result = {
                             "success": false,

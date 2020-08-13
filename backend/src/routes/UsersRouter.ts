@@ -43,12 +43,12 @@ export class UsersRouter {
     private getUsers() {
         this.usersRouter.get("/", async (req: Request, res: Response) => {
             await this.Users.findById(52)
-                .then((user) => {
+                .then(async (user: any) => {
                     if(!user) {
                         res.status(400);
                     }
                     try {
-                        this.userService.findAll((result) => {
+                        await this.userService.findAll((result: any) => {
                             res.status(200).json(result);
                         });
                     } catch (e) {
@@ -62,7 +62,7 @@ export class UsersRouter {
     private getUser() {
         this.usersRouter.get("/:username", async (req: Request, res: Response) => {
             try {
-                await this.userService.findByUserName(req.params.username, (result) => {
+                await this.userService.findByUserName(req.params.username, (result: any) => {
                     res.status(200).json(result);
                 });
             } catch (e) {
@@ -75,7 +75,7 @@ export class UsersRouter {
     private createUser() {
         this.usersRouter.post("/", async (req: Request, res: Response) => {
             try {
-                await this.userService.create(req.body, (result) => {
+                await this.userService.create(req.body, (result: any) => {
                     res.status(201).json(result);
                 });
             } catch (e) {
@@ -89,7 +89,7 @@ export class UsersRouter {
     private updateUser(){
         this.usersRouter.put("/", async (req: Request, res: Response) => {
             try {
-                await this.userService.update(req.body, (result) => {
+                await this.userService.update(req.body, (result: any) => {
                     res.status(200).json(result);
                 });
             } catch (e) {
@@ -103,7 +103,7 @@ export class UsersRouter {
     private deleteUser(){
         this.usersRouter.delete("/:id", async (req: Request, res: Response) => {
             try {
-                await this.userService.deleteById(req.params.id, (result) => {
+                await this.userService.deleteById(req.params.id, (result: any) => {
                     res.status(200).json(result);
                 });
             } catch (e) {
@@ -134,16 +134,16 @@ export class UsersRouter {
                 });
             }
 
-            return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+            return passport.authenticate('local', { session: false }, (err: any, passportUser, info: any) => {
                 if(err) {
                     return next(err);
                 }
 
                 if(passportUser) {
-                    const user = passportUser;
-                    user.token = passportUser.generateJWT();
+                    const ppUser = passportUser;
+                    ppUser.token = passportUser.generateJWT();
 
-                    return res.json({ user: user.toAuthJSON() });
+                    return res.json({ user: ppUser.toAuthJSON() });
                 }
 
                 return res.sendStatus(400);

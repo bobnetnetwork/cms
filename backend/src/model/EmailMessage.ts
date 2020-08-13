@@ -71,10 +71,10 @@ export class EmailMessage {
 
     public generateTextFromHtml(html?) {
         if(!html) {
-            this._text = textVersionJs.htmlToPlainText(this._html);
+            this._text = textVersionJs(this._html);
         } else {
             this._html = html;
-            this._text = textVersionJs.htmlToPlainText(html);
+            this._text = textVersionJs(html);
         }
     }
 
