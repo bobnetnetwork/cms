@@ -1,37 +1,37 @@
 import textVersionJs from "textversionjs";
 
 export class EmailMessage {
-    private _sender;
-    private _receivers;
-    private _cc;
-    private _bcc;
-    private _replyTo;
-    private _inReplyTo;
-    private _references;
-    private _envelope;
+    private _sender: any;
+    private _receivers: any;
+    private _cc: any;
+    private _bcc: any;
+    private _replyTo: any;
+    private _inReplyTo: any;
+    private _references: any;
+    private _envelope: any;
 
-    private _subject;
-    private _text;
-    private _html;
-    private _amp;
-    private _attachDataUrls;
-    private _watchHtml;
-    private _attachments;
+    private _subject: any;
+    private _text: string;
+    private _html: string;
+    private _amp: any;
+    private _attachDataUrls: any;
+    private _watchHtml: any;
+    private _attachments: any;
 
-    private _icalEvent;
-    private _alternatives;
-    private _encoding;
-    private _raw;
-    private _textEncoding;
+    private _icalEvent: any;
+    private _alternatives: any;
+    private _encoding: any;
+    private _raw: any;
+    private _textEncoding: any;
 
-    private _priority;
-    private _headers;
-    private _messageId;
-    private _date;
-    private _list;
+    private _priority: any;
+    private _headers: any;
+    private _messageId: any;
+    private _date: any;
+    private _list: any;
 
-    private _disableFileAccess;
-    private _disableUrlAccess;
+    private _disableFileAccess: any;
+    private _disableUrlAccess: any;
 
     public generateEmailMessage() {
         return {
@@ -69,7 +69,7 @@ export class EmailMessage {
         }
     }
 
-    public generateTextFromHtml(html?) {
+    public generateTextFromHtml(html?: string) {
         if(!html) {
             this._text = textVersionJs(this._html);
         } else {
