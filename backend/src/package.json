@@ -2,7 +2,7 @@
   "name": "cms-backend",
   "version": "0.0.1",
   "description": "An open source CMS based on NodeJS and Angular",
-  "main": "server.js",
+  "main": "Server.js",
   "dependencies": {
     "@types/node": "^14.0.27",
     "cors": "^2.8.5",
