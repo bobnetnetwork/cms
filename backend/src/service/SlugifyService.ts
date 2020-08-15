@@ -1,19 +1,11 @@
 import slugify from'slugify'
-import {SlugifyConfig} from "../config/SlugifyConfig.js";
+import fs from "fs";
 
 export class SlugifyService {
     private readonly conf: string | { replacement?: string; remove?: RegExp; lower?: boolean; strict?: boolean; locale?: string; };
-    private cfg: SlugifyConfig;
 
     constructor() {
-        this.cfg = new SlugifyConfig();
-        this.conf = {
-            replacement: this.cfg.slugifyReplacement,  // replace spaces with replacement character, defaults to `-`
-            remove: this.cfg.slugifyRemove, // remove characters that match regex, defaults to `undefined`
-            lower: this.cfg.slugifyLower,      // convert to lower case, defaults to `false`
-            strict: this.cfg.slugifyStrict,     // strip special characters except replacement, defaults to `false`
-            locale: this.cfg.slugifyLocale,      // language code of the locale to use
-        }
+        this.conf = JSON.parse(fs.readFileSync("./config/SlugifyConfig.json", "utf-8"));
     }
 
     public createSlug(text: string) {
