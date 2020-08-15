@@ -23,7 +23,8 @@ export class UsersService {
                     "message": "Authentication failed or User not found.",
                     "error": err,
                 }
-                this.log.error(err);
+                this.log.error(err.message);
+                this.log.debug(err.stack);
                 callback(result);
             } else {
                 const result = {
@@ -47,16 +48,18 @@ export class UsersService {
                     "message": "Authentication failed or User not found.",
                     "error": err,
                 }
-                this.log.error(err);
+                this.log.error(err.message);
+                this.log.debug(err.stack);
                 callback(result);
             } else {
                 if (!user) {
                     const result = {
                         "success": false,
                         "message": "User Not found in database!",
-                        "error": err,
+                        "error": "User Not found in database!",
                     }
-                    this.log.error(err);
+                    this.log.error("User Not found in database!");
+                    this.log.debug("sd");
                     callback(result);
                 } else {
                     const result = {
@@ -74,7 +77,7 @@ export class UsersService {
     private async isUnique(data: { userName: any; email: any; }, callback: { (result: any): void; (arg0: boolean): void; }) {
         Users.findOne({"userName": data.userName}, {"email": data.email}, (err: { message: any; }, user: any) => {
             if(err){
-                this.log.debug(err.message);
+                this.log.error(err.message);
                 callback(false);
             } else if(!user){
                 callback(true);
@@ -147,7 +150,8 @@ export class UsersService {
                                     "message": "Authentication failed or User creation failed.",
                                     "error": err,
                                 }
-                                this.log.error(err);
+                                this.log.error(err.message);
+                                this.log.debug(err.stack);
                                 callback(rstUser1);
                             } else {
                                 const rstUser2 = {
@@ -164,7 +168,7 @@ export class UsersService {
                             "success": false,
                             "message": "Not contains all required data!",
                         }
-                        this.log.info("Not contains all required data!");
+                        this.log.error("Not contains all required data!");
                         callback(rs2);
                     }
                 })
@@ -173,7 +177,7 @@ export class UsersService {
                     "success": false,
                     "message": "User is already exists!",
                 }
-                this.log.info("User is already exists!");
+                this.log.error("User is already exists!");
                 callback(rs);
             }
         })
@@ -189,7 +193,8 @@ export class UsersService {
                     "message": "User Update Error!",
                     "error": err,
                 }
-                this.log.error(err);
+                this.log.error(err.message);
+                this.log.debug(err.stack);
                 callback(result);
             } else {
                 if (data.firstName !== undefined) user.firstName = data.firstName;
@@ -209,7 +214,8 @@ export class UsersService {
                             "message": "User Update Error!",
                             "error": err1,
                         }
-                        this.log.error(err1);
+                        this.log.error(err1.message);
+                        this.log.debug(err1.stack);
                         callback(result);
                     } else {
                         const result = {
@@ -235,7 +241,8 @@ export class UsersService {
                     "message": "User notfound!",
                     "error": err,
                 }
-                this.log.error(err);
+                this.log.error(err.message);
+                this.log.debug(err.stack);
                 callback(result);
             } else {
                 user.delete((err1: any) => {
@@ -243,9 +250,10 @@ export class UsersService {
                         const result = {
                             "success": false,
                             "message": "User Delete Failed!",
-                            "error": err,
+                            "error": err1,
                         }
-                        this.log.error(err);
+                        this.log.error(err1.message);
+                        this.log.debug(err1.stack);
                         callback(result);
                     } else {
                         const result = {

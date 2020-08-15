@@ -42,6 +42,7 @@ export class ArticlesRouter {
                 } catch (e) {
                     res.status(404).send(e.message);
                     this.log.error(e.message);
+                    this.log.debug(e.stack);
                 }
             });
     }
@@ -55,6 +56,8 @@ export class ArticlesRouter {
                 });
             } catch (e) {
                 res.status(404).send(e.message);
+                this.log.error(e.message);
+                this.log.debug(e.stack);
             }
         });
     }
@@ -69,6 +72,7 @@ export class ArticlesRouter {
             } catch (e) {
                 res.status(404).send(e.message);
                 this.log.error(e.message);
+                this.log.debug(e.stack);
             }
         });
     }

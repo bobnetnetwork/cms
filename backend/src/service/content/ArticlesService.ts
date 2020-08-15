@@ -20,6 +20,7 @@ export class ArticlesService {
                     "error": err,
                 }
                 this.log.error(err);
+                this.log.debug(err.stack);
                 callback(result);
             } else {
                 const result = {
@@ -44,15 +45,16 @@ export class ArticlesService {
                     "error": err,
                 }
                 this.log.error(err);
+                this.log.debug(err.stack);
                 callback(result);
             } else {
                 if (!article) {
                     const result = {
                         "success": false,
                         "message": "Article Not found in database!",
-                        "error": err,
+                        "error": "Article Not found in database!",
                     }
-                    this.log.error(err);
+                    this.log.error("Article Not found in database!");
                     callback(result);
                 } else {
                     const result = {
@@ -70,7 +72,7 @@ export class ArticlesService {
     private async isUnique (data: { slug: any; }, callback: { (result: any): void; (arg0: boolean): void; }) {
         Article.findOne({"slug": data.slug}, (err: { message: any; }, user: any) => {
             if(err){
-                this.log.debug(err.message);
+                this.log.error(err.message);
                 callback(false);
             } else if(!user){
                 callback(true);
@@ -123,7 +125,8 @@ export class ArticlesService {
                                     "message": "Authentication failed or Article creation failed.",
                                     "error": err,
                                 }
-                                this.log.error(err);
+                                this.log.error(err.message);
+                                this.log.debug(err.stack);
                                 callback(rstArticle1);
                             } else {
                                 const rstArticle2 = {
@@ -140,7 +143,7 @@ export class ArticlesService {
                             "success": false,
                             "message": "Not contains all required data!",
                         }
-                        this.log.info("Not contains all required data!");
+                        this.log.error("Not contains all required data!");
                         callback(rs2);
                     }
                 });
@@ -149,7 +152,7 @@ export class ArticlesService {
                     "success": false,
                     "message": "Article is already exists!",
                 }
-                this.log.info("Article is already exists!");
+                this.log.error("Article is already exists!");
                 callback(rs);
             }
         });

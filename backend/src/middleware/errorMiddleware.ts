@@ -14,6 +14,7 @@ export const errorHandler = (
     const message =
         error.message || "It's not you. It's us. We are having some problems.";
     log.error(error.message);
+    log.debug(error.stack);
 
     response.status(status).send(message);
 };

@@ -53,6 +53,7 @@ export class HealthCheckRouter {
                 res.status(200).json(healthCheck);
             } catch (e) {
                 this.log.error(e.message);
+                this.log.debug(e.stack);
                 healthCheck.message = e;
                 res.status(503).json(healthCheck);
             }

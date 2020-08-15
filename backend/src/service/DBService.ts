@@ -33,19 +33,24 @@ export class DBService {
     }
 
     public connectToDB() {
-        mongoose.connect(this.dbUri, {
-            useNewUrlParser: true,
-            useFindAndModify: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true,
-        });
-        this.connection = mongoose.connection;
-        this.connection.once("open", async () => {
-            this.log.info("Connected to database");
-        });
-        this.connection.on("error", () => {
-            this.log.error("Error connecting to database");
-        });
+        try {
+            mongoose.connect(this.dbUri, {
+                useNewUrlParser: true,
+                useFindAndModify: true,
+                useUnifiedTopology: true,
+                useCreateIndex: true,
+            });
+            this.connection = mongoose.connection;
+            this.connection.once("open", async () => {
+                this.log.info("Connected to database");
+            });
+            this.connection.on("error", () => {
+                this.log.error("Error connecting to database");
+            });
+        } catch (e) {
+            this.log.error(e.message);
+            this.log.debug(e.stack);
+        }
     }
 
     public disconnect() {

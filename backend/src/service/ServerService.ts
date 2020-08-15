@@ -20,22 +20,27 @@ export class ServerService {
     }
 
     public startServer(app) {
-        if (process.env.HTTPS_ENABLED === "true") {
-            const privateKey = fs.readFileSync("sslcert/server.key", "utf8");
-            const certificate = fs.readFileSync("sslcert/server.crt", "utf8");
+        try {
+            if (process.env.HTTPS_ENABLED === "true") {
+                const privateKey = fs.readFileSync("sslcert/server.key", "utf8");
+                const certificate = fs.readFileSync("sslcert/server.crt", "utf8");
 
-            const credentials = {key: privateKey, cert: certificate};
+                const credentials = {key: privateKey, cert: certificate};
 
-            const httpsServer = HTTPS.createServer(credentials, app);
-            httpsServer.listen(this.PORT);
-            this.showConnectionAddresses("https");
-        } else {
-            const httpServer = HTTP.createServer(app);
-            httpServer.listen(this.PORT);
-            this.showConnectionAddresses("http");
+                const httpsServer = HTTPS.createServer(credentials, app);
+                httpsServer.listen(this.PORT);
+                this.showConnectionAddresses("https");
+            } else {
+                const httpServer = HTTP.createServer(app);
+                httpServer.listen(this.PORT);
+                this.showConnectionAddresses("http");
+            }
+            this.log.info("pid is " + process.pid);
+            this.connectToDB();
+        } catch (e) {
+            this.log.error(e.message);
+            this.log.debug(e.stack);
         }
-        this.log.info("pid is " + process.pid);
-        this.connectToDB();
     }
 
     public shutDown(msg: string) {

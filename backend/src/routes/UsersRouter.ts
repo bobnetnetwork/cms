@@ -53,6 +53,8 @@ export class UsersRouter {
                         });
                     } catch (e) {
                         res.status(404).send(e.message);
+                        this.log.error(e.message);
+                        this.log.debug(e.stack);
                     }
                 });
         });
@@ -67,6 +69,8 @@ export class UsersRouter {
                 });
             } catch (e) {
                 res.status(404).send(e.message);
+                this.log.error(e.message);
+                this.log.debug(e.stack);
             }
         });
     }
@@ -81,6 +85,7 @@ export class UsersRouter {
             } catch (e) {
                 res.status(404).send(e.message);
                 this.log.error(e.message);
+                this.log.debug(e.stack);
             }
         });
     }
@@ -95,6 +100,7 @@ export class UsersRouter {
             } catch (e) {
                 res.status(500).send(e.message);
                 this.log.error(e.message);
+                this.log.debug(e.stack);
             }
         });
     }
@@ -109,6 +115,7 @@ export class UsersRouter {
             } catch (e) {
                 res.status(500).send(e.message);
                 this.log.error(e.message);
+                this.log.debug(e.stack);
             }
         });
     }
@@ -137,6 +144,8 @@ export class UsersRouter {
             return passport.authenticate('local', { session: false }, (err: any, passportUser, info: any) => {
                 if(err) {
                     return next(err);
+                    this.log.error(err.message);
+                    this.log.debug(err.stack);
                 }
 
                 if(passportUser) {
