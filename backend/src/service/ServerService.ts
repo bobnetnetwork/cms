@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import os from "os";
 import {LogService} from "./LogService.js";
 import {DBService} from "./DBService.js";
-import { Express } from "express-serve-static-core";
 
 export class ServerService {
 
@@ -20,7 +19,7 @@ export class ServerService {
         this.PORT = parseInt(process.env.APP_PORT, 10);
     }
 
-    public startServer(app: Express) {
+    public startServer(app) {
         if (process.env.HTTPS_ENABLED === "true") {
             const privateKey = fs.readFileSync("sslcert/server.key", "utf8");
             const certificate = fs.readFileSync("sslcert/server.crt", "utf8");
