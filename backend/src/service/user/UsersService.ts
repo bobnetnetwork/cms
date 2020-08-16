@@ -4,6 +4,8 @@
 import {UserModel} from "../../model/user/User.js";
 import {LogService} from "../LogService.js";
 import {Logger} from "log4js";
+import {Role} from "../../model/user/Role";
+import {Ref} from "typegoose";
 
 export class UsersService {
 
@@ -12,7 +14,7 @@ export class UsersService {
     /**
      * Service Methods
      */
-    public async findAll(callback: any): Promise<void> {
+    public async findAll(callback: { (result: any): void; (arg0: { error?: any; message: any; success: boolean; user?: any; }): void; }): Promise<void> {
         UserModel.find({}, (err: any, users: any) => {
             if (err) {
                 const result = {
@@ -32,7 +34,7 @@ export class UsersService {
         });
     }
 
-    public async findByUserName (userName: string, callback: any): Promise<void> {
+    public async findByUserName (userName: string, callback: { (result: any): void; (arg0: { error?: any; message?: any; success: boolean; user?: import("typegoose").InstanceType<import("../../model/user/User.js").User>; }): void; }): Promise<void> {
         UserModel.findOne({userName}, (err, user) => {
             if (err) {
                 const result = {
@@ -61,7 +63,7 @@ export class UsersService {
         });
     }
 
-    private async isUnique(userName: string, email: string, callback: any): Promise<void> {
+    private async isUnique(userName: string, email: string, callback: { (result: any): void; (arg0: boolean): void; }): Promise<void> {
         UserModel.findOne({$or: [{userName}, {email}]}, (err: any, user: any) => {
             if(err){
                 this.log.error(err.message);
@@ -75,7 +77,7 @@ export class UsersService {
         });
     }
 
-    private static async isContainAllRequiredData(data: any, callback: any): Promise<void> {
+    private static async isContainAllRequiredData(data: { userName: any; email: any; pwd?: any; }, callback: { (rst: any): void; (arg0: boolean): void; }): Promise<void> {
         let result: boolean;
         result = (data.userName && data.pwd && data.email);
         callback(result);
@@ -124,14 +126,14 @@ export class UsersService {
         return user;
     }
 
-    public async create(data: any, callback: any): Promise<void>{
+    public async create(data: { userName: any; email: any; pwd?: any; }, callback: { (result: any): void; (arg0: { error?: any; message: any; success: boolean; user?: import("typegoose").InstanceType<import("../../model/user/User.js").User>; }): void; }): Promise<void>{
         await this.isUnique(data.userName, data.email, (result: any) => {
             if (result) {
                 UsersService.isContainAllRequiredData(data, (rst: any) => {
                     if(rst){
                         const newUser = this.createUser(data);
 
-                        newUser.save((err: any) => {
+                        newUser.save((err) => {
                             if (err) {
                                 const rstUser1 = {
                                     "error": err,
@@ -168,7 +170,7 @@ export class UsersService {
         })
     }
 
-    public async update(data: any, callback: any): Promise<void>{
+    public async update(data: { userName: string; firstName: string; lastName: string; roles: Ref<Role>; email: string; pwd: string; accountExpired: boolean; accountLocked: boolean; credentialsExpired: boolean; enabled: boolean; }, callback: { (result: any): void; (arg0: { error?: any; message: any; success: boolean; user?: any; }): void; }): Promise<void>{
         UserModel.findOne({
             userName: data.userName
         }, (err: any, user: any) => {
@@ -211,7 +213,7 @@ export class UsersService {
         });
     }
 
-    public async deleteByUserName(UserName: string, callback: any): Promise<void> {
+    public async deleteByUserName(UserName: string, callback: { (result: any): void; (arg0: { error?: any; message: any; success: boolean; }): void; }): Promise<void> {
         UserModel.findOne({
             userName: UserName
         }, (err: any, user: any) => {
