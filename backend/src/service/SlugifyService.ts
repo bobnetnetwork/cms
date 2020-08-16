@@ -1,4 +1,4 @@
-import slugify from "slugify"
+import slugify from "slugify";
 import fs from "fs";
 
 export class SlugifyService {
@@ -8,7 +8,7 @@ export class SlugifyService {
         this.conf = JSON.parse(fs.readFileSync("./config/SlugifyConfig.json", "utf-8"));
     }
 
-    public createSlug(text: string) {
+    public createSlug(text: string): string {
         return slugify(text, this.conf);
     }
 }
