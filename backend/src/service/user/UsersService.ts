@@ -65,9 +65,10 @@ export class UsersService {
     }
 
     private async isUnique(userName: string, email: string, callback: any) {
-        UserModel.findOne({$or: [{userName}, {email}]}, (err: { message: any; }, user: any) => {
+        UserModel.findOne({$or: [{userName}, {email}]}, (err: any, user: any) => {
             if(err){
                 this.log.error(err.message);
+                this.log.debug(err.stack);
                 callback(false);
             } else if(!user){
                 callback(true);
@@ -77,13 +78,13 @@ export class UsersService {
         });
     }
 
-    private static async isContainAllRequiredData(data: { userName: any; pwd: any; email: any; }, callback: any) {
+    private static async isContainAllRequiredData(data: any, callback: any) {
         let result: boolean;
         result = (data.userName && data.pwd && data.email);
         callback(result);
     }
 
-    public createUser(data: { email: any; userName: any; pwd: any; registeredAt: any; firstName: any; lastName: any; roles: any; accountExpired: any; accountLocked: any; credentialsExpired: any; enabled: any; }) {
+    public createUser(data: any) {
         const user = new UserModel();
         user.email = data.email;
         user.userName = data.userName;
@@ -144,7 +145,7 @@ export class UsersService {
                             } else {
                                 const rstUser2 = {
                                     "success": true,
-                                    "message": "User Register Succesful!",
+                                    "message": "User Register Successful!",
                                     "user": newUser,
                                 }
                                 callback(rstUser2);
@@ -173,7 +174,7 @@ export class UsersService {
     public async update (data: any, callback: any) {
         UserModel.findOne({
             userName: data.userName
-        }, (err: any, user: { firstName: any; lastName: any; roles: any; email: any; pwd: any; accountExpired: any; accountLocked: any; credentialsExpired: any; enabled: any; save: (arg0: (err1: any, updatedUser: any) => void) => void; }) => {
+        }, (err: any, user: any) => {
             if (err) {
                 const result = {
                     "success": false,
@@ -203,7 +204,7 @@ export class UsersService {
                     } else {
                         const result = {
                             "success": true,
-                            "message": "User Update Succesful!",
+                            "message": "User Update Successful!",
                             "user": updatedUser,
                         }
                         callback(result);
@@ -216,7 +217,7 @@ export class UsersService {
     public async deleteByUserName(UserName: string, callback: any) {
         UserModel.findOne({
             userName: UserName
-        }, (err: any, user: { delete: (arg0: (err1: any) => void) => void; }) => {
+        }, (err: any, user: any) => {
             if (err) {
                 const result = {
                     "success": false,
