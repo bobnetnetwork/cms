@@ -4,19 +4,19 @@ const { prop, Typegoose } = typegoose;
 export class File extends Typegoose {
 
     @prop()
-    fileName?: string;
+    public fileName?: string;
 
     @prop()
-    url?: string;
+    public url?: string;
 
     @prop()
-    slug?: string;
+    public slug?: string;
 
     @prop()
-    mimeType?: string;
+    public mimeType?: string;
 
     @prop()
-    addedAt?: Date;
+    public addedAt?: Date;
 }
 
 export const FileModel =new File().getModelForClass(File);

@@ -4,10 +4,10 @@ const { prop, Typegoose } = typegoose;
 export class Option extends Typegoose {
 
     @prop()
-    name?: string;
+    public name?: string;
 
     @prop()
-    value?: string;
+    public value?: string;
 }
 
 export const OptionModel = new Option().getModelForClass(Option);

@@ -9,55 +9,55 @@ const { prop, Typegoose } = typegoose;
 export class User extends Typegoose {
 
     @prop()
-    firstName?: string;
+    public firstName?: string;
 
     @prop()
-    lastName?: string;
+    public lastName?: string;
 
     @prop()
-    userName?: string;
+    public userName?: string;
 
     @prop()
-    email?: string;
+    public email?: string;
 
     @prop()
-    pwd?: string;
+    public pwd?: string;
 
     @prop()
-    hash?: string;
+    public hash?: string;
 
     @prop()
-    salt: string = "";
+    public salt: string = "";
 
     @prop()
-    accountExpired?: boolean;
+    public accountExpired?: boolean;
 
     @prop()
-    accountLocked?: boolean;
+    public accountLocked?: boolean;
 
     @prop()
-    credentialsExpired?: boolean;
+    public credentialsExpired?: boolean;
 
     @prop()
-    enabled?: boolean;
+    public enabled?: boolean;
 
     @prop()
-    registeredAt?: Date;
+    public registeredAt?: Date;
 
     @prop()
-    roles?: Ref<Role>;
+    public roles?: Ref<Role>;
 
-    setPassword(password: crypto.BinaryLike) {
+    public setPassword(password: crypto.BinaryLike) {
         this.salt = crypto.randomBytes(16).toString("hex");
         this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, "sha512").toString("hex");
     }
 
-    validatePassword(password: crypto.BinaryLike) {
+    public validatePassword(password: crypto.BinaryLike) {
         const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, "sha512").toString("hex");
         return this.hash === hash;
     }
 
-    generateJWT() {
+    public generateJWT() {
         const today = new Date();
         const expirationDate = new Date(today);
         expirationDate.setDate(today.getDate() + 60);
@@ -69,7 +69,7 @@ export class User extends Typegoose {
         }, "secret");
     }
 
-    toAuthJSON() {
+    public toAuthJSON() {
         return {
             _id: Types.ObjectId,
             email: this.email,
@@ -77,7 +77,5 @@ export class User extends Typegoose {
         };
     }
 }
-
-
 
 export const UserModel = new User().getModelForClass(User);

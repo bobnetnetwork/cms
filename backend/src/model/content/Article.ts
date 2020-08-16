@@ -8,31 +8,31 @@ const { prop, Typegoose } = typegoose;
 export class Article extends Typegoose {
 
     @prop()
-    title?: string;
+    public title?: string;
 
     @prop()
-    headline?: string;
+    public headline?: string;
 
     @prop()
-    content?: string;
+    public content?: string;
 
     @prop()
-    featuredImage?: string;
+    public featuredImage?: string;
 
     @prop()
-    author?: Ref<User>;
+    public author?: Ref<User>;
 
     @prop()
-    slug?: string;
+    public slug?: string;
 
     @prop()
-    addedAt?: Date;
+    public addedAt?: Date;
 
     @prop()
-    tags?: Ref<Tag>;
+    public tags?: Ref<Tag>;
 
     @prop()
-    categories?: Ref<Category>;
+    public categories?: Ref<Category>;
 }
 
 export const ArticleModel = new Article().getModelForClass(Article);
