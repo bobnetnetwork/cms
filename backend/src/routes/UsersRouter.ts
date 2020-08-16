@@ -2,7 +2,7 @@
  * Required External Modules and Interfaces
  */
 
-import express, {Request, Response} from "express";
+import express, {NextFunction, Request, Response} from "express";
 import {UsersService} from "../service/user/UsersService.js";
 import {auth} from "./auth.js";
 import passport from "passport";
@@ -30,7 +30,6 @@ export class UsersRouter {
         this.updateUser();
         this.deleteUser();
         this.login();
-        this.getCurrent();
     }
 
     /**
@@ -147,7 +146,7 @@ export class UsersRouter {
 
     // POST login route (optional, everyone has access)
     private login(){
-        this.usersRouter.post('/login', auth.optional, (req, res, next) => {
+        this.usersRouter.post('/login', auth.optional, (req: Request, res:Response, next: NextFunction) => {
             const { body: { user } } = req;
 
             if(!user.email) {
@@ -166,11 +165,11 @@ export class UsersRouter {
                 });
             }
 
-            return passport.authenticate('local', { session: false }, (err: any, passportUser, info: any) => {
+            return passport.authenticate('local', { session: false }, (err: any, passportUser) => {
                 if(err) {
-                    return next(err);
                     this.log.error(err.message);
                     this.log.debug(err.stack);
+                    return next(err);
                 }
 
                 if(passportUser) {
@@ -182,20 +181,6 @@ export class UsersRouter {
 
                 return res.sendStatus(400);
             })(req, res, next);
-        });
-    }
-
-    // GET current route (required, only authenticated users have access)
-    private getCurrent(){
-        this.usersRouter.get('/current', auth.required, (req, res, next) => {
-            // const { payload: { id } } = req;
-
-            /*return this.Users.findById(id).then((user) => {
-                     if(!user) {
-                         return res.sendStatus(400);
-                     }
-                     return res.json({ user: user.toAuthJSON() });
-                 });*/
         });
     }
 }
