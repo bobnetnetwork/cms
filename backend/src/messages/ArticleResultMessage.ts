@@ -13,6 +13,6 @@ export class ArticleResultMessage extends ResultMessage {
             "article": this.article,
             "message": this.message,
             "success": this.success,
-        }
+        };
     }
 }

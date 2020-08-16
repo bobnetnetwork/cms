@@ -16,7 +16,7 @@ export class ArticlesService {
     public async findAll(callback: any) {
         return ArticleModel.find({}, (err: Error, articles: any) => {
             if (err) {
-                const result = new ErrorResultMessage(err, err.message.toString()).getMessage()
+                const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
                 callback(result);
             } else {
                 const result = new ArticleResultMessage(articles, "Successful, Article Found!").getMessage();
