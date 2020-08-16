@@ -32,10 +32,9 @@ export class UsersService {
     }
 
     public async findByUserName (userName: string, callback: any) {
-        let result;
         UserModel.findOne({userName}, (err, user) => {
             if (err) {
-                result = {
+                const result = {
                     "success": false,
                     "message": err.message,
                     "error": err,
@@ -43,14 +42,14 @@ export class UsersService {
                 callback(result);
             } else {
                 if (!user) {
-                    result = {
+                    const result = {
                         "success": false,
                         "message": "User Not found in database!",
                         "error": new Error("User Not found in database!"),
                     }
                     callback(result);
                 } else {
-                    result = {
+                    const result = {
                         "success": true,
                         "user": user,
                     }
