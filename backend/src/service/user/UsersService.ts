@@ -15,9 +15,9 @@ export class UsersService {
         return UserModel.find({}, (err: any, users: any) => {
             if (err) {
                 const result = {
-                    "success": false,
-                    "message": err.message,
                     "error": err,
+                    "message": err.message,
+                    "success": false,
                 };
                 callback(result);
             } else {
