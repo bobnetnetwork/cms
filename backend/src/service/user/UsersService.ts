@@ -15,16 +15,14 @@ export class UsersService {
     /**
      * Service Methods
      */
-    public async findAll(callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; user?: any; }): void; }) {
+    public async findAll(callback: any) {
         return UserModel.find({}, (err: any, users: any) => {
             if (err) {
                 const result = {
                     "success": false,
-                    "message": "Authentication failed or User not found.",
+                    "message": err.message,
                     "error": err,
                 }
-                this.log.error(err.message);
-                this.log.debug(err.stack);
                 callback(result);
             } else {
                 const result = {
@@ -32,18 +30,42 @@ export class UsersService {
                     "message": "Successful, User Found!",
                     "user": users,
                 }
-                this.log.info("Successful, User Found!");
                 callback(result);
             }
         });
     }
 
-    public async findByUserName (userName: string) {
-        return UserModel.findByUserName(userName);
+    public async findByUserName (userName: string, callback: any) {
+        let result;
+        UserModel.findOne({userName}, (err, user) => {
+            if (err) {
+                result = {
+                    "success": false,
+                    "message": err.message,
+                    "error": err,
+                }
+                callback(result);
+            } else {
+                if (!user) {
+                    result = {
+                        "success": false,
+                        "message": "User Not found in database!",
+                        "error": new Error("User Not found in database!"),
+                    }
+                    callback(result);
+                } else {
+                    result = {
+                        "success": true,
+                        "user": user,
+                    }
+                    callback(result);
+                }
+            }
+        });
     }
 
-    private async isUnique(data: { userName: any; email: any; }, callback: { (result: any): void; (arg0: boolean): void; }) {
-        UserModel.findOne({"userName": data.userName}, {"email": data.email}, (err: { message: any; }, user: any) => {
+    private async isUnique(userName: string, email: string, callback: any) {
+        UserModel.findOne({$or: [{userName}, {email}]}, (err: { message: any; }, user: any) => {
             if(err){
                 this.log.error(err.message);
                 callback(false);
@@ -55,7 +77,7 @@ export class UsersService {
         });
     }
 
-    private static async isContainAllRequiredData(data: { userName: any; pwd: any; email: any; }, callback: { (rst: any): void; (arg0: boolean): void; }) {
+    private static async isContainAllRequiredData(data: { userName: any; pwd: any; email: any; }, callback: any) {
         let result: boolean;
         result = (data.userName && data.pwd && data.email);
         callback(result);
@@ -104,8 +126,8 @@ export class UsersService {
         return user;
     }
 
-    public async create(data: any, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; user?: any; }): void; }) {
-        await this.isUnique(data, (result: any) => {
+    public async create(data: any, callback: any) {
+        await this.isUnique(data.userName, data.email, (result: any) => {
             if (result) {
                 UsersService.isContainAllRequiredData(data, (rst: any) => {
                     if(rst){
@@ -115,11 +137,9 @@ export class UsersService {
                             if (err) {
                                 const rstUser1 = {
                                     "success": false,
-                                    "message": "Authentication failed or User creation failed.",
+                                    "message": err.message,
                                     "error": err,
                                 }
-                                this.log.error(err.message);
-                                this.log.debug(err.stack);
                                 callback(rstUser1);
                             } else {
                                 const rstUser2 = {
@@ -127,7 +147,6 @@ export class UsersService {
                                     "message": "User Register Succesful!",
                                     "user": newUser,
                                 }
-                                this.log.info("User Register Succesful!");
                                 callback(rstUser2);
                             }
                         });
@@ -135,8 +154,8 @@ export class UsersService {
                         const rs2 = {
                             "success": false,
                             "message": "Not contains all required data!",
+                            "error": new Error("Not contains all required data!"),
                         }
-                        this.log.error("Not contains all required data!");
                         callback(rs2);
                     }
                 })
@@ -144,25 +163,23 @@ export class UsersService {
                 const rs = {
                     "success": false,
                     "message": "User is already exists!",
+                    "error": new Error("User is already exists!"),
                 }
-                this.log.error("User is already exists!");
                 callback(rs);
             }
         })
     }
 
-    public async update (data: { userName: any; firstName: any; lastName: any; roles: any; email: any; pwd: any; accountExpired: any; accountLocked: any; credentialsExpired: any; enabled: any; }, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; user?: any; }): void; }) {
+    public async update (data: any, callback: any) {
         UserModel.findOne({
             userName: data.userName
         }, (err: any, user: { firstName: any; lastName: any; roles: any; email: any; pwd: any; accountExpired: any; accountLocked: any; credentialsExpired: any; enabled: any; save: (arg0: (err1: any, updatedUser: any) => void) => void; }) => {
             if (err) {
                 const result = {
                     "success": false,
-                    "message": "User Update Error!",
+                    "message": err.message,
                     "error": err,
                 }
-                this.log.error(err.message);
-                this.log.debug(err.stack);
                 callback(result);
             } else {
                 if (data.firstName !== undefined) user.firstName = data.firstName;
@@ -179,11 +196,9 @@ export class UsersService {
                     if (err1) {
                         const result = {
                             "success": false,
-                            "message": "User Update Error!",
+                            "message": err1.message,
                             "error": err1,
                         }
-                        this.log.error(err1.message);
-                        this.log.debug(err1.stack);
                         callback(result);
                     } else {
                         const result = {
@@ -191,7 +206,6 @@ export class UsersService {
                             "message": "User Update Succesful!",
                             "user": updatedUser,
                         }
-                        this.log.info("User Update Succesful!");
                         callback(result);
                     }
                 });
@@ -199,36 +213,31 @@ export class UsersService {
         });
     }
 
-    public async deleteById(Id: string, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; }): void; }) {
+    public async deleteByUserName(UserName: string, callback: any) {
         UserModel.findOne({
-            id: Id
+            userName: UserName
         }, (err: any, user: { delete: (arg0: (err1: any) => void) => void; }) => {
             if (err) {
                 const result = {
                     "success": false,
-                    "message": "User notfound!",
+                    "message": err.message,
                     "error": err,
                 }
-                this.log.error(err.message);
-                this.log.debug(err.stack);
                 callback(result);
             } else {
                 user.delete((err1: any) => {
                     if (err1) {
                         const result = {
                             "success": false,
-                            "message": "User Delete Failed!",
+                            "message": err1.message,
                             "error": err1,
                         }
-                        this.log.error(err1.message);
-                        this.log.debug(err1.stack);
                         callback(result);
                     } else {
                         const result = {
                             "success": false,
                             "message": "User Delete Succesful!",
                         }
-                        this.log.info("User Delete Succesful!");
                         callback(result);
                     }
                 });

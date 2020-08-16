@@ -40,25 +40,37 @@ export class UsersRouter {
     // GET users/
     private getUsers() {
         this.usersRouter.get("/", async (req: Request, res: Response) => {
-
-                    try {
-                        await this.userService.findAll((result: any) => {
-                            res.status(200).json(result);
-                        });
-                    } catch (e) {
-                        res.status(404).send(e.message);
-                        this.log.error(e.message);
-                        this.log.debug(e.stack);
+            try {
+                await this.userService.findAll((result: any) => {
+                    if(result.error) {
+                        this.log.error(result.error.message);
+                        this.log.debug(result.error.stack);
+                        res.status(404).json(result);
+                    } else {
+                        res.status(200).json(result);
                     }
                 });
+            } catch (e) {
+                res.status(404).send(e.message);
+                this.log.error(e.message);
+                this.log.debug(e.stack);
+            }
+        });
     }
 
     // GET users/:username
     private getUser() {
         this.usersRouter.get("/:username", async (req: Request, res: Response) => {
             try {
-                const result = await this.userService.findByUserName(req.params.username);
-                res.status(200).json(result);
+                await this.userService.findByUserName(req.params.username, (result: any) => {
+                    if(result.error) {
+                        this.log.error(result.error.message);
+                        this.log.debug(result.error.stack);
+                        res.status(404).json(result);
+                    } else {
+                        res.status(200).json(result);
+                    }
+                });
             } catch (e) {
                 res.status(404).send(e.message);
                 this.log.error(e.message);
@@ -72,10 +84,17 @@ export class UsersRouter {
         this.usersRouter.post("/", async (req: Request, res: Response) => {
             try {
                 await this.userService.create(req.body, (result: any) => {
-                    res.status(201).json(result);
+                    if(result.error) {
+                        this.log.error(result.error.message);
+                        this.log.debug(result.error.stack);
+                        res.status(500).json(result);
+                    } else {
+                        this.log.info("User (" + req.body.userName + ") creation is Successful!");
+                        res.status(200).json(result);
+                    }
                 });
             } catch (e) {
-                res.status(404).send(e.message);
+                res.status(500).send(e.message);
                 this.log.error(e.message);
                 this.log.debug(e.stack);
             }
@@ -87,7 +106,14 @@ export class UsersRouter {
         this.usersRouter.put("/", async (req: Request, res: Response) => {
             try {
                 await this.userService.update(req.body, (result: any) => {
-                    res.status(200).json(result);
+                    if(result.error) {
+                        this.log.error(result.error.message);
+                        this.log.debug(result.error.stack);
+                        res.status(500).json(result);
+                    } else {
+                        this.log.info("User (" + req.body.userName + ") updated!")
+                        res.status(200).json(result);
+                    }
                 });
             } catch (e) {
                 res.status(500).send(e.message);
@@ -97,12 +123,19 @@ export class UsersRouter {
         });
     }
 
-    // DELETE users/:id
+    // DELETE users/:username
     private deleteUser(){
-        this.usersRouter.delete("/:id", async (req: Request, res: Response) => {
+        this.usersRouter.delete("/:username", async (req: Request, res: Response) => {
             try {
-                await this.userService.deleteById(req.params.id, (result: any) => {
-                    res.status(200).json(result);
+                await this.userService.deleteByUserName(req.params.username, (result: any) => {
+                    if(result.error) {
+                        this.log.error(result.error.message);
+                        this.log.debug(result.error.stack);
+                        res.status(500).json(result);
+                    } else {
+                        this.log.info("User (" + req.body.userName + ") deleted!");
+                        res.status(200).json(result);
+                    }
                 });
             } catch (e) {
                 res.status(500).send(e.message);

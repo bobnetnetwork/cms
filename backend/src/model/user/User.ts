@@ -1,8 +1,8 @@
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import typegoose, {ModelType, Ref} from 'typegoose';
+import typegoose, {Ref} from 'typegoose';
 import {Role} from "./Role";
-const { prop, Typegoose, staticMethod } = typegoose;
+const { prop, Typegoose } = typegoose;
 
 
 export class User extends Typegoose {
@@ -45,11 +45,6 @@ export class User extends Typegoose {
 
     @prop()
     roles?: Ref<Role>;
-
-    @staticMethod
-    static findByUserName(this: ModelType<User>, userName: string) {
-        return this.findOne( {userName});
-    }
 
     setPassword(password: crypto.BinaryLike) {
         this.salt = crypto.randomBytes(16).toString('hex');
