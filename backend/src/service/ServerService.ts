@@ -5,12 +5,13 @@ import dotenv from "dotenv";
 import os from "os";
 import {LogService} from "./LogService.js";
 import {DBService} from "./DBService.js";
+import {Logger} from "log4js";
 
 export class ServerService {
 
-    private log = new LogService().getLogger("serverService");
+    private log: Logger = new LogService().getLogger("serverService");
     private readonly PORT: number;
-    private database = new DBService();
+    private database: DBService = new DBService();
 
     constructor() {
         if (process.env.NODE_ENV !== "production") {
@@ -25,7 +26,7 @@ export class ServerService {
         }
     }
 
-    public startServer(app: HTTP.RequestListener) {
+    public startServer(app: HTTP.RequestListener): void {
         try {
             if (process.env.HTTPS_ENABLED === "true") {
                 const privateKey = fs.readFileSync("sslcert/server.key", "utf8");
@@ -49,7 +50,7 @@ export class ServerService {
         }
     }
 
-    public shutDown(msg: string) {
+    public shutDown(msg: string): void {
         this.log.info(msg);
         this.log.info("Closing DB connection(s).");
         this.closeDBConnections();
@@ -57,16 +58,16 @@ export class ServerService {
         process.exit(0);
     }
 
-    private connectToDB() {
-        this.database.connectToDB()
+    private connectToDB(): void {
+        this.database.connectToDB();
     }
 
-    private closeDBConnections() {
+    private closeDBConnections(): void {
         this.database.disconnect();
     }
 
-    private showConnectionAddresses(serverType: string) {
-        const networkInterfaces = os.networkInterfaces();
+    private showConnectionAddresses(serverType: string): void {
+        const networkInterfaces: NodeJS.Dict<os.NetworkInterfaceInfo[]> = os.networkInterfaces();
         this.log.info("Server started at:");
         this.log.info(serverType + "://localhost:" + this.PORT);
         this.log.info(serverType + "://" + os.hostname() + ":" + this.PORT);
