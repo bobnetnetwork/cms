@@ -2,9 +2,9 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import typegoose, {Ref} from 'typegoose';
 import {Role} from "./Role";
-import {Types} from "mongoose";
+import mongoose from "mongoose";
 const { prop, Typegoose } = typegoose;
-
+const {Types} = mongoose;
 
 export class User extends Typegoose {
 
