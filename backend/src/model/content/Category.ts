@@ -1,29 +1,29 @@
-import typegoose, {Ref} from 'typegoose';
+import typegoose, {Ref} from "typegoose";
 import {Article} from "./Article";
 const { prop, Typegoose } = typegoose;
 
 export class Category extends Typegoose {
 
     @prop()
-    name?: string;
+    public name?: string;
 
     @prop()
-    description?: string;
+    public description?: string;
 
     @prop()
-    featuredImage?: string;
+    public featuredImage?: string;
 
     @prop()
-    slug?: string;
+    public slug?: string;
 
     @prop()
-    addedAt?: Date;
+    public addedAt?: Date;
 
     @prop()
-    parent?: Category;
+    public parent?: Category;
 
     @prop()
-    articles?: Ref<Article>;
+    public articles?: Ref<Article>;
 }
 
 export const CategoryModel = new Category().getModelForClass(Category);

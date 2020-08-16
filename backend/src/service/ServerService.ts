@@ -51,9 +51,9 @@ export class ServerService {
 
     public shutDown(msg: string) {
         this.log.info(msg);
-        this.log.info("Closing DB connection(s).")
+        this.log.info("Closing DB connection(s).");
         this.closeDBConnections();
-        this.log.info("Closing http(s) server.")
+        this.log.info("Closing http(s) server.");
         process.exit(0);
     }
 
@@ -76,7 +76,7 @@ export class ServerService {
             if(networkInterface){
                 for (const net of networkInterface) {
                     // skip over non-ipv4 and internal (i.e. 127.0.0.1) addresses
-                    if (net.family === 'IPv4' && !net.internal) {
+                    if (net.family === "IPv4" && !net.internal) {
                         this.log.info(serverType + "://" + net.address + ":" + this.PORT);
                     }
                 }

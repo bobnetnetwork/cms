@@ -66,7 +66,7 @@ export class EmailMessage {
 
             disableFileAccess:this._disableFileAccess,
             disableUrlAccess:this._disableUrlAccess,
-        }
+        };
     }
 
    /* public generateTextFromHtml(html?: string) {

@@ -1,29 +1,29 @@
-import typegoose, {Ref} from 'typegoose';
+import typegoose, {Ref} from "typegoose";
 import {User} from "../user/User";
 const { prop, Typegoose } = typegoose;
 
 export class Page extends Typegoose {
 
     @prop()
-    title?: string;
+    public title?: string;
 
     @prop()
-    headline?: string;
+    public headline?: string;
 
     @prop()
-    content?: string;
+    public content?: string;
 
     @prop()
-    featuredImage?: string;
+    public featuredImage?: string;
 
     @prop()
-    author?: Ref<User>;
+    public author?: Ref<User>;
 
     @prop()
-    slug?: string;
+    public slug?: string;
 
     @prop()
-    addedAt?: Date;
+    public addedAt?: Date;
 }
 
 export const PageModel = new Page().getModelForClass(Page);

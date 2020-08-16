@@ -1,20 +1,20 @@
-import typegoose, {Ref} from 'typegoose';
+import typegoose, {Ref} from "typegoose";
 import {Article} from "./Article";
 const { prop, Typegoose } = typegoose;
 
 export class Tag extends Typegoose {
 
     @prop()
-    title?: string;
+    public title?: string;
 
     @prop()
-    slug?: string;
+    public slug?: string;
 
     @prop()
-    addedAt?: Date;
+    public addedAt?: Date;
 
     @prop()
-    articles?: Ref<Article>;
+    public articles?: Ref<Article>;
 }
 
 export const TagModel = new Tag().getModelForClass(Tag);

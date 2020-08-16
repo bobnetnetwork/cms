@@ -18,14 +18,14 @@ export class ArticlesService {
                     "success": false,
                     "message": err.message,
                     "error": err,
-                }
+                };
                 callback(result);
             } else {
                 const result = {
                     "success": true,
                     "message": "Successful, Article Found!",
                     "article": articles,
-                }
+                };
                 callback(result);
             }
         });
@@ -38,7 +38,7 @@ export class ArticlesService {
                     "success": false,
                     "message": err.message,
                     "error": err,
-                }
+                };
                 callback(result);
             } else {
                 if (!article) {
@@ -46,14 +46,14 @@ export class ArticlesService {
                         "success": false,
                         "message": "Article Not found in database!",
                         "error": new Error("Article Not found in database!"),
-                    }
+                    };
                     callback(result);
                 } else {
                     const result = {
                         "success": true,
                         "message": "Successful, Article Found!",
                         "article": article,
-                    }
+                    };
                     callback(result);
                 }
             }
@@ -116,14 +116,14 @@ export class ArticlesService {
                                     "success": false,
                                     "message": err.message,
                                     "error": err,
-                                }
+                                };
                                 callback(rstArticle1);
                             } else {
                                 const rstArticle2 = {
                                     "success": true,
                                     "message": "Article creation Successful!",
                                     "article": newArticle,
-                                }
+                                };
                                 callback(rstArticle2);
                             }
                         });
@@ -132,7 +132,7 @@ export class ArticlesService {
                             "success": false,
                             "message": "Not contains all required data!",
                             "error": new Error("Not contains all required data!"),
-                        }
+                        };
                         callback(rs2);
                     }
                 });
@@ -141,7 +141,7 @@ export class ArticlesService {
                     "success": false,
                     "message": "Article is already exists!",
                     "error": new Error("Article is already exists!"),
-                }
+                };
                 callback(rs);
             }
         });
