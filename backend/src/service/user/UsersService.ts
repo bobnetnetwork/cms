@@ -18,14 +18,14 @@ export class UsersService {
                     "success": false,
                     "message": err.message,
                     "error": err,
-                }
+                };
                 callback(result);
             } else {
                 const result = {
                     "success": true,
                     "message": "Successful, User Found!",
                     "user": users,
-                }
+                };
                 callback(result);
             }
         });
@@ -38,7 +38,7 @@ export class UsersService {
                     "success": false,
                     "message": err.message,
                     "error": err,
-                }
+                };
                 callback(result);
             } else {
                 if (!user) {
@@ -46,13 +46,13 @@ export class UsersService {
                         "success": false,
                         "message": "User Not found in database!",
                         "error": new Error("User Not found in database!"),
-                    }
+                    };
                     callback(result);
                 } else {
                     const result = {
                         "success": true,
                         "user": user,
-                    }
+                    };
                     callback(result);
                 }
             }
@@ -135,14 +135,14 @@ export class UsersService {
                                     "success": false,
                                     "message": err.message,
                                     "error": err,
-                                }
+                                };
                                 callback(rstUser1);
                             } else {
                                 const rstUser2 = {
                                     "success": true,
                                     "message": "User Register Successful!",
                                     "user": newUser,
-                                }
+                                };
                                 callback(rstUser2);
                             }
                         });
@@ -151,16 +151,16 @@ export class UsersService {
                             "success": false,
                             "message": "Not contains all required data!",
                             "error": new Error("Not contains all required data!"),
-                        }
+                        };
                         callback(rs2);
                     }
-                })
+                });
             } else {
                 const rs = {
                     "success": false,
                     "message": "User is already exists!",
                     "error": new Error("User is already exists!"),
-                }
+                };
                 callback(rs);
             }
         })
@@ -175,7 +175,7 @@ export class UsersService {
                     "success": false,
                     "message": err.message,
                     "error": err,
-                }
+                };
                 callback(result);
             } else {
                 if (data.firstName !== undefined) user.firstName = data.firstName;
@@ -194,14 +194,14 @@ export class UsersService {
                             "success": false,
                             "message": err1.message,
                             "error": err1,
-                        }
+                        };
                         callback(result);
                     } else {
                         const result = {
                             "success": true,
                             "message": "User Update Successful!",
                             "user": updatedUser,
-                        }
+                        };
                         callback(result);
                     }
                 });
@@ -218,7 +218,7 @@ export class UsersService {
                     "success": false,
                     "message": err.message,
                     "error": err,
-                }
+                };
                 callback(result);
             } else {
                 user.delete((err1: any) => {
@@ -227,13 +227,13 @@ export class UsersService {
                             "success": false,
                             "message": err1.message,
                             "error": err1,
-                        }
+                        };
                         callback(result);
                     } else {
                         const result = {
                             "success": false,
                             "message": "User Delete Successful!",
-                        }
+                        };
                         callback(result);
                     }
                 });
