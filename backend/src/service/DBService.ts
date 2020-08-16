@@ -63,8 +63,6 @@ export class DBService {
          }
 
          this.dbUri = this.getDBUri();
-
-         this.connectToDB();
     }
 
     private getDBUri(){
