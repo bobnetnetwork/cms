@@ -3,10 +3,11 @@
  */
 import {UserModel} from "../../model/user/User.js";
 import {LogService} from "../LogService.js";
+import {Logger} from "log4js";
 
 export class UsersService {
 
-    private log = new LogService().getLogger("usersService");
+    private log: Logger = new LogService().getLogger("usersService");
 
     /**
      * Service Methods
