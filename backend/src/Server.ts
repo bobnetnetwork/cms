@@ -4,9 +4,11 @@
 
 import cors from "cors";
 import helmet from "helmet";
+import fileUpload from "express-fileupload";
 import {UsersRouter} from "./routes/UsersRouter.js";
 import {ArticlesRouter} from "./routes/ArticlesRouter.js";
 import {HealthCheckRouter} from "./routes/HealthCheckRouter.js";
+import {FilesRouter} from "./routes/FilesRouter.js";
 import {errorHandler} from "./middleware/errorMiddleware.js";
 import {notFoundHandler} from "./middleware/notFoundMiddleware.js";
 import {ServerService} from "./service/ServerService.js";
@@ -25,6 +27,7 @@ class Server {
     private HEALTH_CHECK = this.API_URL + "/health-check";
     private USERS = this.API_URL + "/users";
     private ARTICLES = this.API_URL + "/content/articles";
+    private FILES = this.API_URL + "/files";
 
     private server = new ServerService();
 
@@ -46,10 +49,15 @@ class Server {
         this.app.use(this.HEALTH_CHECK, new HealthCheckRouter().getHealthCheckRouter());
         this.app.use(this.USERS, new UsersRouter().getUsersRouter());
         this.app.use(this.ARTICLES, new ArticlesRouter().getArticleRouter());
+        this.app.use(this.FILES, new FilesRouter().getFileRouter());
         this.app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
         this.app.use(errorHandler);
         this.app.use(notFoundHandler);
+
+        this.app.use(fileUpload({
+            createParentPath: true
+        }));
 
         this.getRootPath();
     }
