@@ -52,7 +52,10 @@ class Server {
         this.app.use(this.FILES, new FilesRouter().getFileRouter());
 
         const sessionOptions = {
-            secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false
+            cookie: { maxAge: 60000 },
+            resave: false,
+            saveUninitialized: false,
+            secret: "passport-tutorial",
         };
 
         this.app.use(session(sessionOptions));
