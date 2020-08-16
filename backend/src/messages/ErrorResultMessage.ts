@@ -3,8 +3,8 @@ import {ResultMessage} from "./ResultMessage.js";
 export class ErrorResultMessage extends ResultMessage {
     protected readonly error: Error;
 
-    constructor(error: Error, message: string, success: boolean) {
-        super(message, success);
+    constructor(error: Error, message: string) {
+        super(message, false);
         this.error = error;
     }
 

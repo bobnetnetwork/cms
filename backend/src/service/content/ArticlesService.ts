@@ -4,6 +4,8 @@
 import {ArticleModel} from "../../model/content/Article.js";
 import {SlugifyService} from "../SlugifyService.js";
 import {LogService} from "../LogService.js";
+import {ErrorResultMessage} from "../../messages/ErrorResultMessage.js";
+import {ArticleResultMessage} from "../../messages/ArticleResultMessage.js";
 
 export class ArticlesService {
     private log = new LogService().getLogger("articlesServices");
@@ -12,48 +14,29 @@ export class ArticlesService {
      * Service Methods
      */
     public async findAll(callback: any) {
-        return ArticleModel.find({}, (err: any, articles: any) => {
+        return ArticleModel.find({}, (err: Error, articles: any) => {
             if (err) {
-                const result = {
-                    "success": false,
-                    "message": err.message,
-                    "error": err,
-                };
+                const result = new ErrorResultMessage(err, err.message.toString()).getMessage()
                 callback(result);
             } else {
-                const result = {
-                    "success": true,
-                    "message": "Successful, Article Found!",
-                    "article": articles,
-                };
+                const result = new ArticleResultMessage(articles, "Successful, Article Found!").getMessage();
                 callback(result);
             }
         });
     }
 
     public async findBySlug(slug: string, callback: any) {
-        return ArticleModel.findOne({slug}, (err: any, article: any) => {
+        return ArticleModel.findOne({slug}, (err: Error, article: any) => {
             if(err) {
-                const result = {
-                    "success": false,
-                    "message": err.message,
-                    "error": err,
-                };
+                const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
                 callback(result);
             } else {
                 if (!article) {
-                    const result = {
-                        "success": false,
-                        "message": "Article Not found in database!",
-                        "error": new Error("Article Not found in database!"),
-                    };
+                    const err1 = new Error("Article Not found in database!");
+                    const result = new ErrorResultMessage(err1, err1.message.toString()).getMessage();
                     callback(result);
                 } else {
-                    const result = {
-                        "success": true,
-                        "message": "Successful, Article Found!",
-                        "article": article,
-                    };
+                    const result = new ArticleResultMessage(article, "Successful, Article Found!").getMessage();
                     callback(result);
                 }
             }
@@ -61,7 +44,7 @@ export class ArticlesService {
     }
 
     private async isUnique (slug: string, callback: any) {
-        ArticleModel.findOne({slug}, (err: any, article: any) => {
+        ArticleModel.findOne({slug}, (err: Error, article: any) => {
             if(err){
                 this.log.error(err.message);
                 this.log.debug(err.stack);
@@ -112,36 +95,22 @@ export class ArticlesService {
 
                         newArticle.save((err: any) => {
                             if (err) {
-                                const rstArticle1 = {
-                                    "success": false,
-                                    "message": err.message,
-                                    "error": err,
-                                };
+                                const rstArticle1 = new ErrorResultMessage(err, err.message.toString()).getMessage();
                                 callback(rstArticle1);
                             } else {
-                                const rstArticle2 = {
-                                    "success": true,
-                                    "message": "Article creation Successful!",
-                                    "article": newArticle,
-                                };
+                                const rstArticle2 = new ArticleResultMessage(newArticle, "Article creation Successful!").getMessage();
                                 callback(rstArticle2);
                             }
                         });
                     } else {
-                        const rs2 = {
-                            "success": false,
-                            "message": "Not contains all required data!",
-                            "error": new Error("Not contains all required data!"),
-                        };
+                        const err1 = new Error("Not contains all required data!");
+                        const rs2 = new ErrorResultMessage(err1, err1.message.toString()).getMessage();
                         callback(rs2);
                     }
                 });
             } else {
-                const rs = {
-                    "success": false,
-                    "message": "Article is already exists!",
-                    "error": new Error("Article is already exists!"),
-                };
+                const err2 = new Error("Article is already exists!");
+                const rs = new ErrorResultMessage(err2, err2.message.toString()).getMessage();
                 callback(rs);
             }
         });

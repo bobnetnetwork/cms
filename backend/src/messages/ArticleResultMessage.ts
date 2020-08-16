@@ -1,18 +1,18 @@
 import {ResultMessage} from "./ResultMessage.js";
 
-export class UserResultMessage extends ResultMessage {
-    protected readonly user: any;
+export class ArticleResultMessage extends ResultMessage {
+    protected readonly article: any;
 
-    constructor(message: string, user: any) {
+    constructor(article: any, message: string) {
         super(message, true);
-        this.user = user;
+        this.article = article;
     }
 
     public getMessage() {
         return {
+            "article": this.article,
             "message": this.message,
             "success": this.success,
-            "user": this.user,
         }
     }
 }
