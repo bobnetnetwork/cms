@@ -11,8 +11,8 @@ export class EmailMessage {
     private _envelope: any;
 
     private _subject: any;
-    private _text: string;
-    private _html: string;
+    private _text: string | undefined;
+    private _html: string | undefined;
     private _amp: any;
     private _attachDataUrls: any;
     private _watchHtml: any;
@@ -69,14 +69,14 @@ export class EmailMessage {
         }
     }
 
-    public generateTextFromHtml(html?: string) {
+   /* public generateTextFromHtml(html?: string) {
         if(!html) {
             this._text = textVersionJs(this._html);
         } else {
             this._html = html;
             this._text = textVersionJs(html);
         }
-    }
+    }*/
 
     get sender() {
         return this._sender;

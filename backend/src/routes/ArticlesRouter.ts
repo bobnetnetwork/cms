@@ -36,7 +36,7 @@ export class ArticlesRouter {
     private getArticles() {
             this.articlesRouter.get("/", async (req: Request, res: Response) => {
                 try {
-                    await this.articlesService.findAll((result) => {
+                    await this.articlesService.findAll((result: any) => {
                         res.status(200).json(result);
                     });
                 } catch (e) {
@@ -51,7 +51,7 @@ export class ArticlesRouter {
     private getArticle() {
         this.articlesRouter.get("/:slug", async (req: Request, res: Response) => {
             try {
-                await this.articlesService.findBySlug(req.params.slug, (result) => {
+                await this.articlesService.findBySlug(req.params.slug, (result: any) => {
                     res.status(200).json(result);
                 });
             } catch (e) {
@@ -66,7 +66,7 @@ export class ArticlesRouter {
     private createArticle() {
         this.articlesRouter.post("/", async (req: Request, res: Response) => {
             try {
-                await this.articlesService.create(req.body, (result) => {
+                await this.articlesService.create(req.body, (result: any) => {
                     res.status(201).json(result);
                 });
             } catch (e) {

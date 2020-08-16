@@ -3,14 +3,12 @@
  */
 
 import express, {Request, Response} from "express";
-import mongoose from "mongoose";
 import {UsersService} from "../service/user/UsersService.js";
 import {auth} from "./auth.js";
 import passport from "passport";
 import {LogService} from "../service/LogService.js";
 
 export class UsersRouter {
-    private Users = mongoose.model("Users");
 
     /**
      * Router Definition
@@ -42,11 +40,7 @@ export class UsersRouter {
     // GET users/
     private getUsers() {
         this.usersRouter.get("/", async (req: Request, res: Response) => {
-            await this.Users.findById(52)
-                .then(async (user: any) => {
-                    if(!user) {
-                        res.status(400);
-                    }
+
                     try {
                         await this.userService.findAll((result: any) => {
                             res.status(200).json(result);
@@ -57,16 +51,14 @@ export class UsersRouter {
                         this.log.debug(e.stack);
                     }
                 });
-        });
     }
 
     // GET users/:username
     private getUser() {
         this.usersRouter.get("/:username", async (req: Request, res: Response) => {
             try {
-                await this.userService.findByUserName(req.params.username, (result: any) => {
-                    res.status(200).json(result);
-                });
+                const result = await this.userService.findByUserName(req.params.username);
+                res.status(200).json(result);
             } catch (e) {
                 res.status(404).send(e.message);
                 this.log.error(e.message);

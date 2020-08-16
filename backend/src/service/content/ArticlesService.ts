@@ -1,7 +1,7 @@
 /**
  * Data Model Interfaces
  */
-import {Article} from "../../model/content/article.js";
+import {ArticleModel} from "../../model/content/Article.js";
 import {SlugifyService} from "../SlugifyService.js";
 import {LogService} from "../LogService.js";
 
@@ -12,7 +12,7 @@ export class ArticlesService {
      * Service Methods
      */
     public async findAll(callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; article?: any; }): void; }) {
-        return Article.find({}, (err: any, articles: any) => {
+        return ArticleModel.find({}, (err: any, articles: any) => {
             if (err) {
                 const result = {
                     "success": false,
@@ -35,7 +35,7 @@ export class ArticlesService {
     }
 
     public async findBySlug(Slug: string, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; article?: any; }): void; }) {
-        return Article.findOne({
+        return ArticleModel.findOne({
             slug: Slug
         }, (err: any, article: any) => {
             if(err) {
@@ -70,7 +70,7 @@ export class ArticlesService {
     }
 
     private async isUnique (data: { slug: any; }, callback: { (result: any): void; (arg0: boolean): void; }) {
-        Article.findOne({"slug": data.slug}, (err: { message: any; }, user: any) => {
+        ArticleModel.findOne({"slug": data.slug}, (err: { message: any; }, user: any) => {
             if(err){
                 this.log.error(err.message);
                 callback(false);
@@ -88,19 +88,19 @@ export class ArticlesService {
         callback(result);
     }
 
-    private static createArticle(data: { title: string; headline: any; connect: any; featuredImage: any; author: any; addedAt: any; tags: any; categories: any; }) {
-        const article = new Article();
+    private static createArticle(data: { title: string; headline: any; content: any; featuredImage: any; author: any; addedAt: any; tags: any; categories: any; }) {
+        const article = new ArticleModel();
         const slugify = new SlugifyService();
 
         article.title = data.title;
         article.headline = data.headline;
-        article.connect = data.connect;
+        article.content = data.content;
         article.featuredImage = data.featuredImage;
         article.author = data.author;
         article.slug = slugify.createSlug(data.title);
 
         if(!data.addedAt){
-            article.addedAt = Date.now();
+            article.addedAt = new Date;
         } else {
             article.addedAt = data.addedAt;
         }

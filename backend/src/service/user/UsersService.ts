@@ -1,7 +1,7 @@
 /**
  * Data Model Interfaces
  */
-import {Users} from "../../model/user/users.js";
+import {UserModel} from "../../model/user/User.js";
 import {LogService} from "../LogService.js";
 
 export class UsersService {
@@ -16,7 +16,7 @@ export class UsersService {
      * Service Methods
      */
     public async findAll(callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; user?: any; }): void; }) {
-        return Users.find({}, (err: any, users: any) => {
+        return UserModel.find({}, (err: any, users: any) => {
             if (err) {
                 const result = {
                     "success": false,
@@ -38,44 +38,12 @@ export class UsersService {
         });
     }
 
-    public async findByUserName (UserName: string, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; user?: any; }): void; }) {
-        return Users.findOne({
-            userName: UserName
-        }, (err: any, user: any) => {
-            if (err) {
-                const result = {
-                    "success": false,
-                    "message": "Authentication failed or User not found.",
-                    "error": err,
-                }
-                this.log.error(err.message);
-                this.log.debug(err.stack);
-                callback(result);
-            } else {
-                if (!user) {
-                    const result = {
-                        "success": false,
-                        "message": "User Not found in database!",
-                        "error": "User Not found in database!",
-                    }
-                    this.log.error("User Not found in database!");
-                    this.log.debug("sd");
-                    callback(result);
-                } else {
-                    const result = {
-                        "success": true,
-                        "message": "Successful, User Found!",
-                        "user": user,
-                    }
-                    this.log.info("Successful, User Found!");
-                    callback(result);
-                }
-            }
-        })
+    public async findByUserName (userName: string) {
+        return UserModel.findByUserName(userName);
     }
 
     private async isUnique(data: { userName: any; email: any; }, callback: { (result: any): void; (arg0: boolean): void; }) {
-        Users.findOne({"userName": data.userName}, {"email": data.email}, (err: { message: any; }, user: any) => {
+        UserModel.findOne({"userName": data.userName}, {"email": data.email}, (err: { message: any; }, user: any) => {
             if(err){
                 this.log.error(err.message);
                 callback(false);
@@ -94,14 +62,14 @@ export class UsersService {
     }
 
     public createUser(data: { email: any; userName: any; pwd: any; registeredAt: any; firstName: any; lastName: any; roles: any; accountExpired: any; accountLocked: any; credentialsExpired: any; enabled: any; }) {
-        const user = new Users();
+        const user = new UserModel();
         user.email = data.email;
         user.userName = data.userName;
         user.pwd = data.pwd;
         user.setPassword(data.pwd);
 
         if(!data.registeredAt){
-            user.registeredAt = Date.now();
+            user.registeredAt = new Date();
         } else {
             user.registeredAt = data.registeredAt;
         }
@@ -184,7 +152,7 @@ export class UsersService {
     }
 
     public async update (data: { userName: any; firstName: any; lastName: any; roles: any; email: any; pwd: any; accountExpired: any; accountLocked: any; credentialsExpired: any; enabled: any; }, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; user?: any; }): void; }) {
-        Users.findOne({
+        UserModel.findOne({
             userName: data.userName
         }, (err: any, user: { firstName: any; lastName: any; roles: any; email: any; pwd: any; accountExpired: any; accountLocked: any; credentialsExpired: any; enabled: any; save: (arg0: (err1: any, updatedUser: any) => void) => void; }) => {
             if (err) {
@@ -232,7 +200,7 @@ export class UsersService {
     }
 
     public async deleteById(Id: string, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; }): void; }) {
-        Users.findOne({
+        UserModel.findOne({
             id: Id
         }, (err: any, user: { delete: (arg0: (err1: any) => void) => void; }) => {
             if (err) {

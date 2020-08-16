@@ -13,13 +13,13 @@ export const auth = {
     required: jwt({
         secret: 'secret',
         userProperty: 'payload',
-        getToken: getTokenFromHeaders,
+        // getToken: getTokenFromHeaders,
         algorithms: ['RS256']
     }),
     optional: jwt({
         secret: 'secret',
         userProperty: 'payload',
-        getToken: getTokenFromHeaders,
+        // getToken: getTokenFromHeaders,
         credentialsRequired: false,
         algorithms: ['RS256']
     }),
