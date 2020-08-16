@@ -2,6 +2,7 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import typegoose, {Ref} from 'typegoose';
 import {Role} from "./Role";
+import {Types} from "mongoose";
 const { prop, Typegoose } = typegoose;
 
 
@@ -63,14 +64,14 @@ export class User extends Typegoose {
 
         return jwt.sign({
             email: this.email,
-            // id: this._id,
+            id: Types.ObjectId,
             exp: parseInt(String(expirationDate.getTime() / 1000), 10),
         }, 'secret');
     }
 
     toAuthJSON() {
         return {
-            // _id: this._id,
+            _id: Types.ObjectId,
             email: this.email,
             token: this.generateJWT(),
         };
