@@ -7,7 +7,7 @@ const log = new LogService().getLogger("errorMiddleware");
 export const errorHandler = (
     error: HttpException,
     request: Request,
-    response: Response
+    response: Response,
 ) => {
     const status = error.statusCode || 500;
     const message =

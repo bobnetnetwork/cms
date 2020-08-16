@@ -5,7 +5,7 @@ const log = new LogService().getLogger("notFoundMiddleware");
 
 export const notFoundHandler = (
     request: Request,
-    response: Response
+    response: Response,
 ) => {
 
     const message = "Resource not found";
