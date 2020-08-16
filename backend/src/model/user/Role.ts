@@ -1,4 +1,4 @@
-import typegoose, {Ref} from 'typegoose';
+import typegoose from 'typegoose';
 const { prop, Typegoose } = typegoose;
 
 export class Role extends Typegoose {

@@ -13,12 +13,12 @@ export class ServerService {
     private database = new DBService();
 
     constructor() {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV !== "production") {
             dotenv.config();
         }
 
         if(process.env.APP_PORT) {
-            this.PORT = parseInt(process.env.APP_PORT as string, 10);
+            this.PORT = parseInt(process.env.APP_PORT, 10);
         } else {
             this.log.error("The APP_PORT environment is required!");
             process.exit(1);
@@ -66,18 +66,18 @@ export class ServerService {
     }
 
     private showConnectionAddresses(serverType: string) {
-        const networkInterfaces = os.networkInterfaces();
+        // const networkInterfaces = os.networkInterfaces();
         this.log.info("Server started at:");
         this.log.info(serverType + "://localhost:" + this.PORT);
         this.log.info(serverType + "://" + os.hostname() + ":" + this.PORT);
 
-        for (const name of Object.keys(networkInterfaces)) {
-            /*for (const net of networkInterfaces[name]) {
+        /*for (const name of Object.keys(networkInterfaces)) {
+            for (const net of networkInterfaces[name]) {
                 // skip over non-ipv4 and internal (i.e. 127.0.0.1) addresses
                 if (net.family === 'IPv4' && !net.internal) {
                     this.log.info(serverType + "://" + net.address + ":" + this.PORT);
                 }
-            }*/
-        }
+            }
+        }*/
     }
 }

@@ -17,7 +17,7 @@ export class EmailService {
     private _emailMessage = new EmailMessage();
 
     constructor() {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV !== "production") {
             dotenv.config();
         }
 
@@ -29,7 +29,7 @@ export class EmailService {
         }
 
         if(process.env.MAIL_SERVER_PORT){
-            this.PORT = parseInt(process.env.MAIL_SERVER_PORT as string, 10);
+            this.PORT = parseInt(process.env.MAIL_SERVER_PORT, 10);
         } else {
             this.log.error("The MAIL_SERVER_PORT environment is required!");
             process.exit(1);

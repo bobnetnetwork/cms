@@ -49,12 +49,12 @@ export class User extends Typegoose {
     setPassword(password: crypto.BinaryLike) {
         this.salt = crypto.randomBytes(16).toString('hex');
         this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-    };
+    }
 
     validatePassword(password: crypto.BinaryLike) {
         const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
         return this.hash === hash;
-    };
+    }
 
     generateJWT() {
         const today = new Date();
@@ -74,7 +74,7 @@ export class User extends Typegoose {
             email: this.email,
             token: this.generateJWT(),
         };
-    };
+    }
 }
 
 

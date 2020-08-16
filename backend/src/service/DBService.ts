@@ -16,7 +16,7 @@ export class DBService {
     private readonly dbUri: string;
 
     constructor() {
-         if (process.env.NODE_ENV !== 'production') {
+         if (process.env.NODE_ENV !== "production") {
              dotenv.config();
          }
 
@@ -42,7 +42,7 @@ export class DBService {
          }
 
          if(process.env.DB_SERVER_PORT) {
-             this.PORT = parseInt(process.env.DB_SERVER_PORT as string, 10);
+             this.PORT = parseInt(process.env.DB_SERVER_PORT, 10);
          } else {
              this.log.error("The DB_SERVER_PORT environment is required!");
              process.exit(1);
