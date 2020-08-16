@@ -11,16 +11,14 @@ export class ArticlesService {
     /**
      * Service Methods
      */
-    public async findAll(callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; article?: any; }): void; }) {
+    public async findAll(callback: any) {
         return ArticleModel.find({}, (err: any, articles: any) => {
             if (err) {
                 const result = {
                     "success": false,
-                    "message": "Authentication failed or Article not found.",
+                    "message": err.message,
                     "error": err,
                 }
-                this.log.error(err);
-                this.log.debug(err.stack);
                 callback(result);
             } else {
                 const result = {
@@ -28,33 +26,27 @@ export class ArticlesService {
                     "message": "Successful, Article Found!",
                     "article": articles,
                 }
-                this.log.info("Successful, Article Found!");
                 callback(result);
             }
         });
     }
 
-    public async findBySlug(Slug: string, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; article?: any; }): void; }) {
-        return ArticleModel.findOne({
-            slug: Slug
-        }, (err: any, article: any) => {
+    public async findBySlug(slug: string, callback: any) {
+        return ArticleModel.findOne({slug}, (err: any, article: any) => {
             if(err) {
                 const result = {
                     "success": false,
-                    "message": "Authentication failed or Article not found.",
+                    "message": err.message,
                     "error": err,
                 }
-                this.log.error(err);
-                this.log.debug(err.stack);
                 callback(result);
             } else {
                 if (!article) {
                     const result = {
                         "success": false,
                         "message": "Article Not found in database!",
-                        "error": "Article Not found in database!",
+                        "error": new Error("Article Not found in database!"),
                     }
-                    this.log.error("Article Not found in database!");
                     callback(result);
                 } else {
                     const result = {
@@ -62,19 +54,19 @@ export class ArticlesService {
                         "message": "Successful, Article Found!",
                         "article": article,
                     }
-                    this.log.info("Successful, Article Found!");
                     callback(result);
                 }
             }
         });
     }
 
-    private async isUnique (data: { slug: any; }, callback: { (result: any): void; (arg0: boolean): void; }) {
-        ArticleModel.findOne({"slug": data.slug}, (err: { message: any; }, user: any) => {
+    private async isUnique (slug: string, callback: any) {
+        ArticleModel.findOne({slug}, (err: any, article: any) => {
             if(err){
                 this.log.error(err.message);
+                this.log.debug(err.stack);
                 callback(false);
-            } else if(!user){
+            } else if(!article){
                 callback(true);
             } else {
                 callback(false);
@@ -82,13 +74,13 @@ export class ArticlesService {
         });
     }
 
-    private static async isContainAllRequiredData (data: { title: any; content: any; }, callback: { (rst: any): void; (arg0: boolean): void; }) {
+    private static async isContainAllRequiredData (data: any, callback: any) {
         let result: boolean;
         result = (data.title && data.content);
         callback(result);
     }
 
-    private static createArticle(data: { title: string; headline: any; content: any; featuredImage: any; author: any; addedAt: any; tags: any; categories: any; }) {
+    private static createArticle(data: any) {
         const article = new ArticleModel();
         const slugify = new SlugifyService();
 
@@ -100,7 +92,7 @@ export class ArticlesService {
         article.slug = slugify.createSlug(data.title);
 
         if(!data.addedAt){
-            article.addedAt = new Date;
+            article.addedAt = new Date();
         } else {
             article.addedAt = data.addedAt;
         }
@@ -111,8 +103,8 @@ export class ArticlesService {
         return article;
     }
 
-    public async create(data: any, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; article?: any; }): void; }) {
-        await  this.isUnique(data, (result: any) => {
+    public async create(data: any, callback: any) {
+        await this.isUnique(data, (result: any) => {
             if(result) {
                 ArticlesService.isContainAllRequiredData(data, (rst: any) => {
                     if(rst) {
@@ -122,19 +114,16 @@ export class ArticlesService {
                             if (err) {
                                 const rstArticle1 = {
                                     "success": false,
-                                    "message": "Authentication failed or Article creation failed.",
+                                    "message": err.message,
                                     "error": err,
                                 }
-                                this.log.error(err.message);
-                                this.log.debug(err.stack);
                                 callback(rstArticle1);
                             } else {
                                 const rstArticle2 = {
                                     "success": true,
-                                    "message": "Article creation Succesful!",
+                                    "message": "Article creation Successful!",
                                     "article": newArticle,
                                 }
-                                this.log.info("Article creation Succesful!");
                                 callback(rstArticle2);
                             }
                         });
@@ -142,8 +131,8 @@ export class ArticlesService {
                         const rs2 = {
                             "success": false,
                             "message": "Not contains all required data!",
+                            "error": new Error("Not contains all required data!"),
                         }
-                        this.log.error("Not contains all required data!");
                         callback(rs2);
                     }
                 });
@@ -151,8 +140,8 @@ export class ArticlesService {
                 const rs = {
                     "success": false,
                     "message": "Article is already exists!",
+                    "error": new Error("Article is already exists!"),
                 }
-                this.log.error("Article is already exists!");
                 callback(rs);
             }
         });

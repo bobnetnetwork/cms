@@ -37,7 +37,13 @@ export class ArticlesRouter {
             this.articlesRouter.get("/", async (req: Request, res: Response) => {
                 try {
                     await this.articlesService.findAll((result: any) => {
-                        res.status(200).json(result);
+                        if(result.error) {
+                            this.log.error(result.error.message);
+                            this.log.debug(result.error.stack);
+                            res.status(404).json(result);
+                        } else {
+                            res.status(200).json(result);
+                        }
                     });
                 } catch (e) {
                     res.status(404).send(e.message);
@@ -52,7 +58,13 @@ export class ArticlesRouter {
         this.articlesRouter.get("/:slug", async (req: Request, res: Response) => {
             try {
                 await this.articlesService.findBySlug(req.params.slug, (result: any) => {
-                    res.status(200).json(result);
+                    if(result.error) {
+                        this.log.error(result.error.message);
+                        this.log.debug(result.error.stack);
+                        res.status(404).json(result);
+                    } else {
+                        res.status(200).json(result);
+                    }
                 });
             } catch (e) {
                 res.status(404).send(e.message);
@@ -67,10 +79,17 @@ export class ArticlesRouter {
         this.articlesRouter.post("/", async (req: Request, res: Response) => {
             try {
                 await this.articlesService.create(req.body, (result: any) => {
-                    res.status(201).json(result);
+                    if(result.error) {
+                        this.log.error(result.error.message);
+                        this.log.debug(result.error.stack);
+                        res.status(500).json(result);
+                    } else {
+                        this.log.info("Article (" + req.body.title + ") creation is Successful!");
+                        res.status(200).json(result);
+                    }
                 });
             } catch (e) {
-                res.status(404).send(e.message);
+                res.status(500).send(e.message);
                 this.log.error(e.message);
                 this.log.debug(e.stack);
             }
