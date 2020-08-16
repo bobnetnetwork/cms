@@ -8,10 +8,6 @@ export class UsersService {
 
     private log = new LogService().getLogger("usersService");
 
-    constructor() {
-        //
-    }
-
     /**
      * Service Methods
      */
