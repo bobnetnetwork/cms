@@ -4,8 +4,11 @@
 import {UserModel} from "../../model/user/User.js";
 import {LogService} from "../LogService.js";
 import {Logger} from "log4js";
-import {Role} from "../../model/user/Role";
+import {Role} from "../../model/user/Role.js";
 import {Ref} from "typegoose";
+import {ErrorResultMessage} from "../../messages/ErrorResultMessage.js";
+import {UserResultMessage} from "../../messages/UserResultMessage.js";
+import {ResultMessage} from "../../messages/ResultMessage.js";
 
 export class UsersService {
 
@@ -17,18 +20,10 @@ export class UsersService {
     public async findAll(callback: { (result: any): void; (arg0: { error?: Error; message: string; success: boolean; user?: any; }): void; }): Promise<void> {
         UserModel.find({}, (err: Error, users: any) => {
             if (err) {
-                const result = {
-                    "error": err,
-                    "message": err.message.toString(),
-                    "success": false,
-                };
+                const result = new ErrorResultMessage(err, err.message.toString(), false).getMessage();
                 callback(result);
             } else {
-                const result = {
-                    "message": "Successful, User Found!",
-                    "success": true,
-                    "user": users,
-                };
+                const result = new UserResultMessage("Successful, User Found!", true, users).getMessage();
                 callback(result);
             }
         });
@@ -37,25 +32,15 @@ export class UsersService {
     public async findByUserName (userName: string, callback: { (result: any): void; (arg0: { error?: Error; message?: string; success: boolean; user?: import("typegoose").InstanceType<import("../../model/user/User.js").User>; }): void; }): Promise<void> {
         UserModel.findOne({userName}, (err: Error, user) => {
             if (err) {
-                const result = {
-                    "error": err,
-                    "message": err.message.toString(),
-                    "success": false,
-                };
+                const result = new ErrorResultMessage(err, err.message.toString(), false).getMessage();
                 callback(result);
             } else {
                 if (!user) {
-                    const result = {
-                        "error": new Error("User Not found in database!"),
-                        "message": "User Not found in database!",
-                        "success": false,
-                    };
+                    const err1 = new Error("User Not found in database!");
+                    const result = new ErrorResultMessage(err1, err1.message.toString(), false).getMessage();
                     callback(result);
                 } else {
-                    const result = {
-                        "success": true,
-                        "user": user,
-                    };
+                    const result = new UserResultMessage("Successful, User Found!", true, user).getMessage();
                     callback(result);
                 }
             }
@@ -134,36 +119,22 @@ export class UsersService {
 
                         newUser.save((err: Error) => {
                             if (err) {
-                                const rstUser1 = {
-                                    "error": err,
-                                    "message": err.message.toString(),
-                                    "success": false,
-                                };
+                                const rstUser1 = new ErrorResultMessage(err, err.message.toString(), false).getMessage();
                                 callback(rstUser1);
                             } else {
-                                const rstUser2 = {
-                                    "message": "User Register Successful!",
-                                    "success": true,
-                                    "user": newUser,
-                                };
+                                const rstUser2 = new UserResultMessage("User Register Successful!", true, newUser).getMessage();
                                 callback(rstUser2);
                             }
                         });
                     } else {
-                        const rs2 = {
-                            "error": new Error("Not contains all required data!"),
-                            "message": "Not contains all required data!",
-                            "success": false,
-                        };
+                        const err2 = new Error("Not contains all required data!");
+                        const rs2 = new ErrorResultMessage(err2, err2.message.toString(), false).getMessage();
                         callback(rs2);
                     }
                 });
             } else {
-                const rs = {
-                    "error": new Error("User is already exists!"),
-                    "message": "User is already exists!",
-                    "success": false,
-                };
+                const err = new Error("User is already exists!");
+                const rs = new ErrorResultMessage(err, err.message.toString(), false).getMessage();
                 callback(rs);
             }
         })
@@ -174,11 +145,7 @@ export class UsersService {
             userName: data.userName,
         }, (err: Error, user: any) => {
             if (err) {
-                const result = {
-                    "error": err,
-                    "message": err.message.toString(),
-                    "success": false,
-                };
+                const result = new ErrorResultMessage(err, err.message.toString(), false).getMessage();
                 callback(result);
             } else {
                 if (data.firstName !== undefined) user.firstName = data.firstName;
@@ -193,18 +160,10 @@ export class UsersService {
 
                 user.save((err1: Error, updatedUser: any) => {
                     if (err1) {
-                        const result = {
-                            "error": err1,
-                            "message": err1.message.toString(),
-                            "success": false,
-                        };
+                        const result = new ErrorResultMessage(err1, err1.message.toString(), false).getMessage();
                         callback(result);
                     } else {
-                        const result = {
-                            "message": "User Update Successful!",
-                            "success": true,
-                            "user": updatedUser,
-                        };
+                        const result = new UserResultMessage("User Update Successful!", true, updatedUser).getMessage();
                         callback(result);
                     }
                 });
@@ -217,26 +176,15 @@ export class UsersService {
             userName: UserName,
         }, (err: Error, user: any) => {
             if (err) {
-                const result = {
-                    "error": err,
-                    "message": err.message.toString(),
-                    "success": false,
-                };
+                const result = new ErrorResultMessage(err, err.message.toString(), false).getMessage();
                 callback(result);
             } else {
                 user.delete((err1: Error) => {
                     if (err1) {
-                        const result = {
-                            "error": err1,
-                            "message": err1.message.toString(),
-                            "success": false,
-                        };
+                        const result = new ErrorResultMessage(err1, err1.message.toString(), false).getMessage();
                         callback(result);
                     } else {
-                        const result = {
-                            "message": "User Delete Successful!",
-                            "success": false,
-                        };
+                        const result = new ResultMessage("User Delete Successful!", true).getMessage();
                         callback(result);
                     }
                 });
