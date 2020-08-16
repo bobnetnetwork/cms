@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import typegoose, {Ref} from 'typegoose';
+import typegoose, {Ref} from "typegoose";
 import {Role} from "./Role";
 import {Types} from "mongoose";
 const { prop, Typegoose } = typegoose;
@@ -48,12 +48,12 @@ export class User extends Typegoose {
     roles?: Ref<Role>;
 
     setPassword(password: crypto.BinaryLike) {
-        this.salt = crypto.randomBytes(16).toString('hex');
-        this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+        this.salt = crypto.randomBytes(16).toString("hex");
+        this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, "sha512").toString("hex");
     }
 
     validatePassword(password: crypto.BinaryLike) {
-        const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
+        const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, "sha512").toString("hex");
         return this.hash === hash;
     }
 
@@ -66,7 +66,7 @@ export class User extends Typegoose {
             email: this.email,
             id: Types.ObjectId,
             exp: parseInt(String(expirationDate.getTime() / 1000), 10),
-        }, 'secret');
+        }, "secret");
     }
 
     toAuthJSON() {

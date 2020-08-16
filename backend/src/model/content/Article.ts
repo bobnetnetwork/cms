@@ -1,4 +1,4 @@
-import typegoose, {Ref} from 'typegoose';
+import typegoose, {Ref} from "typegoose";
 import {Category} from "./Category";
 import {Tag} from "./Tag";
 import {User} from "../user/User";

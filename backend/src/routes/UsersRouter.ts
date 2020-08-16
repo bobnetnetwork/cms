@@ -146,13 +146,13 @@ export class UsersRouter {
 
     // POST login route (optional, everyone has access)
     private login(){
-        this.usersRouter.post('/login', auth.optional, (req: Request, res:Response, next: NextFunction) => {
+        this.usersRouter.post("/login", auth.optional, (req: Request, res:Response, next: NextFunction) => {
             const { body: { user } } = req;
 
             if(!user.email) {
                 return res.status(422).json({
                     errors: {
-                        email: 'is required',
+                        email: "is required",
                     },
                 });
             }
@@ -160,12 +160,12 @@ export class UsersRouter {
             if(!user.password) {
                 return res.status(422).json({
                     errors: {
-                        password: 'is required',
+                        password: "is required",
                     },
                 });
             }
 
-            return passport.authenticate('local', { session: false }, (err: any, passportUser) => {
+            return passport.authenticate("local", { session: false }, (err: any, passportUser) => {
                 if(err) {
                     this.log.error(err.message);
                     this.log.debug(err.stack);

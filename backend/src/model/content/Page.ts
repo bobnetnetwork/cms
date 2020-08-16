@@ -1,4 +1,4 @@
-import typegoose, {Ref} from 'typegoose';
+import typegoose, {Ref} from "typegoose";
 import {User} from "../user/User";
 const { prop, Typegoose } = typegoose;
 
