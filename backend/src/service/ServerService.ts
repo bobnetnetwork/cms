@@ -51,9 +51,9 @@ export class ServerService {
 
     public shutDown(msg: string) {
         this.log.info(msg);
-        this.log.info("Closing DB connection(s).")
+        this.log.info("Closing DB connection(s).");
         this.closeDBConnections();
-        this.log.info("Closing http(s) server.")
+        this.log.info("Closing http(s) server.");
         process.exit(0);
     }
 
