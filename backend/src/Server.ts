@@ -50,9 +50,12 @@ class Server {
         this.app.use(this.USERS, new UsersRouter().getUsersRouter());
         this.app.use(this.ARTICLES, new ArticlesRouter().getArticleRouter());
         this.app.use(this.FILES, new FilesRouter().getFileRouter());
-        this.app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
-        this.app.use(session({ secret: "passport-tutorial", cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
+        const sessionOptions = {
+            secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false
+        };
+
+        this.app.use(session(sessionOptions));
 
         this.app.use(errorHandler);
         this.app.use(notFoundHandler);
@@ -90,7 +93,7 @@ process.on("SIGTERM", () => {
     appServer.shutDown("SIGTERM signal received.");
 });
 
-process.on("SIGINT", () =>{
+process.on("SIGINT", () => {
     appServer.shutDown("SIGINT signal received.");
 });
 
