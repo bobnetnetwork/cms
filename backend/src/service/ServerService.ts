@@ -66,18 +66,21 @@ export class ServerService {
     }
 
     private showConnectionAddresses(serverType: string) {
-        // const networkInterfaces = os.networkInterfaces();
+        const networkInterfaces = os.networkInterfaces();
         this.log.info("Server started at:");
         this.log.info(serverType + "://localhost:" + this.PORT);
         this.log.info(serverType + "://" + os.hostname() + ":" + this.PORT);
 
-        /*for (const name of Object.keys(networkInterfaces)) {
-            for (const net of networkInterfaces[name]) {
-                // skip over non-ipv4 and internal (i.e. 127.0.0.1) addresses
-                if (net.family === 'IPv4' && !net.internal) {
-                    this.log.info(serverType + "://" + net.address + ":" + this.PORT);
+        for (const name of Object.keys(networkInterfaces)) {
+            const networkInterface = networkInterfaces[name];
+            if(networkInterface){
+                for (const net of networkInterface) {
+                    // skip over non-ipv4 and internal (i.e. 127.0.0.1) addresses
+                    if (net.family === 'IPv4' && !net.internal) {
+                        this.log.info(serverType + "://" + net.address + ":" + this.PORT);
+                    }
                 }
             }
-        }*/
+        }
     }
 }
