@@ -14,12 +14,12 @@ export class UsersService {
     /**
      * Service Methods
      */
-    public async findAll(callback: { (result: any): void; (arg0: { error?: any; message: any; success: boolean; user?: any; }): void; }): Promise<void> {
-        UserModel.find({}, (err: any, users: any) => {
+    public async findAll(callback: { (result: any): void; (arg0: { error?: Error; message: string; success: boolean; user?: any; }): void; }): Promise<void> {
+        UserModel.find({}, (err: Error, users: any) => {
             if (err) {
                 const result = {
                     "error": err,
-                    "message": err.message,
+                    "message": err.message.toString(),
                     "success": false,
                 };
                 callback(result);
@@ -34,12 +34,12 @@ export class UsersService {
         });
     }
 
-    public async findByUserName (userName: string, callback: { (result: any): void; (arg0: { error?: any; message?: any; success: boolean; user?: import("typegoose").InstanceType<import("../../model/user/User.js").User>; }): void; }): Promise<void> {
-        UserModel.findOne({userName}, (err, user) => {
+    public async findByUserName (userName: string, callback: { (result: any): void; (arg0: { error?: Error; message?: string; success: boolean; user?: import("typegoose").InstanceType<import("../../model/user/User.js").User>; }): void; }): Promise<void> {
+        UserModel.findOne({userName}, (err: Error, user) => {
             if (err) {
                 const result = {
                     "error": err,
-                    "message": err.message,
+                    "message": err.message.toString(),
                     "success": false,
                 };
                 callback(result);
@@ -49,7 +49,6 @@ export class UsersService {
                         "error": new Error("User Not found in database!"),
                         "message": "User Not found in database!",
                         "success": false,
-
                     };
                     callback(result);
                 } else {
@@ -64,7 +63,7 @@ export class UsersService {
     }
 
     private async isUnique(userName: string, email: string, callback: { (result: any): void; (arg0: boolean): void; }): Promise<void> {
-        UserModel.findOne({$or: [{userName}, {email}]}, (err: any, user: any) => {
+        UserModel.findOne({$or: [{userName}, {email}]}, (err: Error, user: any) => {
             if(err){
                 this.log.error(err.message);
                 this.log.debug(err.stack);
@@ -77,9 +76,9 @@ export class UsersService {
         });
     }
 
-    private static async isContainAllRequiredData(data: { userName: any; email: any; pwd?: any; }, callback: { (rst: any): void; (arg0: boolean): void; }): Promise<void> {
+    private static async isContainAllRequiredData(data: { userName: string; email: string; pwd?: string; }, callback: { (rst: any): void; (arg0: boolean): void; }): Promise<void> {
         let result: boolean;
-        result = (data.userName && data.pwd && data.email);
+        result = (data.userName !== undefined && data.pwd !== undefined && data.email !== undefined);
         callback(result);
     }
 
@@ -126,18 +125,18 @@ export class UsersService {
         return user;
     }
 
-    public async create(data: { userName: any; email: any; pwd?: any; }, callback: { (result: any): void; (arg0: { error?: any; message: any; success: boolean; user?: import("typegoose").InstanceType<import("../../model/user/User.js").User>; }): void; }): Promise<void>{
+    public async create(data: { userName: string; email: string; pwd?: string; }, callback: { (result: any): void; (arg0: { error?: Error; message: string; success: boolean; user?: import("typegoose").InstanceType<import("../../model/user/User.js").User>; }): void; }): Promise<void>{
         await this.isUnique(data.userName, data.email, (result: any) => {
             if (result) {
                 UsersService.isContainAllRequiredData(data, (rst: any) => {
                     if(rst){
                         const newUser = this.createUser(data);
 
-                        newUser.save((err) => {
+                        newUser.save((err: Error) => {
                             if (err) {
                                 const rstUser1 = {
                                     "error": err,
-                                    "message": err.message,
+                                    "message": err.message.toString(),
                                     "success": false,
                                 };
                                 callback(rstUser1);
@@ -170,14 +169,14 @@ export class UsersService {
         })
     }
 
-    public async update(data: { userName: string; firstName: string; lastName: string; roles: Ref<Role>; email: string; pwd: string; accountExpired: boolean; accountLocked: boolean; credentialsExpired: boolean; enabled: boolean; }, callback: { (result: any): void; (arg0: { error?: any; message: any; success: boolean; user?: any; }): void; }): Promise<void>{
+    public async update(data: { userName: string; firstName: string; lastName: string; roles: Ref<Role>; email: string; pwd: string; accountExpired: boolean; accountLocked: boolean; credentialsExpired: boolean; enabled: boolean; }, callback: { (result: any): void; (arg0: { error?: Error; message: string; success: boolean; user?: any; }): void; }): Promise<void>{
         UserModel.findOne({
-            userName: data.userName
-        }, (err: any, user: any) => {
+            userName: data.userName,
+        }, (err: Error, user: any) => {
             if (err) {
                 const result = {
                     "error": err,
-                    "message": err.message,
+                    "message": err.message.toString(),
                     "success": false,
                 };
                 callback(result);
@@ -192,11 +191,11 @@ export class UsersService {
                 if (data.credentialsExpired !== undefined) user.credentialsExpired = data.credentialsExpired;
                 if (data.enabled !== undefined) user.enabled = data.enabled;
 
-                user.save((err1: any, updatedUser: any) => {
+                user.save((err1: Error, updatedUser: any) => {
                     if (err1) {
                         const result = {
                             "error": err1,
-                            "message": err1.message,
+                            "message": err1.message.toString(),
                             "success": false,
                         };
                         callback(result);
@@ -213,23 +212,23 @@ export class UsersService {
         });
     }
 
-    public async deleteByUserName(UserName: string, callback: { (result: any): void; (arg0: { error?: any; message: any; success: boolean; }): void; }): Promise<void> {
+    public async deleteByUserName(UserName: string, callback: { (result: any): void; (arg0: { error?: Error; message: string; success: boolean; }): void; }): Promise<void> {
         UserModel.findOne({
-            userName: UserName
-        }, (err: any, user: any) => {
+            userName: UserName,
+        }, (err: Error, user: any) => {
             if (err) {
                 const result = {
                     "error": err,
-                    "message": err.message,
+                    "message": err.message.toString(),
                     "success": false,
                 };
                 callback(result);
             } else {
-                user.delete((err1: any) => {
+                user.delete((err1: Error) => {
                     if (err1) {
                         const result = {
                             "error": err1,
-                            "message": err1.message,
+                            "message": err1.message.toString(),
                             "success": false,
                         };
                         callback(result);
