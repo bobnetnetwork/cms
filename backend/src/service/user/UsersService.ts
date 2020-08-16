@@ -236,7 +236,7 @@ export class UsersService {
                     } else {
                         const result = {
                             "success": false,
-                            "message": "User Delete Succesful!",
+                            "message": "User Delete Successful!",
                         }
                         callback(result);
                     }
