@@ -1,7 +1,7 @@
-export default class HttpException extends Error {
-    statusCode: number;
-    message: string;
-    error: string | null;
+export class HttpException extends Error {
+    public statusCode: number;
+    public message: string;
+    public error: string | null;
 
     constructor(statusCode: number, message: string, error?: string) {
         super(message);
