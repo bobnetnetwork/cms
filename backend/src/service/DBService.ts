@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import {LogService} from "./LogService.js";
+import {LogService} from "./tool/LogService.js";
+import {Logger} from "log4js";
+import {EnvironmentRequiredException} from "../exception/environment/EnvironmentRequiredException.js";
 
 export class DBService {
     private readonly USER: string;
@@ -10,7 +12,7 @@ export class DBService {
     private readonly ADDRESS: string;
     private readonly DATABASE: string;
 
-    private log = new LogService().getLogger("dbService");
+    private log: Logger = new LogService().getLogger("dbService");
 
     private connection: mongoose.Connection | undefined;
     private readonly dbUri: string;
@@ -23,53 +25,61 @@ export class DBService {
          if(process.env.DB_SERVER_USER) {
              this.USER = process.env.DB_SERVER_USER;
          } else {
-             this.log.error("The DB_SERVER_USER environment is required!");
+             const err = new EnvironmentRequiredException("DB_SERVER_USER");
+             this.log.error(err.message.toString());
+             this.log.debug(err.stack);
              process.exit(1);
          }
 
          if(process.env.DB_SERVER_PWD) {
              this.PWD = process.env.DB_SERVER_PWD;
          } else {
-             this.log.error("The DB_SERVER_PWD environment is required!");
+             const err = new EnvironmentRequiredException("DB_SERVER_PWD");
+             this.log.error(err.message.toString());
+             this.log.debug(err.stack);
              process.exit(1);
          }
 
          if(process.env.DB_SERVER_TYPE) {
              this.TYPE = process.env.DB_SERVER_TYPE;
          } else {
-             this.log.error("The DB_SERVER_TYPE environment is required!");
+             const err = new EnvironmentRequiredException("DB_SERVER_TYPE");
+             this.log.error(err.message.toString());
+             this.log.debug(err.stack);
              process.exit(1);
          }
 
          if(process.env.DB_SERVER_PORT) {
              this.PORT = parseInt(process.env.DB_SERVER_PORT, 10);
          } else {
-             this.log.error("The DB_SERVER_PORT environment is required!");
+             const err = new EnvironmentRequiredException("DB_SERVER_PORT");
+             this.log.error(err.message.toString());
+             this.log.debug(err.stack);
              process.exit(1);
          }
 
          if(process.env.DB_SERVER_ADDRESS) {
              this.ADDRESS = process.env.DB_SERVER_ADDRESS;
          } else {
-             this.log.error("The DB_SERVER_ADDRESS environment is required!");
+             const err = new EnvironmentRequiredException("DB_SERVER_ADDRESS");
+             this.log.error(err.message.toString());
+             this.log.debug(err.stack);
              process.exit(1);
          }
 
          if(process.env.DB_SERVER_DATABASE) {
              this.DATABASE = process.env.DB_SERVER_DATABASE;
          } else {
-             this.log.error("The DB_SERVER_DATABASE environment is required!");
+             const err = new EnvironmentRequiredException("DB_SERVER_DATABASE");
+             this.log.error(err.message.toString());
+             this.log.debug(err.stack);
              process.exit(1);
          }
 
          this.dbUri = this.getDBUri();
     }
 
-    private getDBUri(){
-        return "mongodb://" + this.USER + ":" + this.PWD + "@" + this.ADDRESS + ":" + this.PORT + "/" + this.DATABASE;
-    }
-
-    public connectToDB() {
+    public connectToDB(): void {
         try {
             mongoose.connect(this.dbUri, {
                 useNewUrlParser: true,
@@ -82,7 +92,9 @@ export class DBService {
                 this.log.info("Connected to database");
             });
             this.connection.on("error", () => {
-                this.log.error("Error connecting to database");
+                const err = new Error("Error connecting to database");
+                this.log.error(err.message.toString());
+                this.log.debug(err.stack);
             });
         } catch (e) {
             this.log.error(e.message);
@@ -91,10 +103,14 @@ export class DBService {
         }
     }
 
-    public disconnect() {
+    public disconnect(): void {
         if (!this.connection) {
             return;
         }
         mongoose.disconnect();
+    }
+
+    private getDBUri(): string{
+        return "mongodb://" + this.USER + ":" + this.PWD + "@" + this.ADDRESS + ":" + this.PORT + "/" + this.DATABASE;
     }
 }

@@ -10,15 +10,15 @@ const getTokenFromHeaders = (req: any) => {
 };
 
 export const auth = {
-    required: jwt({
+    optional: jwt({
         algorithms: ["RS256"],
+        credentialsRequired: false,
         getToken: getTokenFromHeaders,
         secret: "secret",
         userProperty: "payload",
     }),
-    optional: jwt({
+    required: jwt({
         algorithms: ["RS256"],
-        credentialsRequired: false,
         getToken: getTokenFromHeaders,
         secret: "secret",
         userProperty: "payload",

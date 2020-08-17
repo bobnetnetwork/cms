@@ -1,37 +1,48 @@
-// import textVersionJs from "textversionjs";
+import textVersionJs from "textversionjs";
+
+import {
+    Address,
+    AmpAttachment, Attachment,
+    AttachmentLike, Envelope,
+    Headers,
+    IcalAttachment,
+    ListHeaders, TextEncoding,
+} from "nodemailer/lib/mailer";
+import {Readable} from "stream";
+import MimeNode from "nodemailer/lib/mime-node";
 
 export class EmailMessage {
-    private _sender: any;
-    private _receivers: any;
-    private _cc: any;
-    private _bcc: any;
-    private _replyTo: any;
-    private _inReplyTo: any;
-    private _references: any;
-    private _envelope: any;
+    private _sender?: string | Address;
+    private _receivers?: string | Address | string[] | Address[];
+    private _cc?: string | Address | string[] | Address[];
+    private _bcc?: string | Address | string[] | Address[];
+    private _replyTo?: string | Address;
+    private _inReplyTo?: string | Address;
+    private _references?: string | string[];
+    private _envelope?: Envelope | MimeNode.Envelope;
 
-    private _subject: any;
-    private _text: string | undefined;
-    private _html: string | undefined;
-    private _amp: any;
-    private _attachDataUrls: any;
-    private _watchHtml: any;
-    private _attachments: any;
+    private _subject?: string;
+    private _text?: string | Buffer | Readable | AttachmentLike;
+    private _html?: string | Buffer | Readable | AttachmentLike;
+    private _amp?: string | Buffer | Readable | AmpAttachment;
+    private _attachDataUrls?: boolean;
+    private _watchHtml?: string | Buffer | Readable | AttachmentLike;
+    private _attachments?: Attachment[];
 
-    private _icalEvent: any;
-    private _alternatives: any;
-    private _encoding: any;
-    private _raw: any;
-    private _textEncoding: any;
+    private _icalEvent?: string | Buffer | Readable | IcalAttachment;
+    private _alternatives?: Attachment[];
+    private _encoding?: string;
+    private _raw?: string | Buffer | Readable | AttachmentLike;
+    private _textEncoding?: TextEncoding;
 
-    private _priority: any;
-    private _headers: any;
-    private _messageId: any;
-    private _date: any;
-    private _list: any;
+    private _priority?: "high"|"normal"|"low";
+    private _headers?: Headers;
+    private _messageId?: string;
+    private _date?: Date | string;
+    private _list?: ListHeaders;
 
-    private _disableFileAccess: any;
-    private _disableUrlAccess: any;
+    private _disableFileAccess?: boolean;
+    private _disableUrlAccess?: boolean;
 
     public generateEmailMessage() {
         return {
@@ -69,228 +80,230 @@ export class EmailMessage {
         };
     }
 
-   /* public generateTextFromHtml(html?: string) {
+   public generateTextFromHtml(html?: string): void {
         if(!html) {
-            this._text = textVersionJs(this._html);
+            if (typeof this._html === "string") {
+                this._text = textVersionJs(this._html);
+            }
         } else {
             this._html = html;
             this._text = textVersionJs(html);
         }
-    }*/
+    }
 
-    get sender() {
+    get sender(): string | Address | undefined {
         return this._sender;
     }
 
-    set sender(value) {
+    set sender(value: string | Address | undefined) {
         this._sender = value;
     }
 
-    get receivers() {
+    get receivers(): string | Address | string[] | Address[] | undefined {
         return this._receivers;
     }
 
-    set receivers(value) {
+    set receivers(value: string | Address | string[] | Address[] | undefined) {
         this._receivers = value;
     }
 
-    get cc() {
+    get cc(): string | Address | string[] | Address[] | undefined {
         return this._cc;
     }
 
-    set cc(value) {
+    set cc(value: string | Address | string[] | Address[] | undefined) {
         this._cc = value;
     }
 
-    get bcc() {
+    get bcc(): string | Address | string[] | Address[] | undefined {
         return this._bcc;
     }
 
-    set bcc(value) {
+    set bcc(value: string | Address | string[] | Address[] | undefined) {
         this._bcc = value;
     }
 
-    get replyTo() {
+    get replyTo(): string | Address | undefined {
         return this._replyTo;
     }
 
-    set replyTo(value) {
+    set replyTo(value: string | Address | undefined) {
         this._replyTo = value;
     }
 
-    get inReplyTo() {
+    get inReplyTo(): string | Address | undefined {
         return this._inReplyTo;
     }
 
-    set inReplyTo(value) {
+    set inReplyTo(value: string | Address | undefined) {
         this._inReplyTo = value;
     }
 
-    get references() {
+    get references(): string | string[] | undefined {
         return this._references;
     }
 
-    set references(value) {
+    set references(value: string | string[] | undefined) {
         this._references = value;
     }
 
-    get envelope() {
+    get envelope(): Envelope | MimeNode.Envelope | undefined {
         return this._envelope;
     }
 
-    set envelope(value) {
+    set envelope(value: Envelope | MimeNode.Envelope | undefined) {
         this._envelope = value;
     }
 
-    get subject() {
+    get subject(): string | undefined {
         return this._subject;
     }
 
-    set subject(value) {
+    set subject(value: string | undefined) {
         this._subject = value;
     }
 
-    get text() {
+    get text(): string | Buffer | Readable | AttachmentLike | undefined {
         return this._text;
     }
 
-    set text(value) {
+    set text(value: string | Buffer | Readable | AttachmentLike | undefined) {
         this._text = value;
     }
 
-    get html() {
+    get html(): string | Buffer | Readable | AttachmentLike | undefined {
         return this._html;
     }
 
-    set html(value) {
+    set html(value: string | Buffer | Readable | AttachmentLike | undefined) {
         this._html = value;
     }
 
-    get amp() {
+    get amp(): string | Buffer | Readable | AmpAttachment | undefined {
         return this._amp;
     }
 
-    set amp(value) {
+    set amp(value: string | Buffer | Readable | AmpAttachment | undefined) {
         this._amp = value;
     }
 
-    get attachDataUrls() {
+    get attachDataUrls(): boolean | undefined {
         return this._attachDataUrls;
     }
 
-    set attachDataUrls(value) {
+    set attachDataUrls(value: boolean | undefined) {
         this._attachDataUrls = value;
     }
 
-    get watchHtml() {
+    get watchHtml(): string | Buffer | Readable | AttachmentLike | undefined {
         return this._watchHtml;
     }
 
-    set watchHtml(value) {
+    set watchHtml(value: string | AttachmentLike | Buffer | Readable | undefined) {
         this._watchHtml = value;
     }
 
-    get attachments() {
+    get attachments(): Attachment[] | undefined {
         return this._attachments;
     }
 
-    set attachments(value) {
+    set attachments(value: Attachment[] | undefined) {
         this._attachments = value;
     }
 
-    get icalEvent() {
+    get icalEvent(): string | Buffer | Readable | IcalAttachment | undefined {
         return this._icalEvent;
     }
 
-    set icalEvent(value) {
+    set icalEvent(value: string | Buffer | Readable | IcalAttachment | undefined) {
         this._icalEvent = value;
     }
 
-    get alternatives() {
+    get alternatives(): Attachment[] | undefined {
         return this._alternatives;
     }
 
-    set alternatives(value) {
+    set alternatives(value: Attachment[] | undefined) {
         this._alternatives = value;
     }
 
-    get encoding() {
+    get encoding(): string | undefined {
         return this._encoding;
     }
 
-    set encoding(value) {
+    set encoding(value: string | undefined) {
         this._encoding = value;
     }
 
-    get raw() {
+    get raw(): string | Buffer | Readable | AttachmentLike | undefined {
         return this._raw;
     }
 
-    set raw(value) {
+    set raw(value: string | Buffer | Readable | AttachmentLike | undefined) {
         this._raw = value;
     }
 
-    get textEncoding() {
+    get textEncoding(): TextEncoding | undefined {
         return this._textEncoding;
     }
 
-    set textEncoding(value) {
+    set textEncoding(value: TextEncoding | undefined ) {
         this._textEncoding = value;
     }
 
-    get priority() {
+    get priority(): "high" | "normal" | "low" | undefined {
         return this._priority;
     }
 
-    set priority(value) {
+    set priority(value: "high" | "normal" | "low" | undefined) {
         this._priority = value;
     }
 
-    get headers() {
+    get headers(): Headers | undefined {
         return this._headers;
     }
 
-    set headers(value) {
+    set headers(value: Headers | undefined) {
         this._headers = value;
     }
 
-    get messageId() {
+    get messageId(): string | undefined {
         return this._messageId;
     }
 
-    set messageId(value) {
+    set messageId(value: string | undefined) {
         this._messageId = value;
     }
 
-    get date() {
+    get date(): string | Date | undefined {
         return this._date;
     }
 
-    set date(value) {
+    set date(value: string | Date | undefined) {
         this._date = value;
     }
 
-    get list() {
+    get list(): ListHeaders | undefined {
         return this._list;
     }
 
-    set list(value) {
+    set list(value: ListHeaders | undefined) {
         this._list = value;
     }
 
-    get disableFileAccess() {
+    get disableFileAccess(): boolean | undefined {
         return this._disableFileAccess;
     }
 
-    set disableFileAccess(value) {
+    set disableFileAccess(value: boolean | undefined) {
         this._disableFileAccess = value;
     }
 
-    get disableUrlAccess() {
+    get disableUrlAccess(): boolean | undefined {
         return this._disableUrlAccess;
     }
 
-    set disableUrlAccess(value) {
+    set disableUrlAccess(value: boolean | undefined) {
         this._disableUrlAccess = value;
     }
 }
