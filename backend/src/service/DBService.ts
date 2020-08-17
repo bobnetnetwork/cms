@@ -92,7 +92,9 @@ export class DBService {
                 this.log.info("Connected to database");
             });
             this.connection.on("error", () => {
-                this.log.error("Error connecting to database");
+                const err = new Error("Error connecting to database");
+                this.log.error(err.message.toString());
+                this.log.debug(err.stack);
             });
         } catch (e) {
             this.log.error(e.message);
