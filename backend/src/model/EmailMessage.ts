@@ -6,14 +6,14 @@ import {
     AttachmentLike, Envelope,
     Headers,
     IcalAttachment,
-    ListHeaders, TextEncoding
+    ListHeaders, TextEncoding,
 } from "nodemailer/lib/mailer";
 import {Readable} from "stream";
 import MimeNode from "nodemailer/lib/mime-node";
 
 export class EmailMessage {
     private _sender?: string | Address;
-    private _receivers? : string | Address | string[] | Address[];
+    private _receivers?: string | Address | string[] | Address[];
     private _cc?: string | Address | string[] | Address[];
     private _bcc?: string | Address | string[] | Address[];
     private _replyTo?: string | Address;
@@ -80,7 +80,7 @@ export class EmailMessage {
         };
     }
 
-   public generateTextFromHtml(html?: string) {
+   public generateTextFromHtml(html?: string): void {
         if(!html) {
             if (typeof this._html === "string") {
                 this._text = textVersionJs(this._html);
