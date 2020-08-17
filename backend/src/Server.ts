@@ -24,7 +24,7 @@ class Server {
     private app: Express = express();
     private router: Router = express.Router();
 
-    private API_URL: string = "/api/v01";
+    private API_URL = "/api/v01";
     private HEALTH_CHECK: string = this.API_URL + "/health-check";
     private USERS: string = this.API_URL + "/users";
     private ARTICLES: string = this.API_URL + "/content/articles";
@@ -40,16 +40,16 @@ class Server {
        this.server.startServer(this.app);
     }
 
+    public shutDown(message: string): void {
+        this.server.shutDown(message);
+    }
+
     private getRootPath(): void {
         this.router.get("/", async (req: Request, res: Response) => {
             res.status(200).json({
                 message: "Welcome to CMS_DEV server by BobNET Network!",
             });
         });
-    }
-
-    public shutDown(message: string): void {
-        this.server.shutDown(message);
     }
 
     private init(): void {
