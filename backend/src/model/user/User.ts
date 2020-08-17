@@ -27,7 +27,7 @@ export class User extends Typegoose {
     public hash?: string;
 
     @prop()
-    public salt: string = "";
+    public salt?: string;
 
     @prop()
     public accountExpired?: boolean;
@@ -47,17 +47,22 @@ export class User extends Typegoose {
     @prop()
     public roles?: Ref<Role>;
 
-    public setPassword(password: crypto.BinaryLike) {
+    public setPassword(password: crypto.BinaryLike): void {
         this.salt = crypto.randomBytes(16).toString("hex");
         this.hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, "sha512").toString("hex");
     }
 
-    public validatePassword(password: crypto.BinaryLike) {
-        const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, "sha512").toString("hex");
+    public validatePassword(password: crypto.BinaryLike): boolean {
+        let hash;
+        if(typeof this.salt !== "undefined") {
+            hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, "sha512").toString("hex");
+        } else {
+            hash = crypto.pbkdf2Sync(password, " ", 10000, 512, "sha512").toString("hex");
+        }
         return this.hash === hash;
     }
 
-    public generateJWT() {
+    public generateJWT(): string {
         const today = new Date();
         const expirationDate = new Date(today);
         expirationDate.setDate(today.getDate() + 60);
@@ -69,13 +74,19 @@ export class User extends Typegoose {
         }, "secret");
     }
 
-    public toAuthJSON() {
+    public toAuthJSON(): AuthJSONType {
         return {
             _id: Types.ObjectId,
             email: this.email,
             token: this.generateJWT(),
         };
     }
+}
+
+type AuthJSONType = {
+    _id: mongoose.Types.ObjectIdConstructor,
+    email: string | undefined,
+    token: string,
 }
 
 export const UserModel = new User().getModelForClass(User);
