@@ -31,7 +31,7 @@ export class HealthCheckRouter {
                 memoryUsage: process.memoryUsage(),
                 resourceUsage: process.resourceUsage(),
                 uptime: process.uptime(),
-            }
+            };
             const osData = {
                 arch: os.arch(),
                 cpus: os.cpus(),
@@ -43,7 +43,7 @@ export class HealthCheckRouter {
                 totalmem: os.totalmem(),
                 uptime: os.uptime(),
                 version: os.version(),
-            }
+            };
             const healthCheck = {
                 message: "OK",
                 os: osData,
