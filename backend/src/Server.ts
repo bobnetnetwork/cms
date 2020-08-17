@@ -22,7 +22,7 @@ import {FacebookAuthRouter} from "./routes/auth/FacebookAuthRouter.js";
 import {TwitterAuthRouter} from "./routes/auth/TwitterAuthRouter.js";
 import {GoogleOAuthRouter} from "./routes/auth/GoogleOAuthRouter.js";
 import {GoogleOAuth2Router} from "./routes/auth/GoogleOAuth2Router.js";
-import {RootRouter} from "./routes/RootRouter";
+import {RootRouter} from "./routes/RootRouter.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");
