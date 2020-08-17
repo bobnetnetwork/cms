@@ -25,7 +25,7 @@ export class EmailMessage {
     private _text?: string | Buffer | Readable | AttachmentLike;
     private _html?: string | Buffer | Readable | AttachmentLike;
     private _amp?: string | Buffer | Readable | AmpAttachment;
-    private _attachDataUrls: any;
+    private _attachDataUrls?: boolean;
     private _watchHtml?: string | Buffer | Readable | AttachmentLike;
     private _attachments?: Attachment[];
 
@@ -187,11 +187,11 @@ export class EmailMessage {
         this._amp = value;
     }
 
-    get attachDataUrls(): any {
+    get attachDataUrls(): boolean | undefined {
         return this._attachDataUrls;
     }
 
-    set attachDataUrls(value: any) {
+    set attachDataUrls(value: boolean | undefined) {
         this._attachDataUrls = value;
     }
 
