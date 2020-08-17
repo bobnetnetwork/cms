@@ -4,7 +4,7 @@ export class ResultMessage extends BaseMessage{
     protected readonly success: boolean;
 
     constructor(message: string, success: boolean) {
-        super(message)
+        super(message);
         this.success = success;
     }
 
