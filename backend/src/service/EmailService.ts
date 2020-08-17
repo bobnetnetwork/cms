@@ -1,10 +1,11 @@
-import nodemailer from "nodemailer";
+import nodemailer, {SentMessageInfo} from "nodemailer";
 import {LogService} from "./LogService.js";
 import dotenv from "dotenv";
 import {EmailMessage} from "../model/EmailMessage";
+import {Logger} from "log4js";
 
 export class EmailService {
-    private log = new LogService().getLogger("EmailService");
+    private log: Logger = new LogService().getLogger("EmailService");
 
     private readonly HOST: string;
     private readonly PORT: number;
@@ -13,8 +14,8 @@ export class EmailService {
     private readonly PWD: string;
 
     private transporter: import("nodemailer/lib/mailer");
-    private info: { messageId: any; } | undefined;
-    private _emailMessage = new EmailMessage();
+    private info: SentMessageInfo;
+    private _emailMessage: EmailMessage = new EmailMessage();
 
     constructor() {
         if (process.env.NODE_ENV !== "production") {
@@ -57,17 +58,17 @@ export class EmailService {
         }
 
         this.transporter = nodemailer.createTransport({
+            auth: {
+                pass: this.PWD,
+                user: this.USER,
+            },
             host: this.HOST,
             port: this.PORT,
             secure: this.SECURE,
-            auth: {
-                user: this.USER,
-                pass: this.PWD
-            },
         });
     }
 
-    public async send() {
+    public async send(): Promise<void> {
         try{
             this.info = await this.transporter.sendMail(this._emailMessage.generateEmailMessage());
 
