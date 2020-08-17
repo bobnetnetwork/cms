@@ -35,4 +35,16 @@ export class Article extends Typegoose {
     public categories?: Ref<Category>;
 }
 
+export type ArticleType = {
+    title?: string,
+    headline?: string,
+    content?: string,
+    featuredImage?: string,
+    author?: Ref<User>,
+    slug?: string,
+    addedAt?: Date,
+    tags?: Ref<Tag>,
+    categories?: Ref<Category>,
+}
+
 export const ArticleModel = new Article().getModelForClass(Article);

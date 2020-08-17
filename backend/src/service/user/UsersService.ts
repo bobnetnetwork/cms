@@ -1,11 +1,9 @@
 /**
  * Data Model Interfaces
  */
-import {UserModel} from "../../model/user/User.js";
+import {UserModel, UserType} from "../../model/user/User.js";
 import {LogService} from "../LogService.js";
 import {Logger} from "log4js";
-import {Role} from "../../model/user/Role.js";
-import {Ref} from "typegoose";
 import {ErrorResultMessage} from "../../messages/ErrorResultMessage.js";
 import {UserResultMessage} from "../../messages/UserResultMessage.js";
 import {ResultMessage, ResultMessageType} from "../../messages/ResultMessage.js";
@@ -20,11 +18,11 @@ export class UsersService {
     public async findAll(callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void> {
         UserModel.find({}, (err: Error, users: any) => {
             if (err) {
-                const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
-                callback(result);
+                const result = new ErrorResultMessage(err, err.message.toString());
+                callback(result.getMessage());
             } else {
-                const result = new UserResultMessage("Successful, User Found!", users).getMessage();
-                callback(result);
+                const result = new UserResultMessage("Successful, User Found!", users);
+                callback(result.getMessage());
             }
         });
     }
@@ -32,47 +30,52 @@ export class UsersService {
     public async findByUserName (userName: string, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void> {
         UserModel.findOne({userName}, (err: Error, user) => {
             if (err) {
-                const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
-                callback(result);
+                const result = new ErrorResultMessage(err, err.message.toString());
+                callback(result.getMessage());
             } else {
                 if (!user) {
                     const err1 = new Error("User Not found in database!");
-                    const result = new ErrorResultMessage(err1, err1.message.toString()).getMessage();
-                    callback(result);
+                    const result = new ErrorResultMessage(err1, err1.message.toString());
+                    callback(result.getMessage());
                 } else {
-                    const result = new UserResultMessage("Successful, User Found!", user).getMessage();
-                    callback(result);
+                    const result = new UserResultMessage("Successful, User Found!", user);
+                    callback(result.getMessage());
                 }
             }
         });
     }
 
-    private async isUnique(userName: string, email: string, callback: { (result: any): void; (arg0: boolean): void; }): Promise<void> {
-        UserModel.findOne({$or: [{userName}, {email}]}, (err: Error, user: any) => {
-            if(err){
-                this.log.error(err.message);
-                this.log.debug(err.stack);
-                callback(false);
-            } else if(!user){
-                callback(true);
-            } else {
-                callback(false);
-            }
-        });
+    private async isUnique(data: UserType, callback: { (result: any): void; (arg0: boolean): void; }): Promise<void> {
+        if(typeof data.userName !== "undefined" && typeof data.email !== "undefined") {
+            UserModel.findOne({$or: [{userName: data.userName}, {email: data.email}]}, (err: Error, user: any) => {
+                if (err) {
+                    this.log.error(err.message);
+                    this.log.debug(err.stack);
+                    callback(false);
+                } else if (!user) {
+                    callback(true);
+                } else {
+                    callback(false);
+                }
+            });
+        }
     }
 
-    private static async isContainAllRequiredData(data: { userName: string; email: string; pwd?: string; }, callback: { (rst: any): void; (arg0: boolean): void; }): Promise<void> {
+    private static async isContainAllRequiredData(data: UserType, callback: { (rst: any): void; (arg0: boolean): void; }): Promise<void> {
         let result: boolean;
         result = (typeof data.userName !== "undefined" && typeof data.pwd !== "undefined" && typeof data.email !== "undefined");
         callback(result);
     }
 
-    public createUser(data: any){
+    public createUser(data: UserType){
         const user = new UserModel();
         user.email = data.email;
         user.userName = data.userName;
         user.pwd = data.pwd;
-        user.setPassword(data.pwd);
+
+        if(data.pwd){
+            user.setPassword(data.pwd);
+        }
 
         if(!data.registeredAt){
             user.registeredAt = new Date();
@@ -110,8 +113,8 @@ export class UsersService {
         return user;
     }
 
-    public async create(data: { userName: string; email: string; pwd?: string; }, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void>{
-        await this.isUnique(data.userName, data.email, (result: boolean) => {
+    public async create(data: UserType, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void>{
+        await this.isUnique(data, (result: boolean) => {
             if (result) {
                 UsersService.isContainAllRequiredData(data, (rst: boolean) => {
                     if(rst){
@@ -119,34 +122,34 @@ export class UsersService {
 
                         newUser.save((err: Error) => {
                             if (err) {
-                                const rstUser1 = new ErrorResultMessage(err, err.message.toString()).getMessage();
-                                callback(rstUser1);
+                                const rstUser1 = new ErrorResultMessage(err, err.message.toString());
+                                callback(rstUser1.getMessage());
                             } else {
-                                const rstUser2 = new UserResultMessage("User Register Successful!", newUser).getMessage();
-                                callback(rstUser2);
+                                const rstUser2 = new UserResultMessage("User Register Successful!", newUser);
+                                callback(rstUser2.getMessage());
                             }
                         });
                     } else {
                         const err2 = new Error("Not contains all required data!");
-                        const rs2 = new ErrorResultMessage(err2, err2.message.toString()).getMessage();
-                        callback(rs2);
+                        const rs2 = new ErrorResultMessage(err2, err2.message.toString());
+                        callback(rs2.getMessage());
                     }
                 });
             } else {
                 const err = new Error("User is already exists!");
-                const rs = new ErrorResultMessage(err, err.message.toString()).getMessage();
-                callback(rs);
+                const rs = new ErrorResultMessage(err, err.message.toString());
+                callback(rs.getMessage());
             }
         });
     }
 
-    public async update(data: { userName: string; firstName: string; lastName: string; roles: Ref<Role>; email: string; pwd: string; accountExpired: boolean; accountLocked: boolean; credentialsExpired: boolean; enabled: boolean; }, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void>{
+    public async update(data: UserType, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void>{
         UserModel.findOne({
             userName: data.userName,
         }, (err: Error, user: any) => {
             if (err) {
-                const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
-                callback(result);
+                const result = new ErrorResultMessage(err, err.message.toString());
+                callback(result.getMessage());
             } else {
                 if (typeof data.firstName !== "undefined") {
                     user.firstName = data.firstName;
@@ -178,11 +181,11 @@ export class UsersService {
 
                 user.save((err1: Error, updatedUser: any) => {
                     if (err1) {
-                        const result = new ErrorResultMessage(err1, err1.message.toString()).getMessage();
-                        callback(result);
+                        const result = new ErrorResultMessage(err1, err1.message.toString());
+                        callback(result.getMessage());
                     } else {
-                        const result = new UserResultMessage("User Update Successful!", updatedUser).getMessage();
-                        callback(result);
+                        const result = new UserResultMessage("User Update Successful!", updatedUser);
+                        callback(result.getMessage());
                     }
                 });
             }
@@ -194,16 +197,16 @@ export class UsersService {
             userName: UserName,
         }, (err: Error, user: any) => {
             if (err) {
-                const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
-                callback(result);
+                const result = new ErrorResultMessage(err, err.message.toString());
+                callback(result.getMessage());
             } else {
                 user.delete((err1: Error) => {
                     if (err1) {
-                        const result = new ErrorResultMessage(err1, err1.message.toString()).getMessage();
-                        callback(result);
+                        const result = new ErrorResultMessage(err1, err1.message.toString());
+                        callback(result.getMessage());
                     } else {
-                        const result = new ResultMessage("User Delete Successful!", true).getMessage();
-                        callback(result);
+                        const result = new ResultMessage("User Delete Successful!", true);
+                        callback(result.getMessage());
                     }
                 });
             }

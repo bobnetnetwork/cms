@@ -89,4 +89,20 @@ type AuthJSONType = {
     token: string,
 }
 
+export type UserType = {
+    firstName?: string,
+    lastName?: string,
+    userName?: string,
+    email?: string,
+    pwd?: string,
+    hash?: string,
+    salt?: string,
+    accountExpired?: boolean,
+    accountLocked?: boolean,
+    credentialsExpired?: boolean,
+    enabled?: boolean,
+    registeredAt?: Date,
+    roles?: Ref<Role>,
+}
+
 export const UserModel = new User().getModelForClass(User);
