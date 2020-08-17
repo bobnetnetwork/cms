@@ -1,6 +1,4 @@
 import express, {Router, Request, Response, NextFunction} from "express";
-import {Logger} from "log4js";
-import {LogService} from "../../service/tool/LogService.js";
 import passport from "passport";
 import passportLocal from "passport-local";
 import { UserModel} from "../../model/user/User.js";
@@ -10,8 +8,6 @@ const LocalStrategy = passportLocal.Strategy;
 export class LocalAuthRouter {
 
     private localAuthRouter: Router = express.Router();
-
-    private log: Logger = new LogService().getLogger("LocalAuthRouter");
 
     constructor() {
         this.configure();
@@ -51,7 +47,7 @@ export class LocalAuthRouter {
 
     private login(): void {
         this.localAuthRouter.post("/login", (req: Request, res: Response, next: NextFunction) => {
-            passport.authenticate("local", (err: Error, user, info) => {
+            passport.authenticate("local", (err: Error, user) => {
                 if(err) {
                     return next(err);
                 }

@@ -1,7 +1,5 @@
-import passportGoogleOAuth, {Profile, VerifyFunction} from "passport-google-oauth";
+import passportGoogleOAuth, {Profile} from "passport-google-oauth";
 import express, {Router} from "express";
-import {LogService} from "../../service/tool/LogService.js";
-import {Logger} from "log4js";
 import passport from "passport";
 import {UserModel} from "../../model/user/User.js";
 
@@ -11,10 +9,10 @@ export class GoogleOAuth2Router {
 
     private googleOAuth2Router: Router = express.Router();
 
-    private log: Logger = new LogService().getLogger("GoogleAuthRouter");
-
     constructor() {
         this.config();
+        this.auth();
+        this.callback();
     }
 
     public getGoogleOAuth2Router(): Router {
@@ -29,7 +27,7 @@ export class GoogleOAuth2Router {
         }
 
         passport.use(new GoogleStrategy(options,
-            async (token: string, tokenSecret: string, profile: Profile, done: VerifyFunction) => {
+            async (token: string, tokenSecret: string, profile: Profile) => {
                 await UserModel.findOrCreate({ googleId: profile.id});
             }
         ));
