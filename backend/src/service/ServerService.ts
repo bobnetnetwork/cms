@@ -72,16 +72,15 @@ export class ServerService {
         this.log.info(serverType + "://localhost:" + this.PORT);
         this.log.info(serverType + "://" + os.hostname() + ":" + this.PORT);
 
-        for (const name of Object.keys(networkInterfaces)) {
-            const networkInterface = networkInterfaces[name];
-            if(networkInterface){
-                for (const net of networkInterface) {
-                    // skip over non-ipv4 and internal (i.e. 127.0.0.1) addresses
-                    if (net.family === "IPv4" && !net.internal) {
-                        this.log.info(serverType + "://" + net.address + ":" + this.PORT);
-                    }
-                }
-            }
+        for(const [key, value] of Object.entries(networkInterfaces)) {
+           if(value) {
+               for(const net of value) {
+                   // skip over non-ipv4 and internal (i.e. 127.0.0.1) addresses
+                   if (net.family === "IPv4" && !net.internal) {
+                       this.log.info(serverType + "://" + net.address + ":" + this.PORT);
+                   }
+               }
+           }
         }
     }
 }
