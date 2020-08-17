@@ -1,9 +1,9 @@
 import passportTwitter, {Profile} from "passport-twitter";
 import express, {Router} from "express";
-import {LogService} from "../../../service/tool/LogService.js";
+import {LogService} from "../../service/tool/LogService.js";
 import {Logger} from "log4js";
 import passport from "passport";
-import {UserModel} from "../../../model/user/User.js";
+import {UserModel} from "../../model/user/User.js";
 
 const TwitterStrategy = passportTwitter.Strategy;
 

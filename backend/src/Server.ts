@@ -7,7 +7,7 @@ import helmet from "helmet";
 import fileUpload from "express-fileupload";
 import {UsersRouter} from "./routes/model/user/UsersRouter.js";
 import {ArticlesRouter} from "./routes/model/content/ArticlesRouter.js";
-import {HealthCheckRouter} from "./routes/model/tool/HealthCheckRouter.js";
+import {HealthCheckRouter} from "./routes/tool/HealthCheckRouter.js";
 import {FilesRouter} from "./routes/model/content/FilesRouter.js";
 import {ErrorMiddleware} from "./middleware/ErrorMiddleware.js";
 import {NotFoundHandler} from "./middleware/NotFoundMiddleware.js";
@@ -17,11 +17,11 @@ import session from "express-session";
 import "./config/passport.js";
 import {LogService} from "./service/tool/LogService.js";
 import {Logger} from "log4js";
-import {LocalAuthRouter} from "./routes/model/auth/LocalAuthRouter.js";
-import {FacebookAuthRouter} from "./routes/model/auth/FacebookAuthRouter.js";
-import {TwitterAuthRouter} from "./routes/model/auth/TwitterAuthRouter.js";
-import {GoogleOAuthRouter} from "./routes/model/auth/GoogleOAuthRouter.js";
-import {GoogleOAuth2Router} from "./routes/model/auth/GoogleOAuth2Router.js";
+import {LocalAuthRouter} from "./routes/auth/LocalAuthRouter.js";
+import {FacebookAuthRouter} from "./routes/auth/FacebookAuthRouter.js";
+import {TwitterAuthRouter} from "./routes/auth/TwitterAuthRouter.js";
+import {GoogleOAuthRouter} from "./routes/auth/GoogleOAuthRouter.js";
+import {GoogleOAuth2Router} from "./routes/auth/GoogleOAuth2Router.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");

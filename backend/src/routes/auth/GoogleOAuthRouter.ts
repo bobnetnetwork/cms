@@ -1,15 +1,15 @@
 import passportGoogleOAuth, {Profile, VerifyFunction} from "passport-google-oauth";
 import express, {Router} from "express";
-import {LogService} from "../../../service/tool/LogService.js";
+import {LogService} from "../../service/tool/LogService.js";
 import {Logger} from "log4js";
 import passport from "passport";
-import {UserModel} from "../../../model/user/User.js";
+import {UserModel} from "../../model/user/User.js";
 
-const GoogleStrategy = passportGoogleOAuth.OAuth2Strategy;
+const GoogleStrategy = passportGoogleOAuth.OAuthStrategy;
 
-export class GoogleOAuth2Router {
+export class GoogleOAuthRouter {
 
-    private googleOAuth2Router: Router = express.Router();
+    private googleOAuthRouter: Router = express.Router();
 
     private log: Logger = new LogService().getLogger("GoogleAuthRouter");
 
@@ -17,15 +17,15 @@ export class GoogleOAuth2Router {
         this.config();
     }
 
-    public getGoogleOAuth2Router(): Router {
-        return this.googleOAuth2Router;
+    public getGoogleOAuthRouter(): Router {
+        return this.googleOAuthRouter;
     }
 
     private config(): void {
         const options = {
-            clientID: "GOOGLE_CLIENT_ID",
-            clientSecret: "GOOGLE_CLIENT_SECRET",
-            callbackURL: "http://www.example.com/auth/google/callback"
+            consumerKey: "GOOGLE_CONSUMER_KEY",
+            consumerSecret: "GOOGLE_CONSUMER_SECRET",
+            callbackURL: "http://www.example.com/auth/google/callback",
         }
 
         passport.use(new GoogleStrategy(options,
@@ -36,7 +36,7 @@ export class GoogleOAuth2Router {
     }
 
     private auth(): void {
-        this.googleOAuth2Router.get("/", passport.authenticate("google", { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+        this.googleOAuthRouter.get("/", passport.authenticate("google", { scope: 'https://www.google.com/m8/feeds' }));
     }
 
     private callback(): void {
@@ -44,7 +44,7 @@ export class GoogleOAuth2Router {
             successRedirect: "/",
             failureRedirect: "/login",
         }
-        this.googleOAuth2Router.get("/callback", passport.authenticate("google", options));
+        this.googleOAuthRouter.get("/callback", passport.authenticate("google", options));
     }
 
 }
