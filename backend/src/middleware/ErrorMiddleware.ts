@@ -24,7 +24,7 @@ export class ErrorMiddleware {
         };
     }
 
-    public getHandler() {
+    public getHandler(): any {
         return this.handler;
     }
 }
