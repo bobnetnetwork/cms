@@ -2,11 +2,12 @@
  * Required External Modules and Interfaces
  */
 
-import express, {NextFunction, Request, Response} from "express";
+import express, {NextFunction, Request, Response, Router} from "express";
 import {UsersService} from "../service/user/UsersService.js";
 import {auth} from "./auth.js";
 import passport from "passport";
 import {LogService} from "../service/LogService.js";
+import {Logger} from "log4js";
 
 export class UsersRouter {
 
@@ -14,14 +15,10 @@ export class UsersRouter {
      * Router Definition
      */
 
-    private usersRouter = express.Router();
-    private log = new LogService().getLogger("usersRouter");
+    private usersRouter: Router = express.Router();
+    private log: Logger = new LogService().getLogger("usersRouter");
 
-    private userService = new UsersService();
-
-    public getUsersRouter(){
-        return this.usersRouter;
-    }
+    private userService: UsersService = new UsersService();
 
     constructor() {
         this.getUsers();
@@ -32,12 +29,16 @@ export class UsersRouter {
         this.login();
     }
 
+    public getUsersRouter(): Router{
+        return this.usersRouter;
+    }
+
     /**
      * Controller Definitions
      */
 
     // GET users/
-    private getUsers() {
+    private getUsers(): void {
         this.usersRouter.get("/", async (req: Request, res: Response) => {
             try {
                 await this.userService.findAll((result: any) => {
@@ -58,7 +59,7 @@ export class UsersRouter {
     }
 
     // GET users/:username
-    private getUser() {
+    private getUser(): void {
         this.usersRouter.get("/:username", async (req: Request, res: Response) => {
             try {
                 await this.userService.findByUserName(req.params.username, (result: any) => {
@@ -79,7 +80,7 @@ export class UsersRouter {
     }
 
     // POST users/
-    private createUser() {
+    private createUser(): void {
         this.usersRouter.post("/", async (req: Request, res: Response) => {
             try {
                 await this.userService.create(req.body, (result: any) => {
@@ -101,7 +102,7 @@ export class UsersRouter {
     }
 
     // PUT users/
-    private updateUser(){
+    private updateUser(): void {
         this.usersRouter.put("/", async (req: Request, res: Response) => {
             try {
                 await this.userService.update(req.body, (result: any) => {
@@ -110,7 +111,7 @@ export class UsersRouter {
                         this.log.debug(result.error.stack);
                         res.status(500).json(result);
                     } else {
-                        this.log.info("User (" + req.body.userName + ") updated!")
+                        this.log.info("User (" + req.body.userName + ") updated!");
                         res.status(200).json(result);
                     }
                 });
@@ -123,7 +124,7 @@ export class UsersRouter {
     }
 
     // DELETE users/:username
-    private deleteUser(){
+    private deleteUser(): void {
         this.usersRouter.delete("/:username", async (req: Request, res: Response) => {
             try {
                 await this.userService.deleteByUserName(req.params.username, (result: any) => {
@@ -145,8 +146,8 @@ export class UsersRouter {
     }
 
     // POST login route (optional, everyone has access)
-    private login(){
-        this.usersRouter.post("/login", auth.optional, (req: Request, res:Response, next: NextFunction) => {
+    private login(): void {
+        this.usersRouter.post("/login", auth.optional, (req: Request, res: Response, next: NextFunction) => {
             const { body: { user } } = req;
 
             if(!user.email) {
