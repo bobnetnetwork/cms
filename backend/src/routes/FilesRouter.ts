@@ -1,11 +1,11 @@
-import express, {Request, Response, Router} from "express";
+import {Request, Response, Router} from "express";
 import {LogService} from "../service/LogService.js";
 import {UploadedFile} from "express-fileupload";
 import {Logger} from "log4js";
 
 export class FilesRouter {
 
-    private filesRouter: Router = express.Router();
+    private filesRouter: Router = Router();
 
     private log: Logger = new LogService().getLogger("articlesRouter");
 
@@ -35,7 +35,7 @@ export class FilesRouter {
                         data: {
                             mimetype: avatar.mimetype,
                             name: avatar.name,
-                            size: avatar.size
+                            size: avatar.size,
                         },
                         message: "File is uploaded",
                         status: true,
