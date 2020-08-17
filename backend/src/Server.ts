@@ -12,30 +12,47 @@ import {FilesRouter} from "./routes/FilesRouter.js";
 import {errorHandler} from "./middleware/errorMiddleware.js";
 import {notFoundHandler} from "./middleware/notFoundMiddleware.js";
 import {ServerService} from "./service/ServerService.js";
-import express, {Request, Response} from "express";
+import express, {Express, Request, Response, Router} from "express";
 import session from "express-session";
 import "./config/passport.js";
 import {LogService} from "./service/LogService.js";
+import {Logger} from "log4js";
 
 class Server {
-    private log = new LogService().getLogger("server");
+    private log: Logger = new LogService().getLogger("server");
 
-    private app = express();
-    private router = express.Router();
+    private app: Express = express();
+    private router: Router = express.Router();
 
-    private API_URL = "/api/v01";
-    private HEALTH_CHECK = this.API_URL + "/health-check";
-    private USERS = this.API_URL + "/users";
-    private ARTICLES = this.API_URL + "/content/articles";
-    private FILES = this.API_URL + "/files";
+    private API_URL: string = "/api/v01";
+    private HEALTH_CHECK: string = this.API_URL + "/health-check";
+    private USERS: string = this.API_URL + "/users";
+    private ARTICLES: string = this.API_URL + "/content/articles";
+    private FILES: string = this.API_URL + "/files";
 
-    private server = new ServerService();
+    private server: ServerService = new ServerService();
 
     constructor() {
         this.init();
     }
 
-    private init() {
+    public start(): void {
+       this.server.startServer(this.app);
+    }
+
+    private getRootPath(): void {
+        this.router.get("/", async (req: Request, res: Response) => {
+            res.status(200).json({
+                message: "Welcome to CMS_DEV server by BobNET Network!",
+            });
+        });
+    }
+
+    public shutDown(message: string): void {
+        this.server.shutDown(message);
+    }
+
+    private init(): void {
         this.log.info("Starting Application...");
         this.log.info("App version: " + process.env.npm_package_version);
         this.log.info(process.env.npm_package_description);
@@ -64,26 +81,10 @@ class Server {
         this.app.use(notFoundHandler);
 
         this.app.use(fileUpload({
-            createParentPath: true
+            createParentPath: true,
         }));
 
         this.getRootPath();
-    }
-
-    public start() {
-       this.server.startServer(this.app);
-    }
-
-    private getRootPath() {
-        this.router.get('/', async (req: Request, res: Response) => {
-            res.status(200).json({
-                message: "Welcome to CMS_DEV server by BobNET Network!"
-            });
-        })
-    }
-
-    public shutDown(message: string) {
-        this.server.shutDown(message);
     }
 }
 
