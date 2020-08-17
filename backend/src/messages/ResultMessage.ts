@@ -1,9 +1,10 @@
-export class ResultMessage {
-    protected readonly message: string;
+import {BaseMessage} from "./BaseMessage.js";
+
+export class ResultMessage extends BaseMessage{
     protected readonly success: boolean;
 
     constructor(message: string, success: boolean) {
-        this.message = message;
+        super(message)
         this.success = success;
     }
 
