@@ -1,4 +1,4 @@
-import {Router, Request, Response, NextFunction} from "express";
+import express, {Router, Request, Response, NextFunction} from "express";
 import {Logger} from "log4js";
 import {LogService} from "../../../service/tool/LogService.js";
 import passport from "passport";
@@ -9,7 +9,7 @@ const LocalStrategy = passportLocal.Strategy;
 
 export class LocalAuthRouter {
 
-    private localAuthRouter: Router = Router();
+    private localAuthRouter: Router = express.Router();
 
     private log: Logger = new LogService().getLogger("LocalAuthRouter");
 

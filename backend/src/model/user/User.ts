@@ -1,11 +1,12 @@
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import {Ref, defaultClasses, getModelForClass, prop, plugin} from "@typegoose/typegoose";
+import typegoose, {Ref} from "@typegoose/typegoose";
 import {Role} from "./Role";
 import mongoose from "mongoose";
 const {Types} = mongoose;
 // @ts-ignore
-import * as findOrCreate from 'mongoose-findorcreate';
+import findOrCreate from 'mongoose-findorcreate';
+const {prop, plugin, defaultClasses, getModelForClass} = typegoose
 
 @plugin(findOrCreate)
 export class User extends defaultClasses.FindOrCreate {

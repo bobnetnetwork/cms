@@ -1,15 +1,15 @@
 import passportGoogleOAuth, {Profile, VerifyFunction} from "passport-google-oauth";
-import {Router} from "express";
-import {LogService} from "../../../service/tool/LogService";
+import express, {Router} from "express";
+import {LogService} from "../../../service/tool/LogService.js";
 import {Logger} from "log4js";
 import passport from "passport";
-import {UserModel} from "../../../model/user/User";
+import {UserModel} from "../../../model/user/User.js";
 
 const GoogleStrategy = passportGoogleOAuth.OAuth2Strategy;
 
 export class GoogleOAuth2Router {
 
-    private googleOAuth2Router: Router = Router();
+    private googleOAuth2Router: Router = express.Router();
 
     private log: Logger = new LogService().getLogger("GoogleAuthRouter");
 

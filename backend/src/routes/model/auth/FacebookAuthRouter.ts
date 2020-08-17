@@ -1,4 +1,4 @@
-import {Router} from "express";
+import express, {Router} from "express";
 import {LogService} from "../../../service/tool/LogService.js";
 import {Logger} from "log4js";
 import passport from "passport";
@@ -9,7 +9,7 @@ const FacebookStrategy = passportFacebook.Strategy;
 
 export class FacebookAuthRouter {
 
-    private facebookAuthRouter: Router = Router();
+    private facebookAuthRouter: Router = express.Router();
 
     private log: Logger = new LogService().getLogger("FacebookAuthRouter");
 
