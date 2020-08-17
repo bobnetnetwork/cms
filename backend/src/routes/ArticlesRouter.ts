@@ -3,8 +3,8 @@
  */
 
 import express, {Request, Response, Router} from "express";
-import {ArticlesService} from "../service/content/ArticlesService.js";
-import {LogService} from "../service/LogService.js";
+import {ArticlesService} from "../service/model/content/ArticlesService.js";
+import {LogService} from "../service/tool/LogService.js";
 import {Logger} from "log4js";
 
 export class ArticlesRouter {

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import {LogService} from "./LogService.js";
+import {LogService} from "./tool/LogService.js";
 import {Logger} from "log4js";
 
 export class DBService {

@@ -3,7 +3,7 @@
  */
 import express, {NextFunction, Request, Response, Router} from "express";
 import os from "os";
-import {LogService} from "../service/LogService.js";
+import {LogService} from "../service/tool/LogService.js";
 import {Logger} from "log4js";
 
 export class HealthCheckRouter {

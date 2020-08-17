@@ -1,6 +1,6 @@
 import {HttpException} from "../common/HttpException";
 import {Request, Response} from "express";
-import {LogService} from "../service/LogService.js";
+import {LogService} from "../service/tool/LogService.js";
 import {Logger} from "log4js";
 
 export class ErrorMiddleware {

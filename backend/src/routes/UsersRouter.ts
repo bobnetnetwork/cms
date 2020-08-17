@@ -3,10 +3,10 @@
  */
 
 import express, {NextFunction, Request, Response, Router} from "express";
-import {UsersService} from "../service/user/UsersService.js";
+import {UsersService} from "../service/model/user/UsersService.js";
 import {auth} from "./auth.js";
 import passport from "passport";
-import {LogService} from "../service/LogService.js";
+import {LogService} from "../service/tool/LogService.js";
 import {Logger} from "log4js";
 
 export class UsersRouter {

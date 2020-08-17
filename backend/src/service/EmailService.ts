@@ -1,5 +1,5 @@
 import nodemailer, {SentMessageInfo} from "nodemailer";
-import {LogService} from "./LogService.js";
+import {LogService} from "./tool/LogService.js";
 import dotenv from "dotenv";
 import {EmailMessage} from "../model/EmailMessage";
 import {Logger} from "log4js";

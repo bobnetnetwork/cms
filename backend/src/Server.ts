@@ -15,7 +15,7 @@ import {ServerService} from "./service/ServerService.js";
 import express, {Express, Request, Response, Router} from "express";
 import session from "express-session";
 import "./config/passport.js";
-import {LogService} from "./service/LogService.js";
+import {LogService} from "./service/tool/LogService.js";
 import {Logger} from "log4js";
 
 class Server {

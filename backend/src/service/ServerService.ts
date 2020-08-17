@@ -3,7 +3,7 @@ import * as HTTP from "http";
 import * as fs from "fs";
 import dotenv from "dotenv";
 import os from "os";
-import {LogService} from "./LogService.js";
+import {LogService} from "./tool/LogService.js";
 import {DBService} from "./DBService.js";
 import {Logger} from "log4js";
 

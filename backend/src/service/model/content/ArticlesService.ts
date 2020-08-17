@@ -1,16 +1,16 @@
 /**
  * Data Model Interfaces
  */
-import {ArticleModel, ArticleType} from "../../model/content/Article.js";
-import {SlugifyService} from "../SlugifyService.js";
-import {LogService} from "../LogService.js";
-import {ErrorResultMessage} from "../../messages/ErrorResultMessage.js";
-import {ArticleResultMessage} from "../../messages/ArticleResultMessage.js";
+import {ArticleModel, ArticleType} from "../../../model/content/Article.js";
+import {SlugifyService} from "../../tool/SlugifyService.js";
+import {LogService} from "../../tool/LogService.js";
+import {ErrorResultMessage} from "../../../messages/ErrorResultMessage.js";
+import {ArticleResultMessage} from "../../../messages/ArticleResultMessage.js";
 import {Logger} from "log4js";
-import {ResultMessageType} from "../../messages/ResultMessage";
-import {ModelNotFoundException} from "../../exception/ModelNotFoundException.js";
-import {ModelRequiredDataException} from "../../exception/ModelRequiredDataException.js";
-import {ModelExistsException} from "../../exception/ModelExistsException.js";
+import {ResultMessageType} from "../../../messages/ResultMessage";
+import {ModelNotFoundException} from "../../../exception/ModelNotFoundException.js";
+import {ModelRequiredDataException} from "../../../exception/ModelRequiredDataException.js";
+import {ModelExistsException} from "../../../exception/ModelExistsException.js";
 
 export class ArticlesService {
     private log: Logger = new LogService().getLogger("articlesServices");
