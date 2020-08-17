@@ -19,6 +19,7 @@ import {LogService} from "./service/tool/LogService.js";
 import {Logger} from "log4js";
 import {LocalAuthRouter} from "./routes/model/auth/LocalAuthRouter.js";
 import {FacebookAuthRouter} from "./routes/model/auth/FacebookAuthRouter.js";
+import {TwitterAuthRouter} from "./routes/model/auth/TwitterAuthRouter.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");
@@ -34,6 +35,7 @@ class Server {
     private AUTH: string = this.API_URL + "/auth";
     private LOCAL_AUTH: string = this.AUTH + "/local";
     private FACEBOOK_AUTH: string = this.AUTH + "/facebook";
+    private TWITTER_AUTH: string = this.AUTH + "/twitter";
 
     private server: ServerService = new ServerService();
 
@@ -74,6 +76,7 @@ class Server {
         this.app.use(this.FILES, new FilesRouter().getFileRouter());
         this.app.use(this.LOCAL_AUTH, new LocalAuthRouter().getLocalAuthRouter());
         this.app.use(this.FACEBOOK_AUTH, new FacebookAuthRouter().getFacebookAuthRouter());
+        this.app.use(this.TWITTER_AUTH, new TwitterAuthRouter().getTwitterAuthRouter());
 
         const sessionOptions = {
             cookie: { maxAge: 60000 },

@@ -1,9 +1,9 @@
 import {Router} from "express";
-import {LogService} from "../../../service/tool/LogService";
+import {LogService} from "../../../service/tool/LogService.js";
 import {Logger} from "log4js";
 import passport from "passport";
-import passportFacebook from "passport-facebook";
-import {UserModel} from "../../../model/user/User";
+import passportFacebook, {Profile} from "passport-facebook";
+import {UserModel} from "../../../model/user/User.js";
 
 const FacebookStrategy = passportFacebook.Strategy;
 
@@ -28,10 +28,10 @@ export class FacebookAuthRouter {
             clientID: "FACEBOOK_APP_ID",
             clientSecret: "FACEBOOK_APP_SECRET",
             callbackUrl: "http://www.example.com/auth/facebook/callback",
-        }
+        };
         passport.use(new FacebookStrategy(options,
-            (accessToken, refreshToken, profile, done) => {
-                UserModel.findOrCreate(..., (err, user) => {
+            (accessToken: string, refreshToken: string, profile: Profile, done) => {
+                UserModel.findOrCreate(..., (err: Error, user: any) => {
                     if(err) {
                         return done(err);
                     }
