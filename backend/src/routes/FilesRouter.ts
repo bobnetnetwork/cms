@@ -1,11 +1,11 @@
-import {Request, Response, Router} from "express";
+import express, {Request, Response, Router} from "express";
 import {LogService} from "../service/LogService.js";
 import {UploadedFile} from "express-fileupload";
 import {Logger} from "log4js";
 
 export class FilesRouter {
 
-    private filesRouter: Router = Router();
+    private filesRouter: Router = express.Router();
 
     private log: Logger = new LogService().getLogger("articlesRouter");
 
