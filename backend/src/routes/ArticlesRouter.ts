@@ -2,9 +2,10 @@
  * Required External Modules and Interfaces
  */
 
-import express, {Request, Response} from "express";
+import express, {Request, Response, Router} from "express";
 import {ArticlesService} from "../service/content/ArticlesService.js";
 import {LogService} from "../service/LogService.js";
+import {Logger} from "log4js";
 
 export class ArticlesRouter {
 
@@ -12,15 +13,11 @@ export class ArticlesRouter {
      * Router Definition
      */
 
-    private articlesRouter = express.Router();
+    private articlesRouter: Router = express.Router();
 
-    private log = new LogService().getLogger("articlesRouter");
+    private log: Logger = new LogService().getLogger("articlesRouter");
 
-    private articlesService = new ArticlesService();
-
-    public getArticleRouter(){
-        return this.articlesRouter;
-    }
+    private articlesService: ArticlesService = new ArticlesService();
 
     constructor() {
         this.getArticles();
@@ -28,12 +25,16 @@ export class ArticlesRouter {
         this.createArticle();
     }
 
+    public getArticleRouter(): Router{
+        return this.articlesRouter;
+    }
+
     /**
      * Controller Definitions
      */
 
     // GET articles/
-    private getArticles() {
+    private getArticles(): void {
             this.articlesRouter.get("/", async (req: Request, res: Response) => {
                 try {
                     await this.articlesService.findAll((result: any) => {
@@ -54,7 +55,7 @@ export class ArticlesRouter {
     }
 
     // GET articles/:slug
-    private getArticle() {
+    private getArticle(): void {
         this.articlesRouter.get("/:slug", async (req: Request, res: Response) => {
             try {
                 await this.articlesService.findBySlug(req.params.slug, (result: any) => {
@@ -75,7 +76,7 @@ export class ArticlesRouter {
     }
 
     // POST articles/
-    private createArticle() {
+    private createArticle(): void {
         this.articlesRouter.post("/", async (req: Request, res: Response) => {
             try {
                 await this.articlesService.create(req.body, (result: any) => {
@@ -95,29 +96,4 @@ export class ArticlesRouter {
             }
         });
     }
-// PUT articles/
-/*
-articlesRouter.put("/", async (req: Request, res: Response) => {
-    try {
-        await articlesService.update(req.body, (result) => {
-            res.status(200).json(result);
-        });
-    } catch (e) {
-        res.status(500).send(e.message);
-        log.error(e.message);
-    }
-});*/
-
-// DELETE articles/:slug
-/*
-articlesRouter.delete("/:slug", async (req: Request, res: Response) => {
-    try {
-        await articlesService.deleteBySlug(req.params.slug, (result) => {
-            res.status(200).json(result);
-        });
-    } catch (e) {
-        res.status(500).send(e.message);
-        log.error(e.message);
-    }
-});*/
 }
