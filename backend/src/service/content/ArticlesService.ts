@@ -6,9 +6,10 @@ import {SlugifyService} from "../SlugifyService.js";
 import {LogService} from "../LogService.js";
 import {ErrorResultMessage} from "../../messages/ErrorResultMessage.js";
 import {ArticleResultMessage} from "../../messages/ArticleResultMessage.js";
+import {Logger} from "log4js";
 
 export class ArticlesService {
-    private log = new LogService().getLogger("articlesServices");
+    private log: Logger = new LogService().getLogger("articlesServices");
 
     /**
      * Service Methods
