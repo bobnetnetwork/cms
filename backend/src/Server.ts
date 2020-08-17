@@ -86,11 +86,18 @@ class Server {
     }
 
     private setRouters(): void {
+        // Root path
         this.app.use(this.API_URL, new RootRouter().getRootRouter());
+
+        // HealthCheck
         this.app.use(this.HEALTH_CHECK, new HealthCheckRouter().getHealthCheckRouter());
+
+        // Models
         this.app.use(this.USERS, new UsersRouter().getUsersRouter());
         this.app.use(this.ARTICLES, new ArticlesRouter().getArticleRouter());
         this.app.use(this.FILES, new FilesRouter().getFileRouter());
+
+        // Auth
         this.app.use(this.LOCAL_AUTH, new LocalAuthRouter().getLocalAuthRouter());
         this.app.use(this.FACEBOOK_AUTH, new FacebookAuthRouter().getFacebookAuthRouter());
         this.app.use(this.TWITTER_AUTH, new TwitterAuthRouter().getTwitterAuthRouter());
