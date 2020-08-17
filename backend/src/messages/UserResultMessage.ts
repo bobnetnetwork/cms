@@ -14,7 +14,7 @@ export class UserResultMessage extends ResultMessage {
             "message": this.message,
             "success": this.success,
             "user": this.user,
-        }
+        };
     }
 }
 
