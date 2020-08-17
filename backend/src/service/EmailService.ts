@@ -3,6 +3,7 @@ import {LogService} from "./tool/LogService.js";
 import dotenv from "dotenv";
 import {EmailMessage} from "../model/EmailMessage";
 import {Logger} from "log4js";
+import {EnvironmentRequiredException} from "../exception/environment/EnvironmentRequiredException.js";
 
 export class EmailService {
     private log: Logger = new LogService().getLogger("EmailService");
@@ -25,35 +26,45 @@ export class EmailService {
         if(process.env.MAIL_SERVER_HOST){
             this.HOST = process.env.MAIL_SERVER_HOST;
         } else {
-            this.log.error("The MAIL_SERVER_HOST environment is required!");
+            const err = new EnvironmentRequiredException("MAIL_SERVER_HOST");
+            this.log.error(err.message.toString());
+            this.log.debug(err.stack);
             process.exit(1);
         }
 
         if(process.env.MAIL_SERVER_PORT){
             this.PORT = parseInt(process.env.MAIL_SERVER_PORT, 10);
         } else {
-            this.log.error("The MAIL_SERVER_PORT environment is required!");
+            const err = new EnvironmentRequiredException("MAIL_SERVER_PORT");
+            this.log.error(err.message.toString());
+            this.log.debug(err.stack);
             process.exit(1);
         }
 
         if(process.env.MAIL_SERVER_SECURE){
             this.SECURE = (process.env.MAIL_SERVER_SECURE === "true");
         } else {
-            this.log.error("The MAIL_SERVER_SECURE environment is required!");
+            const err = new EnvironmentRequiredException("MAIL_SERVER_SECURE");
+            this.log.error(err.message.toString());
+            this.log.debug(err.stack);
             process.exit(1);
         }
 
         if(process.env.MAIL_SERVER_USER){
             this.USER = process.env.MAIL_SERVER_USER;
         } else {
-            this.log.error("The MAIL_SERVER_USER environment is required!");
+            const err = new EnvironmentRequiredException("MAIL_SERVER_USER");
+            this.log.error(err.message.toString());
+            this.log.debug(err.stack);
             process.exit(1);
         }
 
         if(process.env.MAIL_SERVER_PWD){
             this.PWD = process.env.MAIL_SERVER_PWD;
         } else {
-            this.log.error("The MAIL_SERVER_PWD environment is required!");
+            const err = new EnvironmentRequiredException("MAIL_SERVER_PWD");
+            this.log.error(err.message.toString());
+            this.log.debug(err.stack);
             process.exit(1);
         }
 

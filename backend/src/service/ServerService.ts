@@ -6,6 +6,7 @@ import os from "os";
 import {LogService} from "./tool/LogService.js";
 import {DBService} from "./DBService.js";
 import {Logger} from "log4js";
+import {EnvironmentRequiredException} from "../exception/environment/EnvironmentRequiredException.js";
 
 export class ServerService {
 
@@ -21,7 +22,9 @@ export class ServerService {
         if(process.env.APP_PORT) {
             this.PORT = parseInt(process.env.APP_PORT, 10);
         } else {
-            this.log.error("The APP_PORT environment is required!");
+            const err = new EnvironmentRequiredException("APP_PORT");
+            this.log.error(err.message.toString());
+            this.log.debug(err.stack);
             process.exit(1);
         }
     }
