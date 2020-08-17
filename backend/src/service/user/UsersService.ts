@@ -6,8 +6,8 @@ import {LogService} from "../LogService.js";
 import {Logger} from "log4js";
 import {Role} from "../../model/user/Role.js";
 import {Ref} from "typegoose";
-import {ErrorResultMessage, ErrorResultMessageType} from "../../messages/ErrorResultMessage.js";
-import {UserResultMessage, UserResultMessageType} from "../../messages/UserResultMessage.js";
+import {ErrorResultMessage} from "../../messages/ErrorResultMessage.js";
+import {UserResultMessage} from "../../messages/UserResultMessage.js";
 import {ResultMessage, ResultMessageType} from "../../messages/ResultMessage.js";
 
 export class UsersService {
@@ -140,7 +140,7 @@ export class UsersService {
         });
     }
 
-    public async update(data: { userName: string; firstName: string; lastName: string; roles: Ref<Role>; email: string; pwd: string; accountExpired: boolean; accountLocked: boolean; credentialsExpired: boolean; enabled: boolean; }, callback: { (result: any): void; (arg0: ErrorResultMessageType | UserResultMessageType): void; }): Promise<void>{
+    public async update(data: { userName: string; firstName: string; lastName: string; roles: Ref<Role>; email: string; pwd: string; accountExpired: boolean; accountLocked: boolean; credentialsExpired: boolean; enabled: boolean; }, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void>{
         UserModel.findOne({
             userName: data.userName,
         }, (err: Error, user: any) => {
