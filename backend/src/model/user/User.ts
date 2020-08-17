@@ -1,12 +1,15 @@
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import typegoose, {Ref} from "typegoose";
+import typegoose, {Ref} from "@typegoose/typegoose";
 import {Role} from "./Role";
 import mongoose from "mongoose";
-const { prop, Typegoose } = typegoose;
 const {Types} = mongoose;
+// @ts-ignore
+import findOrCreate from 'mongoose-findorcreate';
+const {prop, plugin, defaultClasses, getModelForClass} = typegoose
 
-export class User extends Typegoose {
+@plugin(findOrCreate)
+export class User extends defaultClasses.FindOrCreate {
 
     @prop()
     public firstName?: string;
@@ -105,4 +108,4 @@ export type UserType = {
     roles?: Ref<Role>,
 }
 
-export const UserModel = new User().getModelForClass(User);
+export const UserModel = getModelForClass(User);

@@ -1,4 +1,4 @@
-import {Router, Request, Response, NextFunction} from "express";
+import express, {Router, Request, Response, NextFunction} from "express";
 import {Logger} from "log4js";
 import {LogService} from "../../../service/tool/LogService.js";
 import passport from "passport";
@@ -9,14 +9,13 @@ const LocalStrategy = passportLocal.Strategy;
 
 export class LocalAuthRouter {
 
-    private localAuthRouter: Router = Router();
+    private localAuthRouter: Router = express.Router();
 
     private log: Logger = new LogService().getLogger("LocalAuthRouter");
 
     constructor() {
         this.configure();
         this.login();
-        this.getMe();
         this.logout();
     }
 
@@ -31,7 +30,7 @@ export class LocalAuthRouter {
         }
         passport.use(new LocalStrategy(options,
             (username: string, password: string, done: (error: any, user?: any, options?: (passportLocal.IVerifyOptions | undefined)) => void) => {
-                UserModel.findOne({userName: username}, (err: Error, user) => {
+                UserModel.findOne({userName: username}, (err: Error, user: any) => {
                     if(err) {
                         return done(err);
                     }
@@ -69,17 +68,6 @@ export class LocalAuthRouter {
                     return res.redirect("/users/" + user.userName);
                 });
             }) (req, res, next);
-        });
-    }
-
-    private getMe(): void {
-        this.localAuthRouter.get("/users/me", passport.authenticate("basic", {session: false}), async (req: Request, res: Response) => {
-            if(req.user) {
-                res.json({
-                    id: req.user.id,
-                    username: req.user.userName,
-                });
-            }
         });
     }
 

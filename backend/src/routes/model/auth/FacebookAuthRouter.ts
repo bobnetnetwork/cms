@@ -1,4 +1,4 @@
-import {Router} from "express";
+import express, {Router} from "express";
 import {LogService} from "../../../service/tool/LogService.js";
 import {Logger} from "log4js";
 import passport from "passport";
@@ -9,7 +9,7 @@ const FacebookStrategy = passportFacebook.Strategy;
 
 export class FacebookAuthRouter {
 
-    private facebookAuthRouter: Router = Router();
+    private facebookAuthRouter: Router = express.Router();
 
     private log: Logger = new LogService().getLogger("FacebookAuthRouter");
 
@@ -29,17 +29,15 @@ export class FacebookAuthRouter {
             clientSecret: "FACEBOOK_APP_SECRET",
             callbackUrl: "http://www.example.com/auth/facebook/callback",
         };
-        passport.use(new FacebookStrategy(options,
-            (accessToken: string, refreshToken: string, profile: Profile, done) => {
-                UserModel.findOrCreate(..., (err: Error, user: any) => {
-                    if(err) {
-                        return done(err);
-                    }
-
-                    done(null, user);
-                });
+        passport.use(new FacebookStrategy({
+                clientID: "FACEBOOK_APP_ID",
+                clientSecret: "FACEBOOK_APP_SECRET",
+                callbackURL: "http://www.example.com/auth/facebook/callback"
+            },
+            async (accessToken, refreshToken, profile, done) => {
+                await UserModel.findOrCreate({facebookdId: profile.id});
             }
-            ));
+        ));
     }
 
     private auth(): void {

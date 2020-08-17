@@ -1,5 +1,5 @@
 import passportTwitter, {Profile} from "passport-twitter";
-import {Router} from "express";
+import express, {Router} from "express";
 import {LogService} from "../../../service/tool/LogService.js";
 import {Logger} from "log4js";
 import passport from "passport";
@@ -9,7 +9,7 @@ const TwitterStrategy = passportTwitter.Strategy;
 
 export class TwitterAuthRouter {
 
-    private twitterAuthRouter: Router = Router();
+    private twitterAuthRouter: Router = express.Router();
 
     private log: Logger = new LogService().getLogger("TwitterAuthRouter");
 
@@ -31,13 +31,8 @@ export class TwitterAuthRouter {
         };
 
         passport.use(new TwitterStrategy(options,
-            (token: string, tokenSecret: string, profile: Profile, done: (error: any, user?: any) => void) => {
-                UserModel.findOrCreate(..., (err: Error, user: any) => {
-                    if(err) {
-                        return done(err);
-                    }
-                    done(null, user);
-                })
+            async (token: string, tokenSecret: string, profile: Profile, done: (error: any, user?: any) => void) => {
+                await UserModel.findOrCreate({twitterId: profile.id});
             }
         ));
     }
