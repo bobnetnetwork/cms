@@ -7,6 +7,7 @@ import {LogService} from "../LogService.js";
 import {ErrorResultMessage, ErrorResultMessageType} from "../../messages/ErrorResultMessage.js";
 import {ArticleResultMessage, ArticleResultMessageType} from "../../messages/ArticleResultMessage.js";
 import {Logger} from "log4js";
+import {ResultMessageType} from "../../messages/ResultMessage";
 
 export class ArticlesService {
     private log: Logger = new LogService().getLogger("articlesServices");
@@ -14,7 +15,7 @@ export class ArticlesService {
     /**
      * Service Methods
      */
-    public async findAll(callback: { (result: any): void; (arg0: ErrorResultMessageType | ArticleResultMessageType): void; }) {
+    public async findAll(callback: { (result: any): void; (arg0: ResultMessageType): void; }) {
         return ArticleModel.find({}, (err: Error, articles: any) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
@@ -26,7 +27,7 @@ export class ArticlesService {
         });
     }
 
-    public async findBySlug(slug: string, callback: { (result: any): void; (arg0: ErrorResultMessageType | ArticleResultMessageType): void; }) {
+    public async findBySlug(slug: string, callback: { (result: any): void; (arg0: ResultMessageType): void; }) {
         return ArticleModel.findOne({slug}, (err: Error, article: any) => {
             if(err) {
                 const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
@@ -87,7 +88,7 @@ export class ArticlesService {
         return article;
     }
 
-    public async create(data: any, callback: { (result: any): void; (arg0: ErrorResultMessageType | ArticleResultMessageType): void; }) {
+    public async create(data: any, callback: { (result: any): void; (arg0: ResultMessageType): void; }) {
         await this.isUnique(data, (result: boolean) => {
             if(result) {
                 ArticlesService.isContainAllRequiredData(data, (rst: any) => {

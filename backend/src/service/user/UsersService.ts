@@ -17,7 +17,7 @@ export class UsersService {
     /**
      * Service Methods
      */
-    public async findAll(callback: { (result: any): void; (arg0: ErrorResultMessageType | UserResultMessageType): void; }): Promise<void> {
+    public async findAll(callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void> {
         UserModel.find({}, (err: Error, users: any) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
@@ -29,7 +29,7 @@ export class UsersService {
         });
     }
 
-    public async findByUserName (userName: string, callback: { (result: any): void; (arg0: ErrorResultMessageType | UserResultMessageType): void; }): Promise<void> {
+    public async findByUserName (userName: string, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void> {
         UserModel.findOne({userName}, (err: Error, user) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
@@ -110,7 +110,7 @@ export class UsersService {
         return user;
     }
 
-    public async create(data: { userName: string; email: string; pwd?: string; }, callback: { (result: any): void; (arg0: ErrorResultMessageType | UserResultMessageType): void; }): Promise<void>{
+    public async create(data: { userName: string; email: string; pwd?: string; }, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void>{
         await this.isUnique(data.userName, data.email, (result: boolean) => {
             if (result) {
                 UsersService.isContainAllRequiredData(data, (rst: boolean) => {
@@ -189,7 +189,7 @@ export class UsersService {
         });
     }
 
-    public async deleteByUserName(UserName: string, callback: { (result: any): void; (arg0: ErrorResultMessageType | ResultMessageType): void; }): Promise<void> {
+    public async deleteByUserName(UserName: string, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void> {
         UserModel.findOne({
             userName: UserName,
         }, (err: Error, user: any) => {

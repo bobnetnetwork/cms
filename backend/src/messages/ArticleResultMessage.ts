@@ -1,9 +1,9 @@
 import {ResultMessage} from "./ResultMessage.js";
 
 export class ArticleResultMessage extends ResultMessage {
-    protected readonly article: any;
+    protected readonly article: import("typegoose").InstanceType<import("../model/content/Article.js").Article>;
 
-    constructor(article: any, message: string) {
+    constructor(article: import("typegoose").InstanceType<import("../model/content/Article.js").Article>, message: string) {
         super(message, true);
         this.article = article;
     }
@@ -18,7 +18,7 @@ export class ArticleResultMessage extends ResultMessage {
 }
 
 export type ArticleResultMessageType = {
-    "article": any,
+    "article": import("typegoose").InstanceType<import("../model/content/Article.js").Article>,
     "message": string,
     "success": boolean,
 }
