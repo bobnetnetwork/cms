@@ -21,5 +21,5 @@ export class UserResultMessage extends ResultMessage {
 export type UserResultMessageType = {
     "message": string,
     "success": boolean,
-    "user": import("typegoose").InstanceType<import("../model/user/User.js").User>,
+    "user": InstanceType<import("../model/user/User.js").User>,
 }
