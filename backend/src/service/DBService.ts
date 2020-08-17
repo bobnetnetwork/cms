@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import {LogService} from "./LogService.js";
+import {Logger} from "log4js";
 
 export class DBService {
     private readonly USER: string;
@@ -10,7 +11,7 @@ export class DBService {
     private readonly ADDRESS: string;
     private readonly DATABASE: string;
 
-    private log = new LogService().getLogger("dbService");
+    private log: Logger = new LogService().getLogger("dbService");
 
     private connection: mongoose.Connection | undefined;
     private readonly dbUri: string;
@@ -65,11 +66,7 @@ export class DBService {
          this.dbUri = this.getDBUri();
     }
 
-    private getDBUri(){
-        return "mongodb://" + this.USER + ":" + this.PWD + "@" + this.ADDRESS + ":" + this.PORT + "/" + this.DATABASE;
-    }
-
-    public connectToDB() {
+    public connectToDB(): void {
         try {
             mongoose.connect(this.dbUri, {
                 useNewUrlParser: true,
@@ -91,10 +88,14 @@ export class DBService {
         }
     }
 
-    public disconnect() {
+    public disconnect(): void {
         if (!this.connection) {
             return;
         }
         mongoose.disconnect();
+    }
+
+    private getDBUri(): string{
+        return "mongodb://" + this.USER + ":" + this.PWD + "@" + this.ADDRESS + ":" + this.PORT + "/" + this.DATABASE;
     }
 }
