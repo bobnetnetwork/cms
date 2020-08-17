@@ -6,9 +6,9 @@ import {LogService} from "../LogService.js";
 import {Logger} from "log4js";
 import {Role} from "../../model/user/Role.js";
 import {Ref} from "typegoose";
-import {ErrorResultMessage} from "../../messages/ErrorResultMessage.js";
-import {UserResultMessage} from "../../messages/UserResultMessage.js";
-import {ResultMessage} from "../../messages/ResultMessage.js";
+import {ErrorResultMessage, ErrorResultMessageType} from "../../messages/ErrorResultMessage.js";
+import {UserResultMessage, UserResultMessageType} from "../../messages/UserResultMessage.js";
+import {ResultMessage, ResultMessageType} from "../../messages/ResultMessage.js";
 
 export class UsersService {
 
@@ -17,7 +17,7 @@ export class UsersService {
     /**
      * Service Methods
      */
-    public async findAll(callback: { (result: any): void; (arg0: { error?: Error; message: string; success: boolean; user?: any; }): void; }): Promise<void> {
+    public async findAll(callback: { (result: any): void; (arg0: ErrorResultMessageType | UserResultMessageType): void; }): Promise<void> {
         UserModel.find({}, (err: Error, users: any) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
@@ -29,7 +29,7 @@ export class UsersService {
         });
     }
 
-    public async findByUserName (userName: string, callback: { (result: any): void; (arg0: { error?: Error; message?: string; success: boolean; user?: import("typegoose").InstanceType<import("../../model/user/User.js").User>; }): void; }): Promise<void> {
+    public async findByUserName (userName: string, callback: { (result: any): void; (arg0: ErrorResultMessageType | UserResultMessageType): void; }): Promise<void> {
         UserModel.findOne({userName}, (err: Error, user) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
@@ -110,10 +110,10 @@ export class UsersService {
         return user;
     }
 
-    public async create(data: { userName: string; email: string; pwd?: string; }, callback: { (result: any): void; (arg0: { error?: Error; message: string; success: boolean; user?: import("typegoose").InstanceType<import("../../model/user/User.js").User>; }): void; }): Promise<void>{
-        await this.isUnique(data.userName, data.email, (result: any) => {
+    public async create(data: { userName: string; email: string; pwd?: string; }, callback: { (result: any): void; (arg0: ErrorResultMessageType | UserResultMessageType): void; }): Promise<void>{
+        await this.isUnique(data.userName, data.email, (result: boolean) => {
             if (result) {
-                UsersService.isContainAllRequiredData(data, (rst: any) => {
+                UsersService.isContainAllRequiredData(data, (rst: boolean) => {
                     if(rst){
                         const newUser = this.createUser(data);
 
@@ -140,7 +140,7 @@ export class UsersService {
         });
     }
 
-    public async update(data: { userName: string; firstName: string; lastName: string; roles: Ref<Role>; email: string; pwd: string; accountExpired: boolean; accountLocked: boolean; credentialsExpired: boolean; enabled: boolean; }, callback: { (result: any): void; (arg0: { error?: Error; message: string; success: boolean; user?: any; }): void; }): Promise<void>{
+    public async update(data: { userName: string; firstName: string; lastName: string; roles: Ref<Role>; email: string; pwd: string; accountExpired: boolean; accountLocked: boolean; credentialsExpired: boolean; enabled: boolean; }, callback: { (result: any): void; (arg0: ErrorResultMessageType | UserResultMessageType): void; }): Promise<void>{
         UserModel.findOne({
             userName: data.userName,
         }, (err: Error, user: any) => {
@@ -189,7 +189,7 @@ export class UsersService {
         });
     }
 
-    public async deleteByUserName(UserName: string, callback: { (result: any): void; (arg0: { error?: Error; message: string; success: boolean; }): void; }): Promise<void> {
+    public async deleteByUserName(UserName: string, callback: { (result: any): void; (arg0: ErrorResultMessageType | ResultMessageType): void; }): Promise<void> {
         UserModel.findOne({
             userName: UserName,
         }, (err: Error, user: any) => {

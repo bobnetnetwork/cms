@@ -8,11 +8,17 @@ export class ErrorResultMessage extends ResultMessage {
         this.error = error;
     }
 
-    public getMessage() {
+    public getMessage(): ErrorResultMessageType {
         return {
             "error": this.error,
             "message": this.message,
             "success": this.success,
         };
     }
+}
+
+export type ErrorResultMessageType = {
+    "error": Error,
+    "message": string,
+    "success": boolean,
 }

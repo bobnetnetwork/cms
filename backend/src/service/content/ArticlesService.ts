@@ -4,8 +4,8 @@
 import {ArticleModel} from "../../model/content/Article.js";
 import {SlugifyService} from "../SlugifyService.js";
 import {LogService} from "../LogService.js";
-import {ErrorResultMessage} from "../../messages/ErrorResultMessage.js";
-import {ArticleResultMessage} from "../../messages/ArticleResultMessage.js";
+import {ErrorResultMessage, ErrorResultMessageType} from "../../messages/ErrorResultMessage.js";
+import {ArticleResultMessage, ArticleResultMessageType} from "../../messages/ArticleResultMessage.js";
 import {Logger} from "log4js";
 
 export class ArticlesService {
@@ -14,7 +14,7 @@ export class ArticlesService {
     /**
      * Service Methods
      */
-    public async findAll(callback: any) {
+    public async findAll(callback: { (result: any): void; (arg0: ErrorResultMessageType | ArticleResultMessageType): void; }) {
         return ArticleModel.find({}, (err: Error, articles: any) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
@@ -26,7 +26,7 @@ export class ArticlesService {
         });
     }
 
-    public async findBySlug(slug: string, callback: any) {
+    public async findBySlug(slug: string, callback: { (result: any): void; (arg0: ErrorResultMessageType | ArticleResultMessageType): void; }) {
         return ArticleModel.findOne({slug}, (err: Error, article: any) => {
             if(err) {
                 const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
@@ -44,7 +44,7 @@ export class ArticlesService {
         });
     }
 
-    private async isUnique (slug: string, callback: any) {
+    private async isUnique (slug: string, callback: { (result: any): void; (arg0: boolean): void; }) {
         ArticleModel.findOne({slug}, (err: Error, article: any) => {
             if(err){
                 this.log.error(err.message);
@@ -58,9 +58,9 @@ export class ArticlesService {
         });
     }
 
-    private static async isContainAllRequiredData (data: any, callback: any) {
+    private static async isContainAllRequiredData (data: any, callback: { (rst: any): void; (arg0: boolean): void; }) {
         let result: boolean;
-        result = (data.title && data.content);
+        result = (typeof data.title !== "undefined" && typeof data.content !== "undefined");
         callback(result);
     }
 
@@ -87,8 +87,8 @@ export class ArticlesService {
         return article;
     }
 
-    public async create(data: any, callback: any) {
-        await this.isUnique(data, (result: any) => {
+    public async create(data: any, callback: { (result: any): void; (arg0: ErrorResultMessageType | ArticleResultMessageType): void; }) {
+        await this.isUnique(data, (result: boolean) => {
             if(result) {
                 ArticlesService.isContainAllRequiredData(data, (rst: any) => {
                     if(rst) {

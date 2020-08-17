@@ -8,11 +8,17 @@ export class UserResultMessage extends ResultMessage {
         this.user = user;
     }
 
-    public getMessage() {
+    public getMessage(): UserResultMessageType {
         return {
             "message": this.message,
             "success": this.success,
             "user": this.user,
         }
     }
+}
+
+export type UserResultMessageType = {
+    "message": string,
+    "success": boolean,
+    "user": any,
 }

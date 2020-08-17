@@ -8,11 +8,17 @@ export class ArticleResultMessage extends ResultMessage {
         this.article = article;
     }
 
-    public getMessage() {
+    public getMessage(): ArticleResultMessageType {
         return {
             "article": this.article,
             "message": this.message,
             "success": this.success,
         };
     }
+}
+
+export type ArticleResultMessageType = {
+    "article": any,
+    "message": string,
+    "success": boolean,
 }

@@ -7,10 +7,15 @@ export class ResultMessage {
         this.success = success;
     }
 
-    public getMessage() {
+    public getMessage(): ResultMessageType {
         return {
             "message": this.message,
             "success": this.success,
         };
     }
 }
+
+export type ResultMessageType = {
+    "message": string,
+    "success": boolean,
+};
