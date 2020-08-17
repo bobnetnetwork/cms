@@ -9,8 +9,8 @@ import {UsersRouter} from "./routes/UsersRouter.js";
 import {ArticlesRouter} from "./routes/ArticlesRouter.js";
 import {HealthCheckRouter} from "./routes/HealthCheckRouter.js";
 import {FilesRouter} from "./routes/FilesRouter.js";
-import {errorHandler} from "./middleware/errorMiddleware.js";
-import {notFoundHandler} from "./middleware/notFoundMiddleware.js";
+import {ErrorMiddleware} from "./middleware/ErrorMiddleware.js";
+import {NotFoundHandler} from "./middleware/NotFoundMiddleware.js";
 import {ServerService} from "./service/ServerService.js";
 import express, {Express, Request, Response, Router} from "express";
 import session from "express-session";
@@ -77,8 +77,8 @@ class Server {
 
         this.app.use(session(sessionOptions));
 
-        this.app.use(errorHandler);
-        this.app.use(notFoundHandler);
+        this.app.use(new ErrorMiddleware().getHandler());
+        this.app.use(new NotFoundHandler().getHandler());
 
         this.app.use(fileUpload({
             createParentPath: true,
