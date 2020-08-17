@@ -32,7 +32,7 @@ export class TwitterAuthRouter {
 
         passport.use(new TwitterStrategy(options,
             (token: string, tokenSecret: string, profile: Profile, done: (error: any, user?: any) => void) => {
-                UserModel.findOrCreate(..., (err: Error, user: any) => {
+                UserModel.findOrCreate({twitterId: profile.id}, (err: Error, user: any) => {
                     if(err) {
                         return done(err);
                     }
