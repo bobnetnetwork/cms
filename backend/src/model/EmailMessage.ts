@@ -1,37 +1,48 @@
-// import textVersionJs from "textversionjs";
+import textVersionJs from "textversionjs";
+
+import {
+    Address,
+    AmpAttachment, Attachment,
+    AttachmentLike, Envelope,
+    Headers,
+    IcalAttachment,
+    ListHeaders, TextEncoding
+} from "nodemailer/lib/mailer";
+import {Readable} from "stream";
+import MimeNode from "nodemailer/lib/mime-node";
 
 export class EmailMessage {
-    private _sender: any;
-    private _receivers: any;
-    private _cc: any;
-    private _bcc: any;
-    private _replyTo: any;
-    private _inReplyTo: any;
-    private _references: any;
-    private _envelope: any;
+    private _sender?: string | Address;
+    private _receivers? : string | Address | string[] | Address[];
+    private _cc?: string | Address | string[] | Address[];
+    private _bcc?: string | Address | string[] | Address[];
+    private _replyTo?: string | Address;
+    private _inReplyTo?: string | Address;
+    private _references?: string | string[];
+    private _envelope?: Envelope | MimeNode.Envelope;
 
-    private _subject: any;
-    private _text: string | undefined;
-    private _html: string | undefined;
-    private _amp: any;
+    private _subject?: string;
+    private _text?: string | Buffer | Readable | AttachmentLike;
+    private _html?: string | Buffer | Readable | AttachmentLike;
+    private _amp?: string | Buffer | Readable | AmpAttachment;
     private _attachDataUrls: any;
-    private _watchHtml: any;
-    private _attachments: any;
+    private _watchHtml?: string | Buffer | Readable | AttachmentLike;
+    private _attachments?: Attachment[];
 
-    private _icalEvent: any;
-    private _alternatives: any;
-    private _encoding: any;
-    private _raw: any;
-    private _textEncoding: any;
+    private _icalEvent?: string | Buffer | Readable | IcalAttachment;
+    private _alternatives?: Attachment[];
+    private _encoding?: string;
+    private _raw?: string | Buffer | Readable | AttachmentLike;
+    private _textEncoding?: TextEncoding;
 
-    private _priority: any;
-    private _headers: any;
-    private _messageId: any;
-    private _date: any;
-    private _list: any;
+    private _priority?: "high"|"normal"|"low";
+    private _headers?: Headers;
+    private _messageId?: string;
+    private _date?: Date | string;
+    private _list?: ListHeaders;
 
-    private _disableFileAccess: any;
-    private _disableUrlAccess: any;
+    private _disableFileAccess?: boolean;
+    private _disableUrlAccess?: boolean;
 
     public generateEmailMessage() {
         return {
@@ -69,14 +80,16 @@ export class EmailMessage {
         };
     }
 
-   /* public generateTextFromHtml(html?: string) {
+   public generateTextFromHtml(html?: string) {
         if(!html) {
-            this._text = textVersionJs(this._html);
+            if (typeof this._html === "string") {
+                this._text = textVersionJs(this._html);
+            }
         } else {
             this._html = html;
             this._text = textVersionJs(html);
         }
-    }*/
+    }
 
     get sender() {
         return this._sender;
