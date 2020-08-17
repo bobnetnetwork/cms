@@ -7,9 +7,9 @@ import {Logger} from "log4js";
 import {ErrorResultMessage} from "../../../messages/ErrorResultMessage.js";
 import {UserResultMessage} from "../../../messages/UserResultMessage.js";
 import {ResultMessage, ResultMessageType} from "../../../messages/ResultMessage.js";
-import {ModelRequiredDataException} from "../../../exception/ModelRequiredDataException.js";
-import {ModelNotFoundException} from "../../../exception/ModelNotFoundException.js";
-import {ModelExistsException} from "../../../exception/ModelExistsException.js";
+import {ModelRequiredDataException} from "../../../exception/model/ModelRequiredDataException.js";
+import {ModelNotFoundException} from "../../../exception/model/ModelNotFoundException.js";
+import {ModelExistsException} from "../../../exception/model/ModelExistsException.js";
 
 export class UsersService {
 

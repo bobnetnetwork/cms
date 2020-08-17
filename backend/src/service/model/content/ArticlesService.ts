@@ -8,9 +8,9 @@ import {ErrorResultMessage} from "../../../messages/ErrorResultMessage.js";
 import {ArticleResultMessage} from "../../../messages/ArticleResultMessage.js";
 import {Logger} from "log4js";
 import {ResultMessageType} from "../../../messages/ResultMessage";
-import {ModelNotFoundException} from "../../../exception/ModelNotFoundException.js";
-import {ModelRequiredDataException} from "../../../exception/ModelRequiredDataException.js";
-import {ModelExistsException} from "../../../exception/ModelExistsException.js";
+import {ModelNotFoundException} from "../../../exception/model/ModelNotFoundException.js";
+import {ModelRequiredDataException} from "../../../exception/model/ModelRequiredDataException.js";
+import {ModelExistsException} from "../../../exception/model/ModelExistsException.js";
 
 export class ArticlesService {
     private log: Logger = new LogService().getLogger("articlesServices");
