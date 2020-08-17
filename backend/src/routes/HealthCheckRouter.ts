@@ -1,61 +1,63 @@
 /**
  * Required External Modules and Interfaces
  */
-import express, {NextFunction, Request, Response} from "express";
+import express, {NextFunction, Request, Response, Router} from "express";
 import os from "os";
 import {LogService} from "../service/LogService.js";
+import {Logger} from "log4js";
 
 export class HealthCheckRouter {
     /**
      * Router Definition
      */
-    private healthCheckRouter = express.Router();
+    private healthCheckRouter: Router = express.Router();
 
-    private log = new LogService().getLogger("healthCheckRouter");
-
-    public getHealthCheckRouter(){
-        return this.healthCheckRouter;
-    }
+    private log: Logger = new LogService().getLogger("healthCheckRouter");
 
     constructor() {
         this.healthCheckGet();
     }
 
+    public getHealthCheckRouter(): Router{
+        return this.healthCheckRouter;
+    }
+
     /**
      * Controller Definitions
      */
-    private healthCheckGet(){
+    private healthCheckGet(): void{
         this.healthCheckRouter.get("/", async (req: Request, res: Response, _next: NextFunction) => {
             const processData = {
-                uptime: process.uptime(),
                 memoryUsage: process.memoryUsage(),
-                resourceUsage: process.resourceUsage()
+                resourceUsage: process.resourceUsage(),
+                uptime: process.uptime(),
             }
             const osData = {
-                loadavg: os.loadavg(),
-                freeMem: os.freemem(),
-                totalmem: os.totalmem(),
-                uptime: os.uptime(),
                 arch: os.arch(),
                 cpus: os.cpus(),
-                platform: os.platform(),
+                freeMem: os.freemem(),
                 hostname: os.hostname(),
+                loadavg: os.loadavg(),
+                networkInterfaces: os.networkInterfaces(),
+                platform: os.platform(),
+                totalmem: os.totalmem(),
+                uptime: os.uptime(),
                 version: os.version(),
-                networkInterfaces: os.networkInterfaces()
             }
             const healthCheck = {
-                process: processData,
-                os: osData,
                 message: "OK",
+                os: osData,
+                process: processData,
                 timestamp: Date.now(),
             };
             try {
                 res.status(200).json(healthCheck);
             } catch (e) {
                 this.log.error(e.message);
+                this.log.debug(e.stack);
                 healthCheck.message = e;
                 res.status(503).json(healthCheck);
             }
-        })
+        });
     }
 }

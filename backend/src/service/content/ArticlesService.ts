@@ -1,78 +1,56 @@
 /**
  * Data Model Interfaces
  */
-import {Article} from "../../model/content/article.js";
+import {ArticleModel} from "../../model/content/Article.js";
 import {SlugifyService} from "../SlugifyService.js";
 import {LogService} from "../LogService.js";
+import {ErrorResultMessage} from "../../messages/ErrorResultMessage.js";
+import {ArticleResultMessage} from "../../messages/ArticleResultMessage.js";
+import {Logger} from "log4js";
 
 export class ArticlesService {
-    private log = new LogService().getLogger("articlesServices");
+    private log: Logger = new LogService().getLogger("articlesServices");
 
     /**
      * Service Methods
      */
-    public async findAll(callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; article?: any; }): void; }) {
-        return Article.find({}, (err: any, articles: any) => {
+    public async findAll(callback: any) {
+        return ArticleModel.find({}, (err: Error, articles: any) => {
             if (err) {
-                const result = {
-                    "success": false,
-                    "message": "Authentication failed or Article not found.",
-                    "error": err,
-                }
-                this.log.error(err);
+                const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
                 callback(result);
             } else {
-                const result = {
-                    "success": true,
-                    "message": "Successful, Article Found!",
-                    "article": articles,
-                }
-                this.log.info("Successful, Article Found!");
+                const result = new ArticleResultMessage(articles, "Successful, Article Found!").getMessage();
                 callback(result);
             }
         });
     }
 
-    public async findBySlug(Slug: string, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; article?: any; }): void; }) {
-        return Article.findOne({
-            slug: Slug
-        }, (err: any, article: any) => {
+    public async findBySlug(slug: string, callback: any) {
+        return ArticleModel.findOne({slug}, (err: Error, article: any) => {
             if(err) {
-                const result = {
-                    "success": false,
-                    "message": "Authentication failed or Article not found.",
-                    "error": err,
-                }
-                this.log.error(err);
+                const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
                 callback(result);
             } else {
                 if (!article) {
-                    const result = {
-                        "success": false,
-                        "message": "Article Not found in database!",
-                        "error": err,
-                    }
-                    this.log.error(err);
+                    const err1 = new Error("Article Not found in database!");
+                    const result = new ErrorResultMessage(err1, err1.message.toString()).getMessage();
                     callback(result);
                 } else {
-                    const result = {
-                        "success": true,
-                        "message": "Successful, Article Found!",
-                        "article": article,
-                    }
-                    this.log.info("Successful, Article Found!");
+                    const result = new ArticleResultMessage(article, "Successful, Article Found!").getMessage();
                     callback(result);
                 }
             }
         });
     }
 
-    private async isUnique (data: { slug: any; }, callback: { (result: any): void; (arg0: boolean): void; }) {
-        Article.findOne({"slug": data.slug}, (err: { message: any; }, user: any) => {
+    private async isUnique (slug: string, callback: any) {
+        ArticleModel.findOne({slug}, (err: Error, article: any) => {
             if(err){
-                this.log.debug(err.message);
+                this.log.error(err.message);
+                this.log.debug(err.stack);
                 callback(false);
-            } else if(!user){
+            } else if(!article){
                 callback(true);
             } else {
                 callback(false);
@@ -80,25 +58,25 @@ export class ArticlesService {
         });
     }
 
-    private static async isContainAllRequiredData (data: { title: any; content: any; }, callback: { (rst: any): void; (arg0: boolean): void; }) {
+    private static async isContainAllRequiredData (data: any, callback: any) {
         let result: boolean;
         result = (data.title && data.content);
         callback(result);
     }
 
-    private static createArticle(data: { title: string; headline: any; connect: any; featuredImage: any; author: any; addedAt: any; tags: any; categories: any; }) {
-        const article = new Article();
+    private static createArticle(data: any) {
+        const article = new ArticleModel();
         const slugify = new SlugifyService();
 
         article.title = data.title;
         article.headline = data.headline;
-        article.connect = data.connect;
+        article.content = data.content;
         article.featuredImage = data.featuredImage;
         article.author = data.author;
         article.slug = slugify.createSlug(data.title);
 
         if(!data.addedAt){
-            article.addedAt = Date.now();
+            article.addedAt = new Date();
         } else {
             article.addedAt = data.addedAt;
         }
@@ -109,8 +87,8 @@ export class ArticlesService {
         return article;
     }
 
-    public async create(data: any, callback: { (result: any): void; (arg0: { success: boolean; message: string; error?: any; article?: any; }): void; }) {
-        await  this.isUnique(data, (result: any) => {
+    public async create(data: any, callback: any) {
+        await this.isUnique(data, (result: any) => {
             if(result) {
                 ArticlesService.isContainAllRequiredData(data, (rst: any) => {
                     if(rst) {
@@ -118,38 +96,22 @@ export class ArticlesService {
 
                         newArticle.save((err: any) => {
                             if (err) {
-                                const rstArticle1 = {
-                                    "success": false,
-                                    "message": "Authentication failed or Article creation failed.",
-                                    "error": err,
-                                }
-                                this.log.error(err);
+                                const rstArticle1 = new ErrorResultMessage(err, err.message.toString()).getMessage();
                                 callback(rstArticle1);
                             } else {
-                                const rstArticle2 = {
-                                    "success": true,
-                                    "message": "Article creation Succesful!",
-                                    "article": newArticle,
-                                }
-                                this.log.info("Article creation Succesful!");
+                                const rstArticle2 = new ArticleResultMessage(newArticle, "Article creation Successful!").getMessage();
                                 callback(rstArticle2);
                             }
                         });
                     } else {
-                        const rs2 = {
-                            "success": false,
-                            "message": "Not contains all required data!",
-                        }
-                        this.log.info("Not contains all required data!");
+                        const err1 = new Error("Not contains all required data!");
+                        const rs2 = new ErrorResultMessage(err1, err1.message.toString()).getMessage();
                         callback(rs2);
                     }
                 });
             } else {
-                const rs = {
-                    "success": false,
-                    "message": "Article is already exists!",
-                }
-                this.log.info("Article is already exists!");
+                const err2 = new Error("Article is already exists!");
+                const rs = new ErrorResultMessage(err2, err2.message.toString()).getMessage();
                 callback(rs);
             }
         });

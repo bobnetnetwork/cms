@@ -13,33 +13,49 @@ export class EmailService {
     private readonly PWD: string;
 
     private transporter: import("nodemailer/lib/mailer");
-    private info: { messageId: any; };
+    private info: { messageId: any; } | undefined;
     private _emailMessage = new EmailMessage();
 
     constructor() {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV !== "production") {
             dotenv.config();
         }
-        this.HOST = process.env.MAIL_SERVER_HOST;
-        this.PORT = parseInt(process.env.MAIL_SERVER_PORT, 10);
-        this.SECURE = (process.env.MAIL_SERVER_SECURE === "true");
-        this.USER = process.env.MAIL_SERVER_USER;
-        this.PWD = process.env.MAIL_SERVER_PWD;
-        this.generateTransporter();
-    }
 
-    public async send() {
-        try{
-            this.info = await this.transporter.sendMail(this._emailMessage.generateEmailMessage());
-
-            this.log.info("Message sent: %s", this.info.messageId);
-        } catch (e) {
-            this.log.error(e.message);
-            this.log.debug(e.stack);
+        if(process.env.MAIL_SERVER_HOST){
+            this.HOST = process.env.MAIL_SERVER_HOST;
+        } else {
+            this.log.error("The MAIL_SERVER_HOST environment is required!");
+            process.exit(1);
         }
-    }
 
-    private generateTransporter() {
+        if(process.env.MAIL_SERVER_PORT){
+            this.PORT = parseInt(process.env.MAIL_SERVER_PORT, 10);
+        } else {
+            this.log.error("The MAIL_SERVER_PORT environment is required!");
+            process.exit(1);
+        }
+
+        if(process.env.MAIL_SERVER_SECURE){
+            this.SECURE = (process.env.MAIL_SERVER_SECURE === "true");
+        } else {
+            this.log.error("The MAIL_SERVER_SECURE environment is required!");
+            process.exit(1);
+        }
+
+        if(process.env.MAIL_SERVER_USER){
+            this.USER = process.env.MAIL_SERVER_USER;
+        } else {
+            this.log.error("The MAIL_SERVER_USER environment is required!");
+            process.exit(1);
+        }
+
+        if(process.env.MAIL_SERVER_PWD){
+            this.PWD = process.env.MAIL_SERVER_PWD;
+        } else {
+            this.log.error("The MAIL_SERVER_PWD environment is required!");
+            process.exit(1);
+        }
+
         this.transporter = nodemailer.createTransport({
             host: this.HOST,
             port: this.PORT,
@@ -49,6 +65,22 @@ export class EmailService {
                 pass: this.PWD
             },
         });
+    }
+
+    public async send() {
+        try{
+            this.info = await this.transporter.sendMail(this._emailMessage.generateEmailMessage());
+
+            if(this.info){
+                this.log.info("Message sent: %s", this.info.messageId);
+            } else {
+                this.log.info("Message sent");
+            }
+
+        } catch (e) {
+            this.log.error(e.message);
+            this.log.debug(e.stack);
+        }
     }
 
     get emailMessage(): EmailMessage {

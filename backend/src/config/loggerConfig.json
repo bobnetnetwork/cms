@@ -14,16 +14,35 @@
     },
     "errorFile": {
       "type": "file",
-      "filename": "log/errors.log"
+      "filename": "log/errors.log",
+      "maxLogSize": 10485760,
+      "numBackups": 3,
+      "pattern": "-yyyy-MM-dd"
     },
     "errors": {
       "type": "logLevelFilter",
       "level": "ERROR",
       "appender": "errorFile"
+    },
+    "debugFile": {
+      "type": "file",
+      "filename": "log/debugs.log",
+      "maxLogSize": 10485760,
+      "numBackups": 3,
+      "pattern": "-yyyy-MM-dd"
+    },
+    "debugs": {
+      "type": "logLevelFilter",
+      "level": "DEBUG",
+      "appender": "debugFile"
+    },
+    "out": {
+      "type": "stdout",
+      "pattern": "-yyyy-MM-dd"
     }
   },
   "categories": {
-    "default": { "appenders": [ "app", "errors" ], "level": "DEBUG" },
+    "default": { "appenders": [ "app", "errors", "debugs", "out" ], "level": "DEBUG" },
     "http": { "appenders": [ "access"], "level": "DEBUG" }
   }
 }

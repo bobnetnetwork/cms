@@ -1,5 +1,5 @@
-import HttpException from "../common/http-exception";
-import {NextFunction, Request, Response} from "express";
+import {HttpException} from "../common/HttpException";
+import {Request, Response} from "express";
 import {LogService} from "../service/LogService.js";
 
 const log = new LogService().getLogger("errorMiddleware");
@@ -8,12 +8,12 @@ export const errorHandler = (
     error: HttpException,
     request: Request,
     response: Response,
-    next: NextFunction
 ) => {
     const status = error.statusCode || 500;
     const message =
         error.message || "It's not you. It's us. We are having some problems.";
     log.error(error.message);
+    log.debug(error.stack);
 
     response.status(status).send(message);
 };
