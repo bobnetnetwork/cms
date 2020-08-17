@@ -20,7 +20,7 @@ export class NotFoundHandler {
         };
     }
 
-    public getHandler() {
+    public getHandler(): any {
         return this.handler;
     }
 }
