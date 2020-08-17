@@ -29,10 +29,8 @@ export class GoogleOAuth2Router {
         }
 
         passport.use(new GoogleStrategy(options,
-            (token: string, tokenSecret: string, profile: Profile, done: VerifyFunction) => {
-                UserModel.findOrCreate({ googleId: profile.id}, (err: Error, user: any) => {
-                    return done(err, user);
-                });
+            async (token: string, tokenSecret: string, profile: Profile, done: VerifyFunction) => {
+                await UserModel.findOrCreate({ googleId: profile.id});
             }
         ));
     }

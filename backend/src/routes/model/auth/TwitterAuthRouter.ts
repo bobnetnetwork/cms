@@ -31,13 +31,8 @@ export class TwitterAuthRouter {
         };
 
         passport.use(new TwitterStrategy(options,
-            (token: string, tokenSecret: string, profile: Profile, done: (error: any, user?: any) => void) => {
-                UserModel.findOrCreate({twitterId: profile.id}, (err: Error, user: any) => {
-                    if(err) {
-                        return done(err);
-                    }
-                    done(null, user);
-                })
+            async (token: string, tokenSecret: string, profile: Profile, done: (error: any, user?: any) => void) => {
+                await UserModel.findOrCreate({twitterId: profile.id});
             }
         ));
     }

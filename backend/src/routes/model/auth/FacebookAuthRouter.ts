@@ -29,17 +29,15 @@ export class FacebookAuthRouter {
             clientSecret: "FACEBOOK_APP_SECRET",
             callbackUrl: "http://www.example.com/auth/facebook/callback",
         };
-        passport.use(new FacebookStrategy(options,
-            (accessToken: string, refreshToken: string, profile: Profile, done) => {
-                UserModel.findOrCreate(..., (err: Error, user: any) => {
-                    if(err) {
-                        return done(err);
-                    }
-
-                    done(null, user);
-                });
+        passport.use(new FacebookStrategy({
+                clientID: "FACEBOOK_APP_ID",
+                clientSecret: "FACEBOOK_APP_SECRET",
+                callbackURL: "http://www.example.com/auth/facebook/callback"
+            },
+            async (accessToken, refreshToken, profile, done) => {
+                await UserModel.findOrCreate({facebookdId: profile.id});
             }
-            ));
+        ));
     }
 
     private auth(): void {
