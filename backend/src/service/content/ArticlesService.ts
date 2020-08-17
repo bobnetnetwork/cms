@@ -8,6 +8,9 @@ import {ErrorResultMessage} from "../../messages/ErrorResultMessage.js";
 import {ArticleResultMessage} from "../../messages/ArticleResultMessage.js";
 import {Logger} from "log4js";
 import {ResultMessageType} from "../../messages/ResultMessage";
+import {ModelNotFoundException} from "../../exception/ModelNotFoundException.js";
+import {ModelRequiredDataException} from "../../exception/ModelRequiredDataException.js";
+import {ModelExistsException} from "../../exception/ModelExistsException.js";
 
 export class ArticlesService {
     private log: Logger = new LogService().getLogger("articlesServices");
@@ -34,7 +37,7 @@ export class ArticlesService {
                 callback(result.getMessage());
             } else {
                 if (!article) {
-                    const err1 = new Error("Article Not found in database!");
+                    const err1 = new ModelNotFoundException("Article");
                     const result = new ErrorResultMessage(err1, err1.message.toString());
                     callback(result.getMessage());
                 } else {
@@ -108,13 +111,13 @@ export class ArticlesService {
                             }
                         });
                     } else {
-                        const err1 = new Error("Not contains all required data!");
+                        const err1 = new ModelRequiredDataException();
                         const rs2 = new ErrorResultMessage(err1, err1.message.toString());
                         callback(rs2.getMessage());
                     }
                 });
             } else {
-                const err2 = new Error("Article is already exists!");
+                const err2 = new ModelExistsException("Article");
                 const rs = new ErrorResultMessage(err2, err2.message.toString());
                 callback(rs.getMessage());
             }

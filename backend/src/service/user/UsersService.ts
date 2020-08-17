@@ -7,6 +7,9 @@ import {Logger} from "log4js";
 import {ErrorResultMessage} from "../../messages/ErrorResultMessage.js";
 import {UserResultMessage} from "../../messages/UserResultMessage.js";
 import {ResultMessage, ResultMessageType} from "../../messages/ResultMessage.js";
+import {ModelRequiredDataException} from "../../exception/ModelRequiredDataException.js";
+import {ModelNotFoundException} from "../../exception/ModelNotFoundException.js";
+import {ModelExistsException} from "../../exception/ModelExistsException.js";
 
 export class UsersService {
 
@@ -34,7 +37,7 @@ export class UsersService {
                 callback(result.getMessage());
             } else {
                 if (!user) {
-                    const err1 = new Error("User Not found in database!");
+                    const err1 = new ModelNotFoundException("User");
                     const result = new ErrorResultMessage(err1, err1.message.toString());
                     callback(result.getMessage());
                 } else {
@@ -130,13 +133,13 @@ export class UsersService {
                             }
                         });
                     } else {
-                        const err2 = new Error("Not contains all required data!");
+                        const err2 = new ModelRequiredDataException();
                         const rs2 = new ErrorResultMessage(err2, err2.message.toString());
                         callback(rs2.getMessage());
                     }
                 });
             } else {
-                const err = new Error("User is already exists!");
+                const err = new ModelExistsException("User");
                 const rs = new ErrorResultMessage(err, err.message.toString());
                 callback(rs.getMessage());
             }
