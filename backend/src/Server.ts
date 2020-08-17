@@ -17,6 +17,8 @@ import session from "express-session";
 import "./config/passport.js";
 import {LogService} from "./service/tool/LogService.js";
 import {Logger} from "log4js";
+import {LocalAuthRouter} from "./routes/model/auth/LocalAuthRouter.js";
+import {FacebookAuthRouter} from "./routes/model/auth/FacebookAuthRouter.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");
@@ -29,6 +31,9 @@ class Server {
     private USERS: string = this.API_URL + "/users";
     private ARTICLES: string = this.API_URL + "/content/articles";
     private FILES: string = this.API_URL + "/files";
+    private AUTH: string = this.API_URL + "/auth";
+    private LOCAL_AUTH: string = this.AUTH + "/local";
+    private FACEBOOK_AUTH: string = this.AUTH + "/facebook";
 
     private server: ServerService = new ServerService();
 
@@ -67,6 +72,8 @@ class Server {
         this.app.use(this.USERS, new UsersRouter().getUsersRouter());
         this.app.use(this.ARTICLES, new ArticlesRouter().getArticleRouter());
         this.app.use(this.FILES, new FilesRouter().getFileRouter());
+        this.app.use(this.LOCAL_AUTH, new LocalAuthRouter().getLocalAuthRouter());
+        this.app.use(this.FACEBOOK_AUTH, new FacebookAuthRouter().getFacebookAuthRouter());
 
         const sessionOptions = {
             cookie: { maxAge: 60000 },
