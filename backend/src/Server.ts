@@ -20,6 +20,8 @@ import {Logger} from "log4js";
 import {LocalAuthRouter} from "./routes/model/auth/LocalAuthRouter.js";
 import {FacebookAuthRouter} from "./routes/model/auth/FacebookAuthRouter.js";
 import {TwitterAuthRouter} from "./routes/model/auth/TwitterAuthRouter.js";
+import {GoogleOAuthRouter} from "./routes/model/auth/GoogleOAuthRouter.js";
+import {GoogleOAuth2Router} from "./routes/model/auth/GoogleOAuth2Router.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");
@@ -36,6 +38,8 @@ class Server {
     private LOCAL_AUTH: string = this.AUTH + "/local";
     private FACEBOOK_AUTH: string = this.AUTH + "/facebook";
     private TWITTER_AUTH: string = this.AUTH + "/twitter";
+    private GOOGLE_OAUTH: string = this.AUTH + "/google/oauth";
+    private GOOGLE_OAUTH2: string = this.AUTH + "/google/oauth2";
 
     private server: ServerService = new ServerService();
 
@@ -77,6 +81,8 @@ class Server {
         this.app.use(this.LOCAL_AUTH, new LocalAuthRouter().getLocalAuthRouter());
         this.app.use(this.FACEBOOK_AUTH, new FacebookAuthRouter().getFacebookAuthRouter());
         this.app.use(this.TWITTER_AUTH, new TwitterAuthRouter().getTwitterAuthRouter());
+        this.app.use(this.GOOGLE_OAUTH, new GoogleOAuthRouter().getGoogleOAuthRouter());
+        this.app.use(this.GOOGLE_OAUTH2, new GoogleOAuth2Router().getGoogleOAuth2Router());
 
         const sessionOptions = {
             cookie: { maxAge: 60000 },
