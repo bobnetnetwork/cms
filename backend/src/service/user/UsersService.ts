@@ -63,7 +63,7 @@ export class UsersService {
 
     private static async isContainAllRequiredData(data: { userName: string; email: string; pwd?: string; }, callback: { (rst: any): void; (arg0: boolean): void; }): Promise<void> {
         let result: boolean;
-        result = (typeof data.userName !== undefined && typeof data.pwd !== undefined && typeof data.email !== undefined);
+        result = (typeof data.userName !== "undefined" && typeof data.pwd !== "undefined" && typeof data.email !== "undefined");
         callback(result);
     }
 
@@ -148,31 +148,31 @@ export class UsersService {
                 const result = new ErrorResultMessage(err, err.message.toString()).getMessage();
                 callback(result);
             } else {
-                if (typeof data.firstName !== undefined) {
+                if (typeof data.firstName !== "undefined") {
                     user.firstName = data.firstName;
                 }
-                if (typeof data.lastName !== undefined) {
+                if (typeof data.lastName !== "undefined") {
                     user.lastName = data.lastName;
                 }
-                if (typeof data.roles !== undefined) {
+                if (typeof data.roles !== "undefined") {
                     user.roles = data.roles;
                 }
-                if (typeof data.email !== undefined) {
+                if (typeof data.email !== "undefined") {
                     user.email = data.email;
                 }
-                if (typeof data.pwd !== undefined) {
+                if (typeof data.pwd !== "undefined") {
                     user.pwd = data.pwd;
                 }
-                if (typeof data.accountExpired !== undefined) {
+                if (typeof data.accountExpired !== "undefined") {
                     user.accountExpired = data.accountExpired;
                 }
-                if (typeof data.accountLocked !== undefined) {
+                if (typeof data.accountLocked !== "undefined") {
                     user.accountLocked = data.accountLocked;
                 }
-                if (typeof data.credentialsExpired !== undefined) {
+                if (typeof data.credentialsExpired !== "undefined") {
                     user.credentialsExpired = data.credentialsExpired;
                 }
-                if (typeof data.enabled !== undefined) {
+                if (typeof data.enabled !== "undefined") {
                     user.enabled = data.enabled;
                 }
 
