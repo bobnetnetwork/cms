@@ -19,7 +19,7 @@ export class ArticleResultMessage extends ResultMessage {
 }
 
 export type ArticleResultMessageType = {
-    "article": import("typegoose").InstanceType<import("../model/content/Article.js").Article>,
+    "article": InstanceType<import("../model/content/Article.js").Article>,
     "message": string,
     "success": boolean,
 }
