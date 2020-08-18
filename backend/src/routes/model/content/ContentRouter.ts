@@ -40,7 +40,7 @@ export abstract class ContentRouter extends ModelRouter {
                         this.log.debug(result.error.stack);
                         res.status(500).json(result);
                     } else {
-                        this.log.info("Article (" + req.body.userName + ") deleted!");
+                        this.log.info("Content deleted!");
                         res.status(200).json(result);
                     }
                 });
