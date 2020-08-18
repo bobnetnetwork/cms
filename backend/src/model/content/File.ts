@@ -19,4 +19,12 @@ export class File extends Typegoose {
     public addedAt?: Date;
 }
 
+export type FileType = {
+    fileName?: string,
+    url?: string,
+    slug?: string,
+    mimeType?: string,
+    addedAt?: Date,
+}
+
 export const FileModel =new File().getModelForClass(File);

@@ -25,6 +25,7 @@ import {GoogleOAuth2Router} from "./routes/auth/GoogleOAuth2Router.js";
 import {RootRouter} from "./routes/RootRouter.js";
 import {CategoryRouter} from "./routes/model/content/CategoryRouter.js";
 import {PageRouter} from "./routes/model/content/PageRouter.js";
+import {FileRouter} from "./routes/model/content/FileRouter.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");
@@ -39,6 +40,7 @@ class Server {
     private FILES: string = this.CONTENT + "/files";
     private CATEGORY: string = this.CONTENT + "/category";
     private PAGE: string = this.CONTENT + "/page";
+    private FILE: string = this.CONTENT + "/file";
     private AUTH: string = this.API_URL + "/auth";
     private LOCAL_AUTH: string = this.AUTH + "/local";
     private FACEBOOK_AUTH: string = this.AUTH + "/facebook";
@@ -103,6 +105,7 @@ class Server {
         this.app.use(this.FILES, new FilesRouter().getFileRouter());
         this.app.use(this.CATEGORY, new CategoryRouter().getRouter());
         this.app.use(this.PAGE, new PageRouter().getRouter());
+        this.app.use(this.FILE, new FileRouter().getRouter());
 
         // Auth
         this.app.use(this.LOCAL_AUTH, new LocalAuthRouter().getLocalAuthRouter());
