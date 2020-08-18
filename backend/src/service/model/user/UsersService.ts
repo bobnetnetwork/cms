@@ -10,8 +10,9 @@ import {ResultMessage, ResultMessageType} from "../../../messages/ResultMessage.
 import {ModelRequiredDataException} from "../../../exception/model/ModelRequiredDataException.js";
 import {ModelNotFoundException} from "../../../exception/model/ModelNotFoundException.js";
 import {ModelExistsException} from "../../../exception/model/ModelExistsException.js";
+import {IModelService} from "../IModelService.js";
 
-export class UsersService {
+export class UsersService implements IModelService{
 
     private log: Logger = new LogService().getLogger("usersService");
 

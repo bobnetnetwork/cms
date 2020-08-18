@@ -7,19 +7,20 @@ import {LogService} from "../../tool/LogService.js";
 import {ErrorResultMessage} from "../../../messages/ErrorResultMessage.js";
 import {ArticleResultMessage} from "../../../messages/ArticleResultMessage.js";
 import {Logger} from "log4js";
-import {ResultMessageType} from "../../../messages/ResultMessage";
+import {ResultMessage, ResultMessageType} from "../../../messages/ResultMessage.js";
 import {ModelNotFoundException} from "../../../exception/model/ModelNotFoundException.js";
 import {ModelRequiredDataException} from "../../../exception/model/ModelRequiredDataException.js";
 import {ModelExistsException} from "../../../exception/model/ModelExistsException.js";
+import {IModelService} from "../IModelService.js";
 
-export class ArticlesService {
+export class ArticlesService implements IModelService{
     private log: Logger = new LogService().getLogger("articlesServices");
 
     /**
      * Service Methods
      */
-    public async findAll(callback: { (result: any): void; (arg0: ResultMessageType): void; }) {
-        return ArticleModel.find({}, (err: Error, articles: any) => {
+    public async findAll(callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void> {
+        ArticleModel.find({}, (err: Error, articles: any) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString());
                 callback(result.getMessage());
@@ -120,6 +121,73 @@ export class ArticlesService {
                 const err2 = new ModelExistsException("Article");
                 const rs = new ErrorResultMessage(err2, err2.message.toString());
                 callback(rs.getMessage());
+            }
+        });
+    }
+
+    public async update(data: any, callback: any): Promise<void> {
+        ArticleModel.findOne({
+            slug: data.slug,
+        }, (err: Error, article: any) => {
+            if(err) {
+                const result = new ErrorResultMessage(err, err.message.toString());
+                callback(result.getMessage());
+            } else {
+                if(typeof data.title !== "undefined") {
+                    article.title = data.title;
+                }
+                if(typeof data.headline !== "undefined") {
+                    article.headline = data.headline;
+                }
+                if(typeof data.content !== "undefined") {
+                    article.content = data.content;
+                }
+                if(typeof data.featuredImage !== "undefined") {
+                    article.featuredImage = data.featuredImage;
+                }
+                if(typeof data.author !== "undefined") {
+                    article.author = data.author;
+                }
+                if(typeof data.slug !== "undefined") {
+                    article.slug = data.slug;
+                }
+                if(typeof data.tags !== "undefined") {
+                    article.tags = data.tags;
+                }
+                if(typeof data.categories !== "undefined") {
+                    article.categories = data.categories;
+                }
+
+                article.save((err1: Error, updateArticle: any) => {
+                    if(err1) {
+                        const result = new ErrorResultMessage(err1, err1.message.toString());
+                        callback(result.getMessage());
+                    } else {
+                        const result = new ArticleResultMessage(updateArticle, "Article Update Successful!");
+                        callback(result.getMessage());
+                    }
+                });
+            }
+        });
+    }
+
+    public async deleteBySlug(Slug: string, callback: ((arg0: { error?: Error; message: string; success: boolean; }) => void)): Promise<void> {
+        ArticleModel.findOne({
+            slug: Slug,
+        }, (err: Error, article: any) => {
+            if(err) {
+                const result = new ErrorResultMessage(err, err.message.toString());
+                callback(result.getMessage());
+            } else {
+                article.delete((err1: Error) => {
+                    if(err1) {
+                        const result = new ErrorResultMessage(err1, err1.message.toString());
+                        callback(result.getMessage());
+                    } else {
+                        const result = new ResultMessage("Article Delete Successful!", true);
+                        callback(result.getMessage());
+                    }
+                });
             }
         });
     }

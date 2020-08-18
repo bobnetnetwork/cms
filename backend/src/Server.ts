@@ -93,8 +93,8 @@ class Server {
         this.app.use(this.HEALTH_CHECK, new HealthCheckRouter().getHealthCheckRouter());
 
         // Models
-        this.app.use(this.USERS, new UsersRouter().getUsersRouter());
-        this.app.use(this.ARTICLES, new ArticlesRouter().getArticleRouter());
+        this.app.use(this.USERS, new UsersRouter().getRouter());
+        this.app.use(this.ARTICLES, new ArticlesRouter().getRouter());
         this.app.use(this.FILES, new FilesRouter().getFileRouter());
 
         // Auth
