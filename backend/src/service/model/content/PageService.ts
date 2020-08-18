@@ -8,8 +8,7 @@ import {ResultMessage, ResultMessageType} from "../../../messages/ResultMessage.
 import {ModelRequiredDataException} from "../../../exception/model/ModelRequiredDataException.js";
 import {ModelNotFoundException} from "../../../exception/model/ModelNotFoundException.js";
 import {ModelExistsException} from "../../../exception/model/ModelExistsException.js";
-import {SlugifyService} from "../../tool/SlugifyService";
-import {promises} from "dns";
+import {SlugifyService} from "../../tool/SlugifyService.js";
 
 export class PageService implements IModelService {
 
