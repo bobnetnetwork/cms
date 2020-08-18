@@ -26,6 +26,7 @@ import {RootRouter} from "./routes/RootRouter.js";
 import {CategoryRouter} from "./routes/model/content/CategoryRouter.js";
 import {PageRouter} from "./routes/model/content/PageRouter.js";
 import {FileRouter} from "./routes/model/content/FileRouter.js";
+import {TagRouter} from "./routes/model/content/TagRouter.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");
@@ -41,6 +42,7 @@ class Server {
     private CATEGORY: string = this.CONTENT + "/category";
     private PAGE: string = this.CONTENT + "/page";
     private FILE: string = this.CONTENT + "/file";
+    private TAG: string = this.CONTENT + "/tag";
     private AUTH: string = this.API_URL + "/auth";
     private LOCAL_AUTH: string = this.AUTH + "/local";
     private FACEBOOK_AUTH: string = this.AUTH + "/facebook";
@@ -106,6 +108,7 @@ class Server {
         this.app.use(this.CATEGORY, new CategoryRouter().getRouter());
         this.app.use(this.PAGE, new PageRouter().getRouter());
         this.app.use(this.FILE, new FileRouter().getRouter());
+        this.app.use(this.TAG, new TagRouter().getRouter());
 
         // Auth
         this.app.use(this.LOCAL_AUTH, new LocalAuthRouter().getLocalAuthRouter());
