@@ -8,8 +8,8 @@ export abstract class ModelRouter {
     protected log: Logger
     protected abstract service: IModelService;
 
-    protected constructor(loggerCategory: string) {
-        this.log = new LogService().getLogger(loggerCategory);
+    protected constructor(routerName: string) {
+        this.log = new LogService().getLogger(routerName);
         this.getAll();
         this.create();
         this.update();
