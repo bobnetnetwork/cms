@@ -4,8 +4,8 @@
 import {UserModel, UserType} from "../../../model/user/User.js";
 import {LogService} from "../../tool/LogService.js";
 import {Logger} from "log4js";
-import {ErrorResultMessage} from "../../../messages/ErrorResultMessage.js";
-import {UserResultMessage} from "../../../messages/UserResultMessage.js";
+import {ErrorResultMessage} from "../../../messages/exception/ErrorResultMessage.js";
+import {UserResultMessage} from "../../../messages/model/user/UserResultMessage.js";
 import {ResultMessage, ResultMessageType} from "../../../messages/ResultMessage.js";
 import {ModelRequiredDataException} from "../../../exception/model/ModelRequiredDataException.js";
 import {ModelNotFoundException} from "../../../exception/model/ModelNotFoundException.js";
@@ -49,7 +49,7 @@ export class UsersService implements IModelService{
         });
     }
 
-    private async isUnique(data: UserType, callback: { (result: any): void; (arg0: boolean): void; }): Promise<void> {
+    private async isUnique(data: UserType, callback: { (result: boolean): void; (arg0: boolean): void; }): Promise<void> {
         if(typeof data.userName !== "undefined" && typeof data.email !== "undefined") {
             UserModel.findOne({$or: [{userName: data.userName}, {email: data.email}]}, (err: Error, user: any) => {
                 if (err) {
@@ -71,7 +71,7 @@ export class UsersService implements IModelService{
         callback(result);
     }
 
-    public createUser(data: UserType){
+    private static createUser(data: UserType){
         const user = new UserModel();
         user.email = data.email;
         user.userName = data.userName;
@@ -122,7 +122,7 @@ export class UsersService implements IModelService{
             if (result) {
                 UsersService.isContainAllRequiredData(data, (rst: boolean) => {
                     if(rst){
-                        const newUser = this.createUser(data);
+                        const newUser = UsersService.createUser(data);
 
                         newUser.save((err: Error) => {
                             if (err) {

@@ -4,8 +4,8 @@
 import {ArticleModel, ArticleType} from "../../../model/content/Article.js";
 import {SlugifyService} from "../../tool/SlugifyService.js";
 import {LogService} from "../../tool/LogService.js";
-import {ErrorResultMessage} from "../../../messages/ErrorResultMessage.js";
-import {ArticleResultMessage} from "../../../messages/ArticleResultMessage.js";
+import {ErrorResultMessage} from "../../../messages/exception/ErrorResultMessage.js";
+import {ArticleResultMessage} from "../../../messages/model/content/ArticleResultMessage.js";
 import {Logger} from "log4js";
 import {ResultMessage, ResultMessageType} from "../../../messages/ResultMessage.js";
 import {ModelNotFoundException} from "../../../exception/model/ModelNotFoundException.js";
