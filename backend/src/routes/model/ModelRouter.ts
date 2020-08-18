@@ -48,7 +48,6 @@ export abstract class ModelRouter {
                         this.log.debug(result.error.stack);
                         res.status(500).json(result);
                     } else {
-                        const type = req.body.type;
                         this.log.info("Creation is Successful!");
                         res.status(200).json(result);
                     }
