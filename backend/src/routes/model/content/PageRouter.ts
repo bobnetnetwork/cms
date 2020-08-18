@@ -3,7 +3,7 @@ import {ModelRouter} from "../ModelRouter.js";
 import {PageService} from "../../../service/model/content/PageService.js";
 
 export class PageRouter extends ModelRouter {
-    private service: PageService = new PageService();
+    protected service: PageService = new PageService();
 
     constructor() {
         super("PageRouter");
