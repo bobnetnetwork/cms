@@ -1,7 +1,4 @@
-/**
- * Data Model Interfaces
- */
-import {UserModel, UserType} from "../../../model/user/User.js";
+import {User, UserModel, UserType} from "../../../model/user/User.js";
 import {LogService} from "../../tool/LogService.js";
 import {Logger} from "log4js";
 import {ErrorResultMessage} from "../../../messages/exception/ErrorResultMessage.js";
@@ -11,16 +8,14 @@ import {ModelRequiredDataException} from "../../../exception/model/ModelRequired
 import {ModelNotFoundException} from "../../../exception/model/ModelNotFoundException.js";
 import {ModelExistsException} from "../../../exception/model/ModelExistsException.js";
 import {IModelService} from "../IModelService.js";
+import {InstanceType} from "@hasezoey/typegoose";
 
 export class UsersService implements IModelService{
 
     private log: Logger = new LogService().getLogger("usersService");
 
-    /**
-     * Service Methods
-     */
-    public async findAll(callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void> {
-        UserModel.find({}, (err: Error, users: any) => {
+    public async findAll(callback: (result: ResultMessageType) => void): Promise<void> {
+        UserModel.find({}, (err: Error, users: InstanceType<User>[]) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString());
                 callback(result.getMessage());
@@ -31,14 +26,14 @@ export class UsersService implements IModelService{
         });
     }
 
-    public async findByUserName (userName: string, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void> {
-        UserModel.findOne({userName}, (err: Error, user: import("@hasezoey/typegoose").InstanceType<import("../../../model/user/User.js").User>) => {
+    public async findByUserName (userName: string, callback: (result: ResultMessageType) => void): Promise<void> {
+        UserModel.findOne({userName}, (err: Error, user: InstanceType<User>) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString());
                 callback(result.getMessage());
             } else {
                 if (!user) {
-                    const err1 = new ModelNotFoundException("User");
+                    const err1 = new ModelNotFoundException();
                     const result = new ErrorResultMessage(err1, err1.message.toString());
                     callback(result.getMessage());
                 } else {
@@ -49,7 +44,7 @@ export class UsersService implements IModelService{
         });
     }
 
-    private async isUnique(data: UserType, callback: { (result: boolean): void; (arg0: boolean): void; }): Promise<void> {
+    private async isUnique(data: UserType, callback: (result: boolean) => void): Promise<void> {
         if(typeof data.userName !== "undefined" && typeof data.email !== "undefined") {
             UserModel.findOne({$or: [{userName: data.userName}, {email: data.email}]}, (err: Error, user: any) => {
                 if (err) {
@@ -65,7 +60,7 @@ export class UsersService implements IModelService{
         }
     }
 
-    private static async isContainAllRequiredData(data: UserType, callback: { (rst: any): void; (arg0: boolean): void; }): Promise<void> {
+    private static async isContainAllRequiredData(data: UserType, callback: (result: boolean) => void): Promise<void> {
         let result: boolean;
         result = (typeof data.userName !== "undefined" && typeof data.pwd !== "undefined" && typeof data.email !== "undefined");
         callback(result);
@@ -117,7 +112,7 @@ export class UsersService implements IModelService{
         return user;
     }
 
-    public async create(data: UserType, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void>{
+    public async create(data: UserType, callback: (result: ResultMessageType) => void): Promise<void>{
         await this.isUnique(data, (result: boolean) => {
             if (result) {
                 UsersService.isContainAllRequiredData(data, (rst: boolean) => {
@@ -140,17 +135,17 @@ export class UsersService implements IModelService{
                     }
                 });
             } else {
-                const err = new ModelExistsException("User");
+                const err = new ModelExistsException();
                 const rs = new ErrorResultMessage(err, err.message.toString());
                 callback(rs.getMessage());
             }
         });
     }
 
-    public async update(data: UserType, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void>{
+    public async update(data: UserType, callback: (result: ResultMessageType) => void): Promise<void>{
         UserModel.findOne({
             userName: data.userName,
-        }, (err: Error, user: any) => {
+        }, (err: Error, user: InstanceType<User>) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString());
                 callback(result.getMessage());
@@ -183,7 +178,7 @@ export class UsersService implements IModelService{
                     user.enabled = data.enabled;
                 }
 
-                user.save((err1: Error, updatedUser: any) => {
+                user.save((err1: Error, updatedUser: InstanceType<User>) => {
                     if (err1) {
                         const result = new ErrorResultMessage(err1, err1.message.toString());
                         callback(result.getMessage());
@@ -196,7 +191,7 @@ export class UsersService implements IModelService{
         });
     }
 
-    public async deleteByUserName(UserName: string, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void> {
+    public async deleteByUserName(UserName: string, callback: (result: ResultMessageType) => void): Promise<void> {
         UserModel.findOne({
             userName: UserName,
         }, (err: Error, user: any) => {

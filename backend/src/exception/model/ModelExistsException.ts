@@ -1,5 +1,5 @@
 export class ModelExistsException extends Error {
-    constructor(modelName: string) {
-        super(modelName + " is already exists!");
+    constructor() {
+        super("The content is already exists!");
     }
 }
