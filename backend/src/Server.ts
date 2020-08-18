@@ -24,6 +24,7 @@ import {GoogleOAuthRouter} from "./routes/auth/GoogleOAuthRouter.js";
 import {GoogleOAuth2Router} from "./routes/auth/GoogleOAuth2Router.js";
 import {RootRouter} from "./routes/RootRouter.js";
 import {CategoryRouter} from "./routes/model/content/CategoryRouter.js";
+import {PageRouter} from "./routes/model/content/PageRouter.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");
@@ -33,9 +34,11 @@ class Server {
     private API_URL = "/api/v01";
     private HEALTH_CHECK: string = this.API_URL + "/health-check";
     private USERS: string = this.API_URL + "/users";
-    private ARTICLES: string = this.API_URL + "/content/articles";
-    private FILES: string = this.API_URL + "/files";
-    private CATEGORY: string = this.API_URL + "/category";
+    private CONTENT: string = this.API_URL + "/content";
+    private ARTICLES: string = this.CONTENT + "/articles";
+    private FILES: string = this.CONTENT + "/files";
+    private CATEGORY: string = this.CONTENT + "/category";
+    private PAGE: string = this.CONTENT + "/page";
     private AUTH: string = this.API_URL + "/auth";
     private LOCAL_AUTH: string = this.AUTH + "/local";
     private FACEBOOK_AUTH: string = this.AUTH + "/facebook";
@@ -99,6 +102,7 @@ class Server {
         this.app.use(this.ARTICLES, new ArticlesRouter().getRouter());
         this.app.use(this.FILES, new FilesRouter().getFileRouter());
         this.app.use(this.CATEGORY, new CategoryRouter().getRouter());
+        this.app.use(this.PAGE, new PageRouter().getRouter());
 
         // Auth
         this.app.use(this.LOCAL_AUTH, new LocalAuthRouter().getLocalAuthRouter());
