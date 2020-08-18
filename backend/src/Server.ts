@@ -28,6 +28,7 @@ import {PageRouter} from "./routes/model/content/PageRouter.js";
 import {FileRouter} from "./routes/model/content/FileRouter.js";
 import {TagRouter} from "./routes/model/content/TagRouter.js";
 import {RoleRouter} from "./routes/model/user/RoleRouter.js";
+import {OptionsRouter} from "./routes/model/OptionsRouter.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");
@@ -51,6 +52,7 @@ class Server {
     private TWITTER_AUTH: string = this.AUTH + "/twitter";
     private GOOGLE_OAUTH: string = this.AUTH + "/google/oauth";
     private GOOGLE_OAUTH2: string = this.AUTH + "/google/oauth2";
+    private OPTIONS: string = this.API_URL + "/options";
 
     private server: ServerService = new ServerService();
 
@@ -119,6 +121,8 @@ class Server {
         this.app.use(this.TWITTER_AUTH, new TwitterAuthRouter().getTwitterAuthRouter());
         this.app.use(this.GOOGLE_OAUTH, new GoogleOAuthRouter().getGoogleOAuthRouter());
         this.app.use(this.GOOGLE_OAUTH2, new GoogleOAuth2Router().getGoogleOAuth2Router());
+
+        this.app.use(this.OPTIONS, new OptionsRouter().getRouter());
     }
 }
 

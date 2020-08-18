@@ -10,4 +10,9 @@ export class Option extends Typegoose {
     public value?: string;
 }
 
+export type OptionType = {
+    name?: string,
+    value?: string,
+}
+
 export const OptionModel = new Option().getModelForClass(Option);
