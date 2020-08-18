@@ -13,22 +13,6 @@ export class PageService extends ContentService {
         super("PageService", PageModel);
     }
 
-    protected async isUnique(data: PageType, callback: (result: boolean) => void): Promise<void> {
-        if(typeof data.slug !== "undefined") {
-            this.model.findOne({slug: data.slug}, (err: Error, page: InstanceType<Page>) => {
-                if(err) {
-                    this.log.error(err.message);
-                    this.log.debug(err.stack);
-                    callback(false);
-                } else if(!page) {
-                    callback(true);
-                } else {
-                    callback (false);
-                }
-            });
-        }
-    }
-
     protected async isContainAllRequiredData(data: PageType, callback: (result: boolean) => void): Promise<void> {
         let result: boolean;
         result = (typeof data.title !== "undefined" && typeof data.content !== "undefined");

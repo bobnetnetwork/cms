@@ -12,22 +12,6 @@ export class CategoryService extends ContentService {
         super("CategoryService", CategoryModel);
     }
 
-    protected async isUnique(data: CategoryType, callback: (result: boolean) => void): Promise<void> {
-        if(typeof data.slug !== "undefined") {
-            this.model.findOne({slug: data.slug}, (err: Error, category: InstanceType<Category>) => {
-                if(err) {
-                    this.log.error(err.message);
-                    this.log.debug(err.stack);
-                    callback(false);
-                } else if(!category) {
-                    callback(true);
-                } else {
-                    callback(false);
-                }
-            });
-        }
-    }
-
     protected async isContainAllRequiredData(data: CategoryType, callback: (result: boolean) => void): Promise<void> {
         let result: boolean;
         result = (typeof data.name !== "undefined" && typeof data.slug !== "undefined");

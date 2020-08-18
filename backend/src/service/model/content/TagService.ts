@@ -12,20 +12,6 @@ export class TagService extends ContentService {
         super("TagService", TagModel);
     }
 
-    protected async isUnique (data: TagType, callback: (result: boolean) => void) {
-        this.model.findOne({slug: data.slug}, (err: Error, tag: InstanceType<Tag>) => {
-            if(err){
-                this.log.error(err.message);
-                this.log.debug(err.stack);
-                callback(false);
-            } else if(!tag){
-                callback(true);
-            } else {
-                callback(false);
-            }
-        });
-    }
-
     protected async isContainAllRequiredData(data: TagType, callback: (result: boolean) => void) {
         let result: boolean;
         result = (typeof data.title !== "undefined");

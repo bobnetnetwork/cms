@@ -12,20 +12,6 @@ export class ArticlesService extends ContentService{
         super("ArticlesService", ArticleModel);
     }
 
-    protected async isUnique (data: ArticleType, callback: (result: boolean) => void) {
-        this.model.findOne({slug: data.slug}, (err: Error, article: InstanceType<Article>) => {
-            if(err){
-                this.log.error(err.message);
-                this.log.debug(err.stack);
-                callback(false);
-            } else if(!article){
-                callback(true);
-            } else {
-                callback(false);
-            }
-        });
-    }
-
     protected async isContainAllRequiredData (data: ArticleType, callback: (result: boolean) => void) {
         let result: boolean;
         result = (typeof data.title !== "undefined" && typeof data.content !== "undefined");

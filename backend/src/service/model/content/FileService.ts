@@ -12,20 +12,6 @@ export class FileService extends ContentService {
         super("FileService", FileModel);
     }
 
-    protected async isUnique(data: FileType, callback: (result: boolean) => void) {
-        this.model.findOne({slug: data.slug}, (err: Error, file: InstanceType<File>) => {
-            if(err) {
-                this.log.error(err.message);
-                this.log.debug(err.stack);
-                callback(false);
-            } else if(!file) {
-                callback(true);
-            } else {
-                callback(false);
-            }
-        });
-    }
-
     protected async isContainAllRequiredData(data: FileType, callback: (result: boolean) => void) {
         let result: boolean;
         result = (typeof data.fileName !== "undefined" && typeof data.url !== "undefined");

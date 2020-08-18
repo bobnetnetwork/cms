@@ -10,6 +10,7 @@ import {ModelRequiredDataException} from "../../../exception/model/ModelRequired
 import {ModelExistsException} from "../../../exception/model/ModelExistsException.js";
 import {ContentResultMessage} from "../../../messages/model/content/ContentResultMessage.js";
 import {ModelNotFoundException} from "../../../exception/model/ModelNotFoundException.js";
+import {Article, ArticleType} from "../../../model/content/Article";
 
 export abstract class ContentService implements IModelService {
 
@@ -101,7 +102,19 @@ export abstract class ContentService implements IModelService {
         });
     }
 
-    protected abstract async isUnique(data: any, callback: (result: boolean) => void): Promise<void>;
+    protected async isUnique (data: ArticleType, callback: (result: boolean) => void): Promise<void> {
+        this.model.findOne({slug: data.slug}, (err: Error, content: InstanceType<any>) => {
+            if(err){
+                this.log.error(err.message);
+                this.log.debug(err.stack);
+                callback(false);
+            } else if(!content){
+                callback(true);
+            } else {
+                callback(false);
+            }
+        });
+    }
 
     protected abstract async isContainAllRequiredData(data: any, callback: (result: boolean) => void): Promise<void>;
 
