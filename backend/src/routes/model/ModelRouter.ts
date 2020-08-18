@@ -58,7 +58,7 @@ export abstract class ModelRouter {
                 this.log.debug(e.stack);
             }
         });
-    };
+    }
 
     protected update(): void {
         this.router.put("/", async (req: Request, res: Response) => {
@@ -79,7 +79,7 @@ export abstract class ModelRouter {
                 this.log.debug(e.stack);
             }
         });
-    };
+    }
 
     protected abstract delete(): void;
 
