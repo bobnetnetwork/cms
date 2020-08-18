@@ -27,6 +27,7 @@ import {CategoryRouter} from "./routes/model/content/CategoryRouter.js";
 import {PageRouter} from "./routes/model/content/PageRouter.js";
 import {FileRouter} from "./routes/model/content/FileRouter.js";
 import {TagRouter} from "./routes/model/content/TagRouter.js";
+import {RoleRouter} from "./routes/model/user/RoleRouter.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");
@@ -36,6 +37,7 @@ class Server {
     private API_URL = "/api/v01";
     private HEALTH_CHECK: string = this.API_URL + "/health-check";
     private USERS: string = this.API_URL + "/users";
+    private ROLE: string = this.API_URL + "/roles";
     private CONTENT: string = this.API_URL + "/content";
     private ARTICLES: string = this.CONTENT + "/articles";
     private FILES: string = this.CONTENT + "/files";
@@ -103,6 +105,7 @@ class Server {
 
         // Models
         this.app.use(this.USERS, new UsersRouter().getRouter());
+        this.app.use(this.ROLE, new RoleRouter().getRouter());
         this.app.use(this.ARTICLES, new ArticlesRouter().getRouter());
         this.app.use(this.FILES, new FilesRouter().getFileRouter());
         this.app.use(this.CATEGORY, new CategoryRouter().getRouter());
