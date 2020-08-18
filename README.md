@@ -29,30 +29,12 @@ https://hub.docker.com/r/bobnetnetwork/cms
 
 ### ENV
 
-####Frontend
+* [**Frontend**](https://github.com/bobnetnetwork/cms/wiki/Frontend-environments)
+* [**Backend**](https://github.com/bobnetnetwork/cms/wiki/Backend-Environments)
 
-* TIME_ZONE
-* APP_PORT
-* BE_PORT
-* BE_ADDRESS
-* NODE_ENV
+### API Endpoints
 
-####Backend
-
-* TIME_ZONE
-* APP_PORT
-* DB_SERVER_TYPE
-* DB_SERVER_ADDRESS
-* DB_SERVER_PORT
-* DB_SERVER_USER
-* DB_SERVER_PWD
-* DB_SERVER_DATABASE
-* NODE_ENV
-* MAIL_SERVER_HOST
-* MAIL_SERVER_PORT
-* MAIL_SERVER_SECURE
-* MAIL_SERVER_USER
-* MAIL_SERVER_PWD
+* [**Backend**](https://github.com/bobnetnetwork/cms/wiki/Backend-API-Endpoints)
 
 ## License
 This project is licensed under the GPLv3 License - see the [LICENSE.md](LICENSE.md) file for details
