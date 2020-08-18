@@ -1,68 +1,24 @@
-/**
- * Required External Modules and Interfaces
- */
-
-import express, {NextFunction, Request, Response, Router} from "express";
+import {NextFunction, Request, Response} from "express";
 import {UsersService} from "../../../service/model/user/UsersService.js";
 import {auth} from "./auth.js";
 import passport from "passport";
-import {LogService} from "../../../service/tool/LogService.js";
-import {Logger} from "log4js";
+import {ModelRouter} from "../ModelRouter.js";
 
-export class UsersRouter {
-
-    /**
-     * Router Definition
-     */
-
-    private usersRouter: Router = express.Router();
-    private log: Logger = new LogService().getLogger("usersRouter");
-
-    private userService: UsersService = new UsersService();
+export class UsersRouter extends ModelRouter {
+    protected service: UsersService = new UsersService();
 
     constructor() {
-        this.getUsers();
-        this.getUser();
-        this.createUser();
-        this.updateUser();
-        this.deleteUser();
+        super("UsersRouter");
+        this.get();
+        this.delete();
         this.login();
     }
 
-    public getUsersRouter(): Router{
-        return this.usersRouter;
-    }
-
-    /**
-     * Controller Definitions
-     */
-
-    // GET users/
-    private getUsers(): void {
-        this.usersRouter.get("/", async (req: Request, res: Response) => {
-            try {
-                await this.userService.findAll((result: any) => {
-                    if(result.error) {
-                        this.log.error(result.error.message);
-                        this.log.debug(result.error.stack);
-                        res.status(404).json(result);
-                    } else {
-                        res.status(200).json(result);
-                    }
-                });
-            } catch (e) {
-                res.status(404).send(e.message);
-                this.log.error(e.message);
-                this.log.debug(e.stack);
-            }
-        });
-    }
-
     // GET users/:username
-    private getUser(): void {
-        this.usersRouter.get("/:username", async (req: Request, res: Response) => {
+    protected get(): void {
+        this.router.get("/:username", async (req: Request, res: Response) => {
             try {
-                await this.userService.findByUserName(req.params.username, (result: any) => {
+                await this.service.findByUserName(req.params.username, (result: any) => {
                     if(result.error) {
                         this.log.error(result.error.message);
                         this.log.debug(result.error.stack);
@@ -73,50 +29,6 @@ export class UsersRouter {
                 });
             } catch (e) {
                 res.status(404).send(e.message);
-                this.log.error(e.message);
-                this.log.debug(e.stack);
-            }
-        });
-    }
-
-    // POST users/
-    private createUser(): void {
-        this.usersRouter.post("/", async (req: Request, res: Response) => {
-            try {
-                await this.userService.create(req.body, (result: any) => {
-                    if(result.error) {
-                        this.log.error(result.error.message);
-                        this.log.debug(result.error.stack);
-                        res.status(500).json(result);
-                    } else {
-                        this.log.info("User (" + req.body.userName + ") creation is Successful!");
-                        res.status(200).json(result);
-                    }
-                });
-            } catch (e) {
-                res.status(500).send(e.message);
-                this.log.error(e.message);
-                this.log.debug(e.stack);
-            }
-        });
-    }
-
-    // PUT users/
-    private updateUser(): void {
-        this.usersRouter.put("/", async (req: Request, res: Response) => {
-            try {
-                await this.userService.update(req.body, (result: any) => {
-                    if(result.error) {
-                        this.log.error(result.error.message);
-                        this.log.debug(result.error.stack);
-                        res.status(500).json(result);
-                    } else {
-                        this.log.info("User (" + req.body.userName + ") updated!");
-                        res.status(200).json(result);
-                    }
-                });
-            } catch (e) {
-                res.status(500).send(e.message);
                 this.log.error(e.message);
                 this.log.debug(e.stack);
             }
@@ -124,10 +36,10 @@ export class UsersRouter {
     }
 
     // DELETE users/:username
-    private deleteUser(): void {
-        this.usersRouter.delete("/:username", async (req: Request, res: Response) => {
+    protected delete(): void {
+        this.router.delete("/:username", async (req: Request, res: Response) => {
             try {
-                await this.userService.deleteByUserName(req.params.username, (result: any) => {
+                await this.service.deleteByUserName(req.params.username, (result: any) => {
                     if(result.error) {
                         this.log.error(result.error.message);
                         this.log.debug(result.error.stack);
@@ -138,16 +50,16 @@ export class UsersRouter {
                     }
                 });
             } catch (e) {
-                res.status(500).send(e.message);
                 this.log.error(e.message);
                 this.log.debug(e.stack);
+                res.status(500).send(e.message);
             }
         });
     }
 
     // POST login route (optional, everyone has access)
     private login(): void {
-        this.usersRouter.post("/login", auth.optional, (req: Request, res: Response, next: NextFunction) => {
+        this.router.post("/login", auth.optional, (req: Request, res: Response, next: NextFunction) => {
             const { body: { user } } = req;
 
             if(!user.email) {

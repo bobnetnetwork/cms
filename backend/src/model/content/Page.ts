@@ -1,5 +1,5 @@
-import typegoose, {Ref} from "typegoose";
-import {User} from "../user/User";
+import typegoose, {Ref} from "@hasezoey/typegoose";
+import {User} from "../user/User.js";
 const { prop, Typegoose } = typegoose;
 
 export class Page extends Typegoose {

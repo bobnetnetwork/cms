@@ -1,7 +1,7 @@
-import typegoose, {Ref} from "typegoose";
-import {Category} from "./Category";
-import {Tag} from "./Tag";
-import {User} from "../user/User";
+import typegoose, {Ref} from "@hasezoey/typegoose";
+import {Category} from "./Category.js";
+import {Tag} from "./Tag.js";
+import {User} from "../user/User.js";
 const { prop, Typegoose } = typegoose;
 
 

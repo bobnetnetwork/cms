@@ -8,7 +8,7 @@ passport.use(new Strategy({
     passwordField: "user[password]",
     usernameField: "user[email]",
 }, (email: string, password: string, done: any) => {
-    UserModel.findOne({ email },  (err, user) => {
+    UserModel.findOne({ email },  (err: Error, user: any) => {
         if(!user || !user.validatePassword(password)) {
             return done(null, false, { errors: { "email or password": "is invalid" } });
         } else {

@@ -1,5 +1,5 @@
 import {ResultMessage} from "./ResultMessage.js";
-import {InstanceType} from "typegoose";
+import {InstanceType} from "@hasezoey/typegoose";
 
 export class ArticleResultMessage extends ResultMessage {
     protected readonly article: InstanceType<import("../model/content/Article.js").Article>;

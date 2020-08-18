@@ -10,8 +10,9 @@ import {ResultMessage, ResultMessageType} from "../../../messages/ResultMessage.
 import {ModelRequiredDataException} from "../../../exception/model/ModelRequiredDataException.js";
 import {ModelNotFoundException} from "../../../exception/model/ModelNotFoundException.js";
 import {ModelExistsException} from "../../../exception/model/ModelExistsException.js";
+import {IModelService} from "../IModelService.js";
 
-export class UsersService {
+export class UsersService implements IModelService{
 
     private log: Logger = new LogService().getLogger("usersService");
 
@@ -31,7 +32,7 @@ export class UsersService {
     }
 
     public async findByUserName (userName: string, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void> {
-        UserModel.findOne({userName}, (err: Error, user: import("typegoose").InstanceType<import("../../../model/user/User.js").User>) => {
+        UserModel.findOne({userName}, (err: Error, user: import("@hasezoey/typegoose").InstanceType<import("../../../model/user/User.js").User>) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString());
                 callback(result.getMessage());
