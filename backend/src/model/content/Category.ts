@@ -26,4 +26,14 @@ export class Category extends Typegoose {
     public articles?: Ref<Article>;
 }
 
+export type CategoryType = {
+    name?: string,
+    description?: string,
+    featuredImage?: string,
+    slug?: string,
+    addedAt?: Date,
+    parent?: Category,
+    articles?: Ref<Article>,
+}
+
 export const CategoryModel = new Category().getModelForClass(Category);

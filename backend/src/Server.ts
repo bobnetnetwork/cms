@@ -23,6 +23,7 @@ import {TwitterAuthRouter} from "./routes/auth/TwitterAuthRouter.js";
 import {GoogleOAuthRouter} from "./routes/auth/GoogleOAuthRouter.js";
 import {GoogleOAuth2Router} from "./routes/auth/GoogleOAuth2Router.js";
 import {RootRouter} from "./routes/RootRouter.js";
+import {CategoryRouter} from "./routes/model/content/CategoryRouter.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");
@@ -34,6 +35,7 @@ class Server {
     private USERS: string = this.API_URL + "/users";
     private ARTICLES: string = this.API_URL + "/content/articles";
     private FILES: string = this.API_URL + "/files";
+    private CATEGORY: string = this.API_URL + "/category";
     private AUTH: string = this.API_URL + "/auth";
     private LOCAL_AUTH: string = this.AUTH + "/local";
     private FACEBOOK_AUTH: string = this.AUTH + "/facebook";
@@ -96,6 +98,7 @@ class Server {
         this.app.use(this.USERS, new UsersRouter().getRouter());
         this.app.use(this.ARTICLES, new ArticlesRouter().getRouter());
         this.app.use(this.FILES, new FilesRouter().getFileRouter());
+        this.app.use(this.CATEGORY, new CategoryRouter().getRouter());
 
         // Auth
         this.app.use(this.LOCAL_AUTH, new LocalAuthRouter().getLocalAuthRouter());
