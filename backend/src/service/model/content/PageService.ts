@@ -158,7 +158,7 @@ export class PageService implements IModelService {
         });
     }
 
-    public async deleteBySlug(Slug: string, callback: { (result: any): void; (arg0: { error?: Error; message: string; success: boolean; }): void; }): promises<void> {
+    public async deleteBySlug(Slug: string, callback: { (result: any): void; (arg0: { error?: Error; message: string; success: boolean; }): void; }): Promise<void> {
         PageModel.findOne({slug: Slug}, (err: Error, page: any) => {
             if(err) {
                 const result = new ErrorResultMessage(err, err.message.toString());
