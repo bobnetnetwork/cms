@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+// @ts-ignore
 import typegoose, {Ref} from "@typegoose/typegoose";
 import {Role} from "./Role";
 import mongoose from "mongoose";

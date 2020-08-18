@@ -32,7 +32,7 @@ export class UsersService implements IModelService{
     }
 
     public async findByUserName (userName: string, callback: { (result: any): void; (arg0: ResultMessageType): void; }): Promise<void> {
-        UserModel.findOne({userName}, (err: Error, user: import("typegoose").InstanceType<import("../../../model/user/User.js").User>) => {
+        UserModel.findOne({userName}, (err: Error, user: import("@hasezoey/typegoose").InstanceType<import("../../../model/user/User.js").User>) => {
             if (err) {
                 const result = new ErrorResultMessage(err, err.message.toString());
                 callback(result.getMessage());

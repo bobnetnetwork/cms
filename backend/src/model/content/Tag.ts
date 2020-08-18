@@ -1,5 +1,5 @@
-import typegoose, {Ref} from "typegoose";
-import {Article} from "./Article";
+import typegoose, {Ref} from "@hasezoey/typegoose";
+import {Article} from "./Article.js";
 const { prop, Typegoose } = typegoose;
 
 export class Tag extends Typegoose {

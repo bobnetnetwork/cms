@@ -1,5 +1,5 @@
 import {ResultMessage} from "./ResultMessage.js";
-import {InstanceType} from "typegoose";
+import {InstanceType} from "@hasezoey/typegoose";
 
 export class UserResultMessage extends ResultMessage {
     protected readonly user: InstanceType<import("../model/user/User.js").User>;

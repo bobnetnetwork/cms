@@ -1,4 +1,4 @@
-import typegoose from "typegoose";
+import typegoose from "@hasezoey/typegoose";
 const { prop, Typegoose } = typegoose;
 
 export class File extends Typegoose {
