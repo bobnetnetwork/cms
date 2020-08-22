@@ -9,7 +9,7 @@
     "express": "^4.16.4",
     "helmet": "^3.23.3",
     "log4js": "^6.3.0",
-    "mongoose": "^5.9.26",
+    "mongoose": "^5.9.27",
     "router": "^1.3.5",
     "slugify": "^1.4.5"
   },
