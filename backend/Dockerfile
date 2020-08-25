@@ -49,7 +49,7 @@ USER backend
 
 EXPOSE $APP_PORT
 
-VOLUME [/usr/src/app/config /usr/src/app/logs]
+VOLUME /usr/src/app/config /usr/src/app/logs
 
 # Start
 CMD [ "npm", "start" ]
