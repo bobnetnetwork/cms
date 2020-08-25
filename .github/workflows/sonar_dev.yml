@@ -19,6 +19,7 @@ jobs:
           node-version: '14.x'
       - name: SonarCloud Scan
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB }}
           SONAR_TOKEN: ${{ secrets.SONAR }}
         run: |
           npm install typescript --save
