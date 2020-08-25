@@ -12,6 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          ref: develop
           fetch-depth: 0
       - name: Setup Node.js environment
         uses: actions/setup-node@v1
