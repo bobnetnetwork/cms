@@ -21,7 +21,7 @@ updates:
       - "bobesz"
     target-branch: "packages-updates"
   - package-ecosystem: "npm"
-    directory: "/dashboard/src"
+    directory: "/dashboard"
     schedule:
       interval: "daily"
     labels:
