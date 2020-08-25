@@ -23,6 +23,12 @@ import {TwitterAuthRouter} from "./routes/auth/TwitterAuthRouter.js";
 import {GoogleOAuthRouter} from "./routes/auth/GoogleOAuthRouter.js";
 import {GoogleOAuth2Router} from "./routes/auth/GoogleOAuth2Router.js";
 import {RootRouter} from "./routes/RootRouter.js";
+import {CategoryRouter} from "./routes/model/content/CategoryRouter.js";
+import {PageRouter} from "./routes/model/content/PageRouter.js";
+import {FileRouter} from "./routes/model/content/FileRouter.js";
+import {TagRouter} from "./routes/model/content/TagRouter.js";
+import {RoleRouter} from "./routes/model/user/RoleRouter.js";
+import {OptionsRouter} from "./routes/model/OptionsRouter.js";
 
 class Server {
     private log: Logger = new LogService().getLogger("server");
@@ -32,14 +38,21 @@ class Server {
     private API_URL = "/api/v01";
     private HEALTH_CHECK: string = this.API_URL + "/health-check";
     private USERS: string = this.API_URL + "/users";
-    private ARTICLES: string = this.API_URL + "/content/articles";
-    private FILES: string = this.API_URL + "/files";
+    private ROLE: string = this.API_URL + "/roles";
+    private CONTENT: string = this.API_URL + "/content";
+    private ARTICLES: string = this.CONTENT + "/articles";
+    private FILES: string = this.CONTENT + "/files";
+    private CATEGORY: string = this.CONTENT + "/category";
+    private PAGE: string = this.CONTENT + "/page";
+    private FILE: string = this.CONTENT + "/file";
+    private TAG: string = this.CONTENT + "/tag";
     private AUTH: string = this.API_URL + "/auth";
     private LOCAL_AUTH: string = this.AUTH + "/local";
     private FACEBOOK_AUTH: string = this.AUTH + "/facebook";
     private TWITTER_AUTH: string = this.AUTH + "/twitter";
     private GOOGLE_OAUTH: string = this.AUTH + "/google/oauth";
     private GOOGLE_OAUTH2: string = this.AUTH + "/google/oauth2";
+    private OPTIONS: string = this.API_URL + "/options";
 
     private server: ServerService = new ServerService();
 
@@ -94,8 +107,13 @@ class Server {
 
         // Models
         this.app.use(this.USERS, new UsersRouter().getRouter());
+        this.app.use(this.ROLE, new RoleRouter().getRouter());
         this.app.use(this.ARTICLES, new ArticlesRouter().getRouter());
         this.app.use(this.FILES, new FilesRouter().getFileRouter());
+        this.app.use(this.CATEGORY, new CategoryRouter().getRouter());
+        this.app.use(this.PAGE, new PageRouter().getRouter());
+        this.app.use(this.FILE, new FileRouter().getRouter());
+        this.app.use(this.TAG, new TagRouter().getRouter());
 
         // Auth
         this.app.use(this.LOCAL_AUTH, new LocalAuthRouter().getLocalAuthRouter());
@@ -103,6 +121,8 @@ class Server {
         this.app.use(this.TWITTER_AUTH, new TwitterAuthRouter().getTwitterAuthRouter());
         this.app.use(this.GOOGLE_OAUTH, new GoogleOAuthRouter().getGoogleOAuthRouter());
         this.app.use(this.GOOGLE_OAUTH2, new GoogleOAuth2Router().getGoogleOAuth2Router());
+
+        this.app.use(this.OPTIONS, new OptionsRouter().getRouter());
     }
 }
 

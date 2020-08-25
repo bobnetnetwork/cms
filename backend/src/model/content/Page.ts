@@ -26,4 +26,14 @@ export class Page extends Typegoose {
     public addedAt?: Date;
 }
 
+export type PageType = {
+    title?: string,
+    headline?: string,
+    content?: string,
+    featuredImage?: string,
+    author?: Ref<User>,
+    slug?: string,
+    addedAt?: Date,
+}
+
 export const PageModel = new Page().getModelForClass(Page);

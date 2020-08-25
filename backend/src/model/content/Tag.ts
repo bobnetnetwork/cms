@@ -17,4 +17,11 @@ export class Tag extends Typegoose {
     public articles?: Ref<Article>;
 }
 
+export type TagType = {
+    title?: string,
+    slug?: string,
+    addedAt?: Date,
+    articles?: Ref<Article>,
+}
+
 export const TagModel = new Tag().getModelForClass(Tag);

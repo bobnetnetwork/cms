@@ -1,4 +1,4 @@
-import {ResultMessage} from "./ResultMessage.js";
+import {ResultMessage} from "../ResultMessage.js";
 
 export class ErrorResultMessage extends ResultMessage {
     protected readonly error: Error;

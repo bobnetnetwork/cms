@@ -1,6 +1,6 @@
 export class ModelNotFoundException extends Error {
 
-    constructor(modelName: string) {
-        super(modelName + " not found in database!");
+    constructor() {
+        super("Content not found in database!");
     }
 }
