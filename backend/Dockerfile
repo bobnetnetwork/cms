@@ -22,7 +22,7 @@ RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /
 WORKDIR /usr/src/app
 
 # Bundle app source
-COPY src/. /usr/src/app
+COPY . /usr/src/app
 
 #Install Typescritp for conversion
 RUN npm install -g typescript
