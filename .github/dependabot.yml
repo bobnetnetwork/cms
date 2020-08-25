@@ -12,20 +12,20 @@ updates:
       - "bobesz"
     target-branch: "packages-updates"
   - package-ecosystem: "npm"
-      directory: "/frontend/src"
-      schedule:
-        interval: "daily"
-      labels:
-        - "dependencies"
-      assignees:
-        - "bobesz"
-      target-branch: "packages-updates"
+    directory: "/frontend/src"
+    schedule:
+      interval: "daily"
+    labels:
+      - "dependencies"
+    assignees:
+      - "bobesz"
+    target-branch: "packages-updates"
   - package-ecosystem: "npm"
-      directory: "/dashboard/src"
-      schedule:
-        interval: "daily"
-      labels:
-        - "dependencies"
-      assignees:
-        - "bobesz"
-      target-branch: "packages-updates"
+    directory: "/dashboard/src"
+    schedule:
+      interval: "daily"
+    labels:
+      - "dependencies"
+    assignees:
+      - "bobesz"
+    target-branch: "packages-updates"
