@@ -20,3 +20,12 @@ updates:
       assignees:
         - "bobesz"
       target-branch: "packages-updates"
+  - package-ecosystem: "npm"
+      directory: "/dashboard/src"
+      schedule:
+        interval: "daily"
+      labels:
+        - "dependencies"
+      assignees:
+        - "bobesz"
+      target-branch: "packages-updates"
