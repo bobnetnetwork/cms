@@ -5,7 +5,7 @@ frontend:  [![Known Vulnerabilities](https://snyk.io/test/github/bobnetnetwork/c
 
 backend: [![Known Vulnerabilities](https://snyk.io/test/github/bobnetnetwork/cms/badge.svg?targetFile=backend/src/package.json)](https://snyk.io/test/github/bobnetnetwork/cms?targetFile=backend/src/package.json)
 
-An open source CMS based on NodeJS and AngularJS. 
+An open source CMS based on NodeJS and Angular. 
 
 ## Motivation
 
@@ -17,8 +17,24 @@ Whether you use this project, have learned something from it, or just like it, p
 
 ## Technologies
 * NodeJS
-* AngularJS
+* TypeScript
+* Angular
 * MongoDB
+* Docker
+
+## Docker Images
+https://hub.docker.com/r/bobnetnetwork/cms
+* **[Dev]Frontend**  _docker pull bobnetnetwork/cms:frontend-dev_
+* **[Dev]Backend**  _docker pull bobnetnetwork/cms:backend-dev_
+
+### ENV
+
+* [**Frontend**](https://github.com/bobnetnetwork/cms/wiki/Frontend-environments)
+* [**Backend**](https://github.com/bobnetnetwork/cms/wiki/Backend-Environments)
+
+### API Endpoints
+
+* [**Backend**](https://github.com/bobnetnetwork/cms/wiki/Backend-API-Endpoints)
 
 ## License
 This project is licensed under the GPLv3 License - see the [LICENSE.md](LICENSE.md) file for details
