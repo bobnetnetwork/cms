@@ -3,7 +3,7 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/backend/src"
+    directory: "/backend"
     schedule:
       interval: "daily"
     labels:
@@ -12,7 +12,7 @@ updates:
       - "bobesz"
     target-branch: "packages-updates"
   - package-ecosystem: "npm"
-    directory: "/frontend/src"
+    directory: "/frontend"
     schedule:
       interval: "daily"
     labels:

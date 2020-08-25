@@ -5,12 +5,10 @@ import {Model} from "mongoose";
 import {ErrorResultMessage} from "../../../messages/exception/ErrorResultMessage.js";
 import {ResultMessage, ResultMessageType} from "../../../messages/ResultMessage.js";
 import {InstanceType} from "@hasezoey/typegoose";
-import {PageType} from "../../../model/content/Page.js";
 import {ModelRequiredDataException} from "../../../exception/model/ModelRequiredDataException.js";
 import {ModelExistsException} from "../../../exception/model/ModelExistsException.js";
 import {ContentResultMessage} from "../../../messages/model/content/ContentResultMessage.js";
 import {ModelNotFoundException} from "../../../exception/model/ModelNotFoundException.js";
-import {Article, ArticleType} from "../../../model/content/Article";
 
 export abstract class ContentService implements IModelService {
 
@@ -72,7 +70,7 @@ export abstract class ContentService implements IModelService {
         });
     }
 
-    public async create(data: PageType, callback: (result: ResultMessageType) => void): Promise<void> {
+    public async create(data: any, callback: (result: ResultMessageType) => void): Promise<void> {
         await this.isUnique(data, (result: boolean) => {
             if(result) {
                 this.isContainAllRequiredData(data, (rst: any) => {
@@ -102,7 +100,7 @@ export abstract class ContentService implements IModelService {
         });
     }
 
-    protected async isUnique (data: ArticleType, callback: (result: boolean) => void): Promise<void> {
+    protected async isUnique (data: any, callback: (result: boolean) => void): Promise<void> {
         this.model.findOne({slug: data.slug}, (err: Error, content: InstanceType<any>) => {
             if(err){
                 this.log.error(err.message);

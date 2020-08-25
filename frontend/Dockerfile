@@ -22,7 +22,7 @@ RUN npm install -g typescript
 RUN adduser --disabled-password frontend
 
 # Copy all other source code to work directory
-COPY src/. /usr/src/app
+COPY . /usr/src/app
 
 RUN chown -R frontend:frontend /usr/src/app
 USER frontend

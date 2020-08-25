@@ -9,7 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { ArticleComponent } from './article/article.component';
 import { CategoryComponent } from './category/category.component';
 import { TagComponent } from './tag/tag.component';
-import { UserComponent } from './user/user.component';
 import { MessagesComponent } from './messages/messages.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 
@@ -20,7 +19,6 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
     ArticleComponent,
     CategoryComponent,
     TagComponent,
-    UserComponent,
     MessagesComponent,
     HeroDetailComponent
   ],
