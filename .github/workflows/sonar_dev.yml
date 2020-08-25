@@ -19,11 +19,10 @@ jobs:
           node-version: '14.x'
       - name: SonarCloud Scan
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB }}
           SONAR_TOKEN: ${{ secrets.SONAR }}
         run: |
-          npm install
           npm install typescript --save
+          ./npm-install.sh
           export SONAR_SCANNER_VERSION=4.4.0.2170
           export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
           curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
@@ -31,8 +30,4 @@ jobs:
           export PATH=$SONAR_SCANNER_HOME/bin:$PATH
           export SONAR_SCANNER_OPTS="-server"
           sonar-scanner \
-            -Dsonar.organization=bobnetnetwork \
-            -Dsonar.projectKey=bobnetnetwork_cms \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR }}
