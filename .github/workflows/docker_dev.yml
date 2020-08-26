@@ -28,8 +28,8 @@ jobs:
           username: bobesz
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: bobnetnetwork/cms/cms
-          tags: backend-dev
+          repository: bobnetnetwork/cms/backend-dev
+          tags: latest
           path: ./backend/
   frontend-image:
     runs-on: ubuntu-latest
@@ -53,8 +53,8 @@ jobs:
           username: bobesz
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: bobnetnetwork/cms/cms
-          tags: frontend-dev
+          repository: bobnetnetwork/cms/frontend-dev
+          tags: latest
           path: ./frontend/
   dashboard-image:
     runs-on: ubuntu-latest
@@ -78,6 +78,6 @@ jobs:
           username: bobesz
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: bobnetnetwork/cms/cms
-          tags: dashboard-dev
+          repository: bobnetnetwork/cms/dashboard-dev
+          tags: latest
           path: ./dashboard/
