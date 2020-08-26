@@ -32,4 +32,5 @@ jobs:
           export PATH=$SONAR_SCANNER_HOME/bin:$PATH
           export SONAR_SCANNER_OPTS="-server"
           sonar-scanner \
-            -Dsonar.login=${{ secrets.SONAR }}
+            -Dsonar.login=${{ secrets.SONAR }} \
+            -Dsonar.branch.name=dev
