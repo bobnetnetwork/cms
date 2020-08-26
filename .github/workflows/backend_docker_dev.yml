@@ -21,4 +21,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: bobnetnetwork/cms
           tags: backend-dev
-          path: /backend
+          path: ./backend/
