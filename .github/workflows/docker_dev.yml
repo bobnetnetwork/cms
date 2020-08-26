@@ -30,6 +30,7 @@ jobs:
           registry: docker.pkg.github.com
           repository: bobnetnetwork/cms/cms
           tags: backend-dev
+          path: ./backend/
   frontend-image:
     runs-on: ubuntu-latest
     steps:
