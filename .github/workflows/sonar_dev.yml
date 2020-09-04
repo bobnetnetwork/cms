@@ -12,17 +12,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          ref: develop
           fetch-depth: 0
       - name: Setup Node.js environment
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: '14.x'
       - name: SonarCloud Scan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB }}
           SONAR_TOKEN: ${{ secrets.SONAR }}
         run: |
-          npm install
+          npm install typescript --save
+          /bin/bash ./npm-install.sh
           export SONAR_SCANNER_VERSION=4.4.0.2170
           export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
           curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
@@ -30,8 +32,5 @@ jobs:
           export PATH=$SONAR_SCANNER_HOME/bin:$PATH
           export SONAR_SCANNER_OPTS="-server"
           sonar-scanner \
-            -Dsonar.organization=bobnetnetwork \
-            -Dsonar.projectKey=bobnetnetwork_cms \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR }}
+            -Dsonar.login=${{ secrets.SONAR }} \
+            -Dsonar.branch.name=dev
