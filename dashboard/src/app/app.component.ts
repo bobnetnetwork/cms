@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,22 +7,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
     './app.component.css'
   ]
 })
-export class AppComponent implements OnInit, OnDestroy{
-
+export class AppComponent {
   title = 'cms-dashboard';
-
-  ngOnInit(): void{
-    const body = document.body;
-    body.classList.add('main-sidebar');
-    body.classList.add('sidebar-dark-primary');
-    body.classList.add('elevation-4');
- }
-
- ngOnDestroy(): void{
-  const body = document.body;
-  body.classList.remove('main-sidebar');
-  body.classList.remove('sidebar-dark-primary');
-  body.classList.remove('elevation-4');
-}
 
 }
