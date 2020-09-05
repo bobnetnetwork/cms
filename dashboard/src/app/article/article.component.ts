@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { Article } from 'src/model/content/Article';
 
 export class ArticleMessage {
-  content: Article[]
-  message: String
+  content: Article[];
+  message: String;
 }
 
 @Component({
@@ -17,7 +17,7 @@ export class ArticleMessage {
 })
 export class ArticleComponent implements OnInit {
 
-  articles: Article[]
+  articles: Article[];
   msg: ArticleMessage;
 
   constructor(private service: ArticleService) {
