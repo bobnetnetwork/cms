@@ -9,6 +9,7 @@ import { AppheaderComponent } from './appheader/appheader.component';
 import { AppmenuComponent } from './appmenu/appmenu.component';
 import { AppfooterComponent } from './appfooter/appfooter.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SinglearticleComponent } from './singlearticle/singlearticle.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AppheaderComponent,
     AppmenuComponent,
     AppfooterComponent,
-    DashboardComponent
+    DashboardComponent,
+    SinglearticleComponent
   ],
   imports: [
     BrowserModule,

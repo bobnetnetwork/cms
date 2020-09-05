@@ -16,8 +16,8 @@ export class ArticleService {
     return this.http.get(this.url);
   }
 
-  getArticle(slug: string): Observable<Article> {
-    return this.http.get<Article>(this.url + slug);
+  getArticle(slug: string) {
+    return this.http.get(this.url + slug);
   }
 
   insertArticle(article: Article): Observable<Article> {
