@@ -1,5 +1,5 @@
-import { Observable } from "rxjs";
-import { User } from "../user/User"
+import { Observable } from 'rxjs';
+import { User } from '../user/User';
 
 export class Page {
   title?: string;
