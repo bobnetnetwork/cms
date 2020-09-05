@@ -10,10 +10,10 @@ import { AppmenuComponent } from './components/template/appmenu/appmenu.componen
 import { AppfooterComponent } from './components/template/appfooter/appfooter.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ArticleComponent } from './components/model/content/article/article/article.component';
-import { PagesComponent } from './components/model/content/pages/pages.component';
-import { PageComponent } from './components/model/content/page/page.component';
+import { PagesComponent } from './components/model/content/page/pages/pages.component';
+import { PageComponent } from './components/model/content/page/page/page.component';
 import { NewarticleComponent } from './components/model/content/article/newarticle/newarticle.component';
-import { NewpageComponent } from './components/model/content/newpage/newpage.component';
+import { NewpageComponent } from './components/model/content/page/newpage/newpage.component';
 
 @NgModule({
   declarations: [

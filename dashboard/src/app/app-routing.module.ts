@@ -3,11 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { ArticlesComponent } from './components/model/content/article/articles/articles.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ArticleComponent} from './components/model/content/article/article/article.component';
+import { PagesComponent } from './components/model/content/page/pages/pages.component';
+import { PageComponent } from './components/model/content/page/page/page.component';
 
 const routes: Routes = [
-  {path: 'articles', component: ArticlesComponent},
   {path: '', component: DashboardComponent},
-  {path: 'articles/:articleslug', component: ArticleComponent}
+  {path: 'articles', component: ArticlesComponent},
+  {path: 'articles/:articleslug', component: ArticleComponent},
+  {path: 'pages', component: PagesComponent},
+  {path: 'pages/:pageslug', component: PageComponent}
 ];
 
 @NgModule({
