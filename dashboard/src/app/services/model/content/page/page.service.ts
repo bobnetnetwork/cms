@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class PageService {
 
-  private url = "http://10.9.110.111:9421/api/v01/content/page/";
+  private url = 'http://10.9.110.111:9421/api/v01/content/page/';
 
   constructor(private http: HttpClient) { }
 
