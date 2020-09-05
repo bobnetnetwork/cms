@@ -62,7 +62,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "cms-dashboard:build"
+            "browserTarget": "cms-dashboard:build",
+            "port": 9423
           },
           "configurations": {
             "production": {
