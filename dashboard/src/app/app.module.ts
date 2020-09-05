@@ -10,6 +10,10 @@ import { AppmenuComponent } from './appmenu/appmenu.component';
 import { AppfooterComponent } from './appfooter/appfooter.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SinglearticleComponent } from './singlearticle/singlearticle.component';
+import { PagesComponent } from './pages/pages.component';
+import { PageComponent } from './page/page.component';
+import { NewarticleComponent } from './newarticle/newarticle.component';
+import { NewpageComponent } from './newpage/newpage.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,11 @@ import { SinglearticleComponent } from './singlearticle/singlearticle.component'
     AppmenuComponent,
     AppfooterComponent,
     DashboardComponent,
-    SinglearticleComponent
+    SinglearticleComponent,
+    PagesComponent,
+    PageComponent,
+    NewarticleComponent,
+    NewpageComponent
   ],
   imports: [
     BrowserModule,
