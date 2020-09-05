@@ -30,10 +30,10 @@
   height: 12px;
   overflow: hidden;
 
-  -webkit-border-radius: 0 0 4px 0;
-  -moz-border-radius: 0 0 4px 0;
-  -o-border-radius: 0 0 4px 0;
-  border-radius: 0 0 4px 0;
+  -webkit-border-radius: 0 0 4px;
+  -moz-border-radius: 0 0 4px;
+  -o-border-radius: 0 0 4px;
+  border-radius: 0 0 4px;
 
   -webkit-box-shadow: inset -1px 0 #1D00AF, inset 0 -1px #1D00AF, inset 0 2px rgba(255, 255, 255, 0.5), inset 0 6px rgba(255, 255, 255, .3);
   -moz-box-shadow: inset -1px 0 #1D00AF, inset 0 -1px #1D00AF, inset 0 2px rgba(255, 255, 255, 0.5), inset 0 6px rgba(255, 255, 255, .3);

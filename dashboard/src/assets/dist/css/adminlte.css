@@ -4376,7 +4376,7 @@ input[type="button"].btn-block {
   align-items: center;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem;
 }
 
 .navbar .container,
@@ -6388,13 +6388,13 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 
 .bs-popover-bottom > .arrow::before, .bs-popover-auto[x-placement^="bottom"] > .arrow::before {
   top: 0;
-  border-width: 0 0.5rem 0.5rem 0.5rem;
+  border-width: 0 0.5rem 0.5rem;
   border-bottom-color: rgba(0, 0, 0, 0.25);
 }
 
 .bs-popover-bottom > .arrow::after, .bs-popover-auto[x-placement^="bottom"] > .arrow::after {
   top: 1px;
-  border-width: 0 0.5rem 0.5rem 0.5rem;
+  border-width: 0 0.5rem 0.5rem;
   border-bottom-color: #ffffff;
 }
 
@@ -13471,8 +13471,8 @@ body.text-sm .control-sidebar {
 
 .dropdown-submenu > .dropdown-menu {
   left: 100%;
-  margin-left: 0px;
-  margin-top: 0px;
+  margin-left: 0;
+  margin-top: 0;
   top: 0;
 }
 
@@ -19104,7 +19104,7 @@ html.maximized-card {
 .small-box h3 {
   font-size: 2.2rem;
   font-weight: bold;
-  margin: 0 0 10px 0;
+  margin: 0 0 10px;
   padding: 0;
   white-space: nowrap;
 }
@@ -27386,7 +27386,7 @@ select.form-control-sm ~ .select2-container--default .select2-selection--multipl
 }
 
 .ribbon-wrapper.ribbon-lg .ribbon {
-  right: 0px;
+  right: 0;
   top: 26px;
   width: 160px;
 }
@@ -31218,4 +31218,3 @@ a.text-muted:hover {
 [class*="accent-"] a.btn-dark {
   color: #ffffff;
 }
-/*# sourceMappingURL=adminlte.css.map */
