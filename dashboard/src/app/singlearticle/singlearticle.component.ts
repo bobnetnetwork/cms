@@ -20,7 +20,7 @@ export class SinglearticleComponent implements OnInit {
   article: Article;
 
   constructor(private route: ActivatedRoute, private service: ArticleService) {
-    this.slug = this.route.snapshot.paramMap.get("articleslug");
+    this.slug = this.route.snapshot.paramMap.get('articleslug');
     this.service.getArticle(this.slug).subscribe(res => {
       console.log(res);
       this.msg = res as ArticleMessage;
