@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ArticleComponent } from './article/article.component';
+import { ArticlesComponent } from './components/model/content/article/articles/articles.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SinglearticleComponent} from './singlearticle/singlearticle.component';
+import { ArticleComponent} from './components/model/content/article/article/article.component';
 
 const routes: Routes = [
-  {path: 'articles', component: ArticleComponent},
+  {path: 'articles', component: ArticlesComponent},
   {path: '', component: DashboardComponent},
-  {path: 'articles/:articleslug', component: SinglearticleComponent}
+  {path: 'articles/:articleslug', component: ArticleComponent}
 ];
 
 @NgModule({

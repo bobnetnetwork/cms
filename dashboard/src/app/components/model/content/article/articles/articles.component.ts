@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticleService } from 'src/article.service';
-import { HttpClient, HttpHandler } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Article } from 'src/model/content/Article';
+import { ArticleService } from '../../../../../services/model/content/article/article.service';
+import { HttpClient } from '@angular/common/http';
+import { Article } from '../../../../../model/content/Article';
 
 export class ArticleMessage {
   content: Article[];
@@ -11,11 +10,11 @@ export class ArticleMessage {
 
 @Component({
   selector: 'app-article',
-  templateUrl: './article.component.html',
-  styleUrls: ['./article.component.css'],
+  templateUrl: './articles.component.html',
+  styleUrls: ['./articles.component.css'],
   providers: [HttpClient]
 })
-export class ArticleComponent implements OnInit {
+export class ArticlesComponent implements OnInit {
 
   articles: Article[];
   msg: ArticleMessage;

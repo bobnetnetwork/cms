@@ -3,27 +3,27 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ArticleComponent } from './article/article.component';
+import { ArticlesComponent } from './components/model/content/article/articles/articles.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AppheaderComponent } from './appheader/appheader.component';
-import { AppmenuComponent } from './appmenu/appmenu.component';
-import { AppfooterComponent } from './appfooter/appfooter.component';
+import { AppheaderComponent } from './components/template/appheader/appheader.component';
+import { AppmenuComponent } from './components/template/appmenu/appmenu.component';
+import { AppfooterComponent } from './components/template/appfooter/appfooter.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SinglearticleComponent } from './singlearticle/singlearticle.component';
-import { PagesComponent } from './pages/pages.component';
-import { PageComponent } from './page/page.component';
-import { NewarticleComponent } from './newarticle/newarticle.component';
-import { NewpageComponent } from './newpage/newpage.component';
+import { ArticleComponent } from './components/model/content/article/article/article.component';
+import { PagesComponent } from './components/model/content/pages/pages.component';
+import { PageComponent } from './components/model/content/page/page.component';
+import { NewarticleComponent } from './components/model/content/article/newarticle/newarticle.component';
+import { NewpageComponent } from './components/model/content/newpage/newpage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ArticleComponent,
+    ArticlesComponent,
     AppheaderComponent,
     AppmenuComponent,
     AppfooterComponent,
     DashboardComponent,
-    SinglearticleComponent,
+    ArticleComponent,
     PagesComponent,
     PageComponent,
     NewarticleComponent,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Article } from 'src/model/content/Article';
-import { ArticleService } from 'src/article.service';
+import { Article } from 'src/app/model/content/Article';
+import { ArticleService } from 'src/app/services/model/content/article/article.service';
 
 export class ArticleMessage {
   content: Article[];
@@ -10,10 +10,10 @@ export class ArticleMessage {
 
 @Component({
   selector: 'app-singlearticle',
-  templateUrl: './singlearticle.component.html',
-  styleUrls: ['./singlearticle.component.css']
+  templateUrl: './article.component.html',
+  styleUrls: ['./article.component.css']
 })
-export class SinglearticleComponent implements OnInit {
+export class ArticleComponent implements OnInit {
 
   private slug: string;
   private msg: ArticleMessage;
