@@ -1,9 +1,14 @@
-<p>article works!</p>
-
-<div *ngFor="let article of articles">
-  <h1>{{article.title}}</h1>
-  <p><b>Slug: </b>{{article.slug}}</p>
-  <p><b>AddedAt: </b>{{article.addedAt}}</p>
-  <p><b>Content: </b>{{article.content}}</p>
-  <p><b>Headline: </b>{{article.headline}}</p>
-</div>
+<table>
+  <caption>Articles</caption>
+  <tr>
+    <th scope="col1">Title</th>
+    <th scope="col1">Headline</th>
+    <th scope="col1">AddedAt</th>
+    <th scope="col1">Author</th>
+  </tr>
+  <tr *ngFor="let article of articles">
+    <td><a href="/articles/{{article.slug}}">{{article.title}}</a></td>
+    <td>{{article.headline}}</td>
+    <td>{{article.addedAt | date: "yyyy-MM-dd HH:MM"}}</td>
+  </tr>
+</table>
