@@ -3,24 +3,20 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeroesComponent } from './heroes/heroes.component';
-
-import { FormsModule } from '@angular/forms';
-import { ArticleComponent } from './article/article.component';
-import { CategoryComponent } from './category/category.component';
-import { TagComponent } from './tag/tag.component';
-import { MessagesComponent } from './messages/messages.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
+import { AppheaderComponent } from './components/template/appheader/appheader.component';
+import { AppfooterComponent } from './components/template/appfooter/appfooter.component';
+import { AppmenuComponent } from './components/template/appmenu/appmenu.component';
+import { AppsidebarComponent } from './components/template/appsidebar/appsidebar.component';
+import { AppcontentComponent } from './components/template/appcontent/appcontent.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeroesComponent,
-    ArticleComponent,
-    CategoryComponent,
-    TagComponent,
-    MessagesComponent,
-    HeroDetailComponent
+    AppheaderComponent,
+    AppfooterComponent,
+    AppmenuComponent,
+    AppsidebarComponent,
+    AppcontentComponent
   ],
   imports: [
     BrowserModule,
