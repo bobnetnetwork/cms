@@ -45,22 +45,22 @@ export class ArticleComponent implements OnInit {
   }
 
   saveAsDraft() {
-    console.log("Saved Draft!");
+    console.log('Saved Draft!');
     console.log(this.articleForm);
-    console.log("Title: ", this.articleForm.get("title").value);
+    console.log('Title: ', this.articleForm.get('title').value);
   }
 
   publish() {
-    this.article.title = this.articleForm.get("title").value;
-    this.article.content = this.articleForm.get("content").value
+    this.article.title = this.articleForm.get('title').value;
+    this.article.content = this.articleForm.get('content').value;
     this.service.updateArticle(this.article).subscribe(res => {
-      console.log("Update log: ", res);
+      console.log('Update log: ', res);
     });
   }
 
   delete() {
     this.service.deleteArticle(this.article.slug).subscribe(res => {
-      console.log("Delete log: ", res);
+      console.log('Delete log: ', res);
     });
   }
 }
