@@ -24,8 +24,8 @@ export class ArticleService {
     return this.http.post<Article>(this.url, article);
   }
 
-  updateArticle(article: Article): Observable<void> {
-    return this.http.put<void>(this.url + article.slug, article);
+  updateArticle(article: Article) {
+    return this.http.put(this.url, article);
   }
 
   deleteArticle(slug: string) {

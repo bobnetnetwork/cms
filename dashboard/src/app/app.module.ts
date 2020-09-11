@@ -14,6 +14,7 @@ import { PagesComponent } from './components/model/content/page/pages/pages.comp
 import { PageComponent } from './components/model/content/page/page/page.component';
 import { NewarticleComponent } from './components/model/content/article/newarticle/newarticle.component';
 import { NewpageComponent } from './components/model/content/page/newpage/newpage.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,9 @@ import { NewpageComponent } from './components/model/content/page/newpage/newpag
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
