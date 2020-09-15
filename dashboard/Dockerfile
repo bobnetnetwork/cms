@@ -20,13 +20,13 @@ RUN npm i -g @angular/cli
 RUN npm install -g typescript
 
 #Add App user
-RUN adduser --disabled-password dashboard
+#RUN adduser --disabled-password dashboard
 
 # Copy all other source code to work directory
 COPY . /usr/src/app
 
-RUN chown -R dashboard:dashboard /usr/src/app
-USER dashboard
+#RUN chown -R dashboard:dashboard /usr/src/app
+#USER dashboard
 
 # Install all Packages
 RUN npm install
