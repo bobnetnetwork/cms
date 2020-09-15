@@ -33,7 +33,7 @@ RUN npm install
 
 RUN npm run build
 
-USER root
+#USER root
 
 # Stage 2
 FROM nginx:1.17.1-alpine
