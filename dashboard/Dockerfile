@@ -1,4 +1,5 @@
-FROM node:14
+# Stage 1
+FROM node:14 As builder
 # Env
 ENV TIME_ZONE=Europe/Budapest
 ENV APP_PORT=9423
@@ -32,7 +33,15 @@ RUN npm install
 
 RUN npm run build
 
+USER root
+
+# Stage 2
+FROM nginx:1.17.1-alpine
+COPY --from=builder /usr/src/app/dist/cms-dashboard /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/
+
 EXPOSE $APP_PORT
 
 # Start
-CMD [ "ng", "serve" ]
+# CMD [ "ng", "serve" ]
