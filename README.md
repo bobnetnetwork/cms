@@ -5,7 +5,7 @@ frontend:  [![Known Vulnerabilities](https://snyk.io/test/github/bobnetnetwork/c
 
 backend: [![Known Vulnerabilities](https://snyk.io/test/github/bobnetnetwork/cms/badge.svg?targetFile=backend/src/package.json)](https://snyk.io/test/github/bobnetnetwork/cms?targetFile=backend/src/package.json)
 
-An open source CMS based on NodeJS and Angular. 
+An open source CMS based on NodeJS. 
 
 ## Motivation
 
@@ -18,7 +18,6 @@ Whether you use this project, have learned something from it, or just like it, p
 ## Technologies
 * NodeJS
 * TypeScript
-* Angular
 * MongoDB
 * Docker
 
