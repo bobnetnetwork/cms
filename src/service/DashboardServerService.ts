@@ -15,8 +15,8 @@ export class DashboardServerService extends ServerService {
         super("DashboardServerService", app);
 
         this.app.engine('mustache', mustacheExpress());
-        this.app.set('views', path.resolve()+ '\\src\\views');
-        this.app.use(express.static('public'));
+        this.app.set('views', path.resolve()+ '\\src\\views\\dashboard');
+        this.app.use(express.static(path.resolve()+ '\\src\\views\\dashboard\\assets'));
         this.app.set('view engine', 'mustache');
 
         this.app.get('/', function (req, res) {
