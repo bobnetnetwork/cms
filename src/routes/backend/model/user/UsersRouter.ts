@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from "express";
-import {UsersService} from "../../../service/model/user/UsersService.js";
+import {UsersService} from "../../../../service/model/user/UsersService.js";
 import {auth} from "./auth.js";
 import passport from "passport";
 import {ModelRouter} from "../ModelRouter.js";

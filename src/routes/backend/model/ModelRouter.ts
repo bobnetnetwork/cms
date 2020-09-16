@@ -1,7 +1,7 @@
 import {Logger} from "log4js";
 import express, {Router, Request, Response} from "express";
-import {IModelService} from "../../service/model/IModelService.js";
-import {LogService} from "../../service/tool/LogService.js";
+import {IModelService} from "../../../service/model/IModelService.js";
+import {LogService} from "../../../service/tool/LogService.js";
 
 export abstract class ModelRouter {
     protected router: Router = express.Router();

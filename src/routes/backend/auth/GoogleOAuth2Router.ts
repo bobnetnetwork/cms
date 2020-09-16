@@ -1,13 +1,13 @@
 import passportGoogleOAuth, {Profile} from "passport-google-oauth";
 import express, {Router} from "express";
 import passport from "passport";
-import {UserModel} from "../../model/user/User.js";
+import {UserModel} from "../../../model/user/User.js";
 
-const GoogleStrategy = passportGoogleOAuth.OAuthStrategy;
+const GoogleStrategy = passportGoogleOAuth.OAuth2Strategy;
 
-export class GoogleOAuthRouter {
+export class GoogleOAuth2Router {
 
-    private googleOAuthRouter: Router = express.Router();
+    private googleOAuth2Router: Router = express.Router();
 
     constructor() {
         this.config();
@@ -15,15 +15,15 @@ export class GoogleOAuthRouter {
         this.callback();
     }
 
-    public getGoogleOAuthRouter(): Router {
-        return this.googleOAuthRouter;
+    public getGoogleOAuth2Router(): Router {
+        return this.googleOAuth2Router;
     }
 
     private config(): void {
         const options = {
-            consumerKey: "GOOGLE_CONSUMER_KEY",
-            consumerSecret: "GOOGLE_CONSUMER_SECRET",
-            callbackURL: "http://www.example.com/auth/google/callback",
+            clientID: "GOOGLE_CLIENT_ID",
+            clientSecret: "GOOGLE_CLIENT_SECRET",
+            callbackURL: "http://www.example.com/auth/google/callback"
         }
 
         passport.use(new GoogleStrategy(options,
@@ -34,7 +34,7 @@ export class GoogleOAuthRouter {
     }
 
     private auth(): void {
-        this.googleOAuthRouter.get("/", passport.authenticate("google", { scope: 'https://www.google.com/m8/feeds' }));
+        this.googleOAuth2Router.get("/", passport.authenticate("google", { scope: ['https://www.googleapis.com/auth/plus.login'] }));
     }
 
     private callback(): void {
@@ -42,7 +42,7 @@ export class GoogleOAuthRouter {
             successRedirect: "/",
             failureRedirect: "/login",
         }
-        this.googleOAuthRouter.get("/callback", passport.authenticate("google", options));
+        this.googleOAuth2Router.get("/callback", passport.authenticate("google", options));
     }
 
 }

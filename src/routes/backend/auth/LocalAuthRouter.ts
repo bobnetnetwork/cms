@@ -1,7 +1,7 @@
 import express, {Router, Request, Response, NextFunction} from "express";
 import passport from "passport";
 import passportLocal from "passport-local";
-import { UserModel} from "../../model/user/User.js";
+import { UserModel} from "../../../model/user/User.js";
 
 const LocalStrategy = passportLocal.Strategy;
 

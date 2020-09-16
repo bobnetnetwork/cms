@@ -1,7 +1,7 @@
 import express, {Router} from "express";
 import passport from "passport";
 import passportFacebook, {Profile} from "passport-facebook";
-import {UserModel} from "../../model/user/User.js";
+import {UserModel} from "../../../model/user/User.js";
 
 const FacebookStrategy = passportFacebook.Strategy;
 
