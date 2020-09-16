@@ -7,6 +7,7 @@ import fetch from "node-fetch";
 import http from "http";
 import axios from "axios";
 import {Article} from "../model/content/Article.js"
+import {DashboardRoutesEnum} from "../messages/enums/DashboardRoutesEnum.js";
 
 export class DashboardServerService extends ServerService {
 
@@ -29,7 +30,7 @@ export class DashboardServerService extends ServerService {
             res.render('valami', {valami: 'valamik'});
         });
 
-        this.app.get('/cikkek', async function(req, res) {
+        this.app.get(DashboardRoutesEnum.ARTICLES, async function(req, res) {
             const url: string = 'http://10.9.110.111:9421/api/v01/content/articles';
 
             try {
