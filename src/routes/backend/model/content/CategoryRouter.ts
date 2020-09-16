@@ -1,4 +1,4 @@
-import {CategoryService} from "../../../service/model/content/CategoryService.js";
+import {CategoryService} from "../../../../service/model/content/CategoryService.js";
 import {ContentRouter} from "./ContentRouter.js";
 
 export class CategoryRouter extends ContentRouter {

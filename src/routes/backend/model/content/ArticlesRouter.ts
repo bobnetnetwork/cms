@@ -1,4 +1,4 @@
-import {ArticlesService} from "../../../service/model/content/ArticlesService.js";
+import {ArticlesService} from "../../../../service/model/content/ArticlesService.js";
 import {ContentRouter} from "./ContentRouter.js";
 
 export class ArticlesRouter extends ContentRouter {

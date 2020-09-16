@@ -1,6 +1,6 @@
 import {ModelRouter} from "../ModelRouter.js";
 import {Request, Response} from "express";
-import {ContentService} from "../../../service/model/content/ContentService.js";
+import {ContentService} from "../../../../service/model/content/ContentService.js";
 
 export abstract class ContentRouter extends ModelRouter {
     protected abstract service: ContentService;
