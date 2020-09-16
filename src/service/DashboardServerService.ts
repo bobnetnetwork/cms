@@ -5,6 +5,7 @@ import mustacheExpress from "mustache-express";
 import path from 'path';
 import fetch from "node-fetch";
 import http from "http";
+import axios from "axios";
 
 export class DashboardServerService extends ServerService {
 
@@ -25,6 +26,17 @@ export class DashboardServerService extends ServerService {
 
         this.app.get('/valami', function(req, res) {
             res.render('valami', {valami: 'valamik'});
+        });
+
+        this.app.get('/cikk', async function(req, ress) {
+            const url: string = 'http://10.9.110.111:9421/api/v01/content/articles';
+
+            try {
+                const response = await axios.get(url);
+                console.log(response.data);
+            } catch (exception) {
+                process.stderr.write(`ERROR received from ${url}: ${exception}\n`);
+            }
         });
 
         
