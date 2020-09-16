@@ -12,6 +12,9 @@ import {FilesRouter} from "./routes/model/content/FilesRouter.js";
 import {ErrorMiddleware} from "./middleware/ErrorMiddleware.js";
 import {NotFoundHandler} from "./middleware/NotFoundMiddleware.js";
 import {ServerService} from "./service/ServerService.js";
+import {FrontendServerService} from "./service/FrontendServerService.js";
+import {BackendServerService} from "./service/BackendServerService.js";
+import {DashboardServerService} from "./service/DashboardServerService.js";
 import express, {Express} from "express";
 import session from "express-session";
 import "./config/passport.js";
@@ -54,7 +57,9 @@ class Server {
     private GOOGLE_OAUTH2: string = this.AUTH + "/google/oauth2";
     private OPTIONS: string = this.API_URL + "/options";
 
-    private server: ServerService = new ServerService();
+    private serverType = process.env.APP_TYPE;
+
+    private server!: ServerService;
 
     constructor() {
         this.init();
@@ -69,6 +74,24 @@ class Server {
     }
 
     private init(): void {
+        switch(this.serverType){
+            case "backend":
+                this.initBackend();
+                break;
+            case "frontend":
+                this.initFrontend();
+                break;
+            case "dashboard":
+                this.initDashboard();
+                break;
+            default:
+                this.log.error("Nincs szervertípús megadva."); // TODO: átírni
+        }
+        
+    }
+
+    private initBackend() {
+        this.server = new BackendServerService();
         this.log.info("Starting Application...");
         this.log.info("App version: " + process.env.npm_package_version);
         this.log.info(process.env.npm_package_description);
@@ -96,6 +119,14 @@ class Server {
         this.app.use(fileUpload({
             createParentPath: true,
         }));
+    }
+
+    private initFrontend() {
+        this.server = new FrontendServerService();
+    }
+
+    private initDashboard() {
+        this.server = new DashboardServerService();
     }
 
     private setRouters(): void {
