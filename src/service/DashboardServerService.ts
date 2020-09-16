@@ -6,6 +6,7 @@ import path from 'path';
 import fetch from "node-fetch";
 import http from "http";
 import axios from "axios";
+import {Article} from "../model/content/Article.js"
 
 export class DashboardServerService extends ServerService {
 
@@ -28,49 +29,20 @@ export class DashboardServerService extends ServerService {
             res.render('valami', {valami: 'valamik'});
         });
 
-        this.app.get('/cikk', async function(req, ress) {
+        this.app.get('/cikkek', async function(req, res) {
             const url: string = 'http://10.9.110.111:9421/api/v01/content/articles';
 
             try {
                 const response = await axios.get(url);
-                console.log(response.data);
+                var cikkek:[Article] = response.data.content;
+
+                res.render('cikkek', { articles: cikkek});
+
+
             } catch (exception) {
                 process.stderr.write(`ERROR received from ${url}: ${exception}\n`);
             }
         });
-
-        
-
-        this.app.get('/cikkek', function(req, ress) {
-            var options = {
-                host: '10.9.110.111',
-                port:'9421',
-                path: '/api/v01/content/articles'
-            }
-
-            var request = http.request(options, function (res) {
-                var data = '';
-                res.on('data', function(chunk) {
-                    data += chunk;
-                });
-                res.on('end', function() {
-                    console.log(data);
-
-                    var valami = JSON.parse(data);
-
-                    var title = valami.content[0].title;
-                    console.log(valami.content[0].title);
-
-                    ress.render('cikkek', {title: title});
-                });
-            });
-
-            request.on('error', function (e) {
-                console.log(e.message);
-            });
-            request.end();
-        });
-
 
 
     }
