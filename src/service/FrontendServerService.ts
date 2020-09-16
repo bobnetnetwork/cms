@@ -1,12 +1,21 @@
 import { ServerService } from './ServerService.js';
+import {Express} from "express";
 
-export class FrontendServerService implements ServerService {
+export class FrontendServerService extends ServerService {
 
-    public startServer(app: HTTP.RequestListener): void{
+    constructor(app: Express) {
+        super("FrontendServerService", app);
+    }
+
+    public openConnections(): void {
 
     }
-    
-    public shutDown(msg: string): void{
+
+    public closeConnections(): void {
+
+    }
+
+    public setRouters(): void {
         
     }
 

@@ -1,13 +1,21 @@
 import { ServerService } from './ServerService.js';
-import * as HTTP from "http";
+import {Express} from "express";
 
-export class DashboardServerService implements ServerService {
+export class DashboardServerService extends ServerService {
 
-    public startServer(app: HTTP.RequestListener): void{
+    constructor(app: Express) {
+        super("DashboardServerService", app);
+    }
+
+    public openConnections(): void {
 
     }
-    
-    public shutDown(msg: string): void{
+
+    public closeConnections(): void {
+
+    }
+
+    public setRouters(): void {
         
     }
 
