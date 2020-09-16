@@ -2,8 +2,7 @@ import { ServerService } from './ServerService.js';
 import express, {Express} from "express";
 import mustacheExpress from "mustache-express";
 import path from 'path';
-import axios from "axios";
-import {Article} from "../model/content/Article.js"
+import {ArticlesRoute} from "../routes/dashboard/ArticlesRoute.js";
 import {DashboardRoutesEnum} from "../messages/enums/DashboardRoutesEnum.js";
 
 export class DashboardServerService extends ServerService {
@@ -24,16 +23,10 @@ export class DashboardServerService extends ServerService {
             res.render('valami', {valami: 'valamik'});
         });
 
+        
         this.app.get(DashboardRoutesEnum.ARTICLES, async function(req, res) {
-            const url: string = 'http://10.9.110.111:9421/api/v01/content/articles';
-
-            try {
-                const response = await axios.get(url);
-                var cikkek:[Article] = response.data.content;
-                res.render('cikkek', { articles: cikkek});
-            } catch (exception) {
-                process.stderr.write(`ERROR received from ${url}: ${exception}\n`);
-            }
+                const articlesRoute = new ArticlesRoute("articles");
+                articlesRoute.getRoute(req, res);
         });
     }
 
