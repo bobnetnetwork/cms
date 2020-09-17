@@ -13,6 +13,7 @@ export class DashboardServerService extends ServerService {
         this.app.set('views', path.resolve()+ '\\src\\views\\dashboard');
         this.app.use(express.static(path.resolve()+ '\\src\\views\\dashboard\\assets'));
         this.app.set('view engine', 'mustache');
+        this.setRouters();
     }
 
     public openConnections(): void {
@@ -36,6 +37,11 @@ export class DashboardServerService extends ServerService {
                 const articlesRoute = new ArticlesRoute("articles");
                 articlesRoute.getRoute(req, res);
         });
+
+        const articlesRoute = new ArticlesRoute('articles');
+        articlesRoute.getArticle();
+
+        this.app.use("/articles", articlesRoute.getRouter());
     }
 
 }
