@@ -71,5 +71,5 @@ export class BackendServerService extends ServerService {
         this.app.use(BackendRoutesEnum.API_URL + BackendRoutesEnum.OPTIONS, new OptionsRouter().getRouter());
     }
 
-    
+
 }

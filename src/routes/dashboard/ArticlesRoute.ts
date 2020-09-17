@@ -4,7 +4,7 @@ import {Route} from "./Route.js";
 import express, {Router, Request, Response} from "express";
 
 export class ArticlesRoute extends Route {
-    
+
     private view: string;
     private router: Router = express.Router();
 
@@ -19,23 +19,23 @@ export class ArticlesRoute extends Route {
 
             try {
                 const response = await axios.get(url);
-                var articles:[Article] = response.data.content;
-                res.render(this.view, { articles: articles});
+                let articles:[Article] = response.data.content;
+                res.render(this.view, { articles});
             } catch (exception) {
                 this.log.error(`ERROR received from ${url}: ${exception}\n`);
             }
     }
 
     public async getArticle(): Promise<void> {
-        
+
 
         this.router.get("/:slug", async (req: Request, res: Response) => {
             try {
                 const url: string = 'http://10.9.110.111:9421/api/v01/content/articles/' + req.params.slug;
                 console.log(url);
                 const response = await axios.get(url);
-                var article = response.data.content;
-                res.render('article', {article: article});
+                let article = response.data.content;
+                res.render('article', {article});
             } catch (e) {
                 res.status(404).send(e.message);
                 this.log.error(e.message);
