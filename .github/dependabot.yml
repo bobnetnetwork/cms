@@ -3,25 +3,7 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/backend"
-    schedule:
-      interval: "daily"
-    labels:
-      - "dependencies"
-    assignees:
-      - "bobesz"
-    target-branch: "packages-updates"
-  - package-ecosystem: "npm"
-    directory: "/frontend"
-    schedule:
-      interval: "daily"
-    labels:
-      - "dependencies"
-    assignees:
-      - "bobesz"
-    target-branch: "packages-updates"
-  - package-ecosystem: "npm"
-    directory: "/dashboard"
+    directory: "/"
     schedule:
       interval: "daily"
     labels:
