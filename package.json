@@ -5,7 +5,7 @@
   "main": "Server.js",
   "dependencies": {
     "@hasezoey/typegoose": "^5.9.2",
-    "@typegoose/typegoose": "^7.3.5",
+    "@typegoose/typegoose": "^7.4.0",
     "@types/cors": "^2.8.7",
     "@types/express-fileupload": "^1.1.5",
     "@types/express-jwt": "0.0.42",
