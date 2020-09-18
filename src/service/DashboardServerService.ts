@@ -25,23 +25,14 @@ export class DashboardServerService extends ServerService {
     }
 
     public setRouters(): void {
-        this.app.get('/', function (req, res) {
-            res.render('index', { name : 'Luk'});
-        });
-
-        this.app.get('/valami', function(req, res) {
-            res.render('valami', {valami: 'valamik'});
-        });
-
-        this.app.get(DashboardRoutesEnum.ARTICLES, async function(req, res) {
-                const articlesRoute = new ArticlesRoute("articles");
-                articlesRoute.getRoute(req, res);
-        });
-
-        const articlesRoute = new ArticlesRoute('articles');
-        articlesRoute.getArticle();
-
-        this.app.use("/articles", articlesRoute.getRouter());
+        this.app.use(DashboardRoutesEnum.ARTICLES,  new ArticlesRoute().getRouter());
+        this.app.use(DashboardRoutesEnum.CATEGORIES);
+        this.app.use(DashboardRoutesEnum.TAGS);
+        this.app.use(DashboardRoutesEnum.PAGES);
+        this.app.use(DashboardRoutesEnum.MEDIA);
+        this.app.use(DashboardRoutesEnum.USERS);
+        this.app.use(DashboardRoutesEnum.ROLES);
+        this.app.use(DashboardRoutesEnum.SETTINGS);
     }
 
 }
