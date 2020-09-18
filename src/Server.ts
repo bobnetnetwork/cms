@@ -25,7 +25,7 @@ class Server {
 
     private app: Express = express();
 
-    
+
 
     private serverType!: string;
 
@@ -45,7 +45,7 @@ class Server {
             process.exit(1);
         }
 
-        
+
 
         this.init();
     }
@@ -72,7 +72,7 @@ class Server {
             default:
                 this.log.error("Nem megfelelő szervertípús!"); // TODO: átírni
         }
-        
+
     }
 
     private initBackend() {
