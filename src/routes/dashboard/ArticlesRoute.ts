@@ -4,7 +4,7 @@ import {Route} from "./Route.js";
 import express, {Router, Request, Response} from "express";
 
 export class ArticlesRoute extends Route {
-    
+
     private router: Router = express.Router();
 
     constructor(){
@@ -18,8 +18,8 @@ export class ArticlesRoute extends Route {
             try {
                 const url: string = 'http://10.9.110.111:9421/api/v01/content/articles';
                 const response = await axios.get(url);
-                var articles:[Article] = response.data.content;
-                res.render("articles", { articles: articles});
+                let articles:[Article] = response.data.content;
+                res.render("articles", { articles});
             } catch(e) {
                 res.status(404).send(e.message);
                 this.log.error(e.message);
@@ -33,8 +33,8 @@ export class ArticlesRoute extends Route {
             try {
                 const url: string = 'http://10.9.110.111:9421/api/v01/content/articles/' + req.params.slug;
                 const response = await axios.get(url);
-                var article = response.data.content;
-                res.render('article', {article: article});
+                let article = response.data.content;
+                res.render('article', {article});
             } catch (e) {
                 res.status(404).send(e.message);
                 this.log.error(e.message);
