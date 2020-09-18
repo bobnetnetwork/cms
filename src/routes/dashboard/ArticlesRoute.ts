@@ -18,7 +18,7 @@ export class ArticlesRoute extends Route {
             try {
                 const url: string = 'http://10.9.110.111:9421/api/v01/content/articles';
                 const response = await axios.get(url);
-                let articles:[Article] = response.data.content;
+                const articles:[Article] = response.data.content;
                 res.render("articles", { articles});
             } catch(e) {
                 res.status(404).send(e.message);
@@ -33,7 +33,7 @@ export class ArticlesRoute extends Route {
             try {
                 const url: string = 'http://10.9.110.111:9421/api/v01/content/articles/' + req.params.slug;
                 const response = await axios.get(url);
-                let article = response.data.content;
+                const article = response.data.content;
                 res.render('article', {article});
             } catch (e) {
                 res.status(404).send(e.message);
