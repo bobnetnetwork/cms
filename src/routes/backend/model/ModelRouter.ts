@@ -63,6 +63,8 @@ export abstract class ModelRouter {
     protected update(): void {
         this.router.put("/", async (req: Request, res: Response) => {
             try {
+                this.log.info("update");
+                this.log.debug(req.body);
                 await this.service.update(req.body, (result: any) => {
                     if(result.error) {
                         this.log.error(result.error.message);

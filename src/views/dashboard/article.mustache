@@ -23,7 +23,7 @@
 
   <!-- Main content -->
   <section class="content">
-    <form [formGroup]="articleForm">
+    <form action="/articles/{{article.slug}}" method="post">
                 <div class="row">
                     <div class="col-lg-9">
                         <div class="card card-outline card-info">
@@ -42,7 +42,10 @@
                             <!-- /.card-header -->
                             <div class="card-body pad">
                                 <div class="mb-3">
-                                    <input type="text" id="title" name="title" value="{{article.title}}" class="form-control" formControlName="title">
+                                    <input type="text" id="title" name="title" value="{{article.title}}" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" id="slug" name="slug" value="{{article.slug}}" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -64,9 +67,7 @@
                             <!-- /.card-header -->
                             <div class="card-body pad">
                                 <div class="mb-3">
-                                    <textarea name="content" class="textarea" style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
-                                    {{article.content}}
-                                    </textarea>
+                                    <textarea name="content" class="textarea" style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{article.content}}</textarea>
                                 </div>
                             </div>
                         </div>

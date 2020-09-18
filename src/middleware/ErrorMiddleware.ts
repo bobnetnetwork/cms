@@ -17,6 +17,7 @@ export class ErrorMiddleware {
             const status = error.statusCode || 500;
             const message =
                 error.message || "It's not you. It's us. We are having some problems.";
+                this.log.error(error.error);
             this.log.error(error.message);
             this.log.debug(error.stack);
 

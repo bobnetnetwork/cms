@@ -98,8 +98,8 @@ class Server {
 
         this.app.use(session(sessionOptions));
 
-        this.app.use(new ErrorMiddleware().getHandler());
-        this.app.use(new NotFoundHandler().getHandler());
+        //this.app.use(new ErrorMiddleware().getHandler());
+        //this.app.use(new NotFoundHandler().getHandler());
 
         this.app.use(fileUpload({
             createParentPath: true,

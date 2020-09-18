@@ -4,6 +4,7 @@ import mustacheExpress from "mustache-express";
 import path from 'path';
 import {ArticlesRoute} from "../routes/dashboard/ArticlesRoute.js";
 import {DashboardRoutesEnum} from "../messages/enums/DashboardRoutesEnum.js";
+import bodyParser from "body-parser";
 
 export class DashboardServerService extends ServerService {
 
@@ -12,6 +13,7 @@ export class DashboardServerService extends ServerService {
         this.app.engine('mustache', mustacheExpress());
         this.app.set('views', path.resolve()+ '\\src\\views\\dashboard');
         this.app.use(express.static(path.resolve()+ '\\node_modules\\admin-lte'));
+        this.app.use(bodyParser.urlencoded({extended: true}));
         this.app.set('view engine', 'mustache');
         this.setRouters();
     }

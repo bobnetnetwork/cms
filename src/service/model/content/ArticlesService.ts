@@ -47,12 +47,16 @@ export class ArticlesService extends ContentService{
     public async update(data: ArticleType, callback: (result: ResultMessageType) => void): Promise<void> {
         this.model.findOne({
             slug: data.slug,
-        }, (err: Error, article: any) => {
+        }, (err: Error, article: InstanceType<Article>) => {
             if(err) {
                 const result = new ErrorResultMessage(err, err.message.toString());
                 callback(result.getMessage());
             } else {
                 if(typeof data.title !== "undefined") {
+                    this.log.debug(data);
+                    this.log.debug(data.title == null);
+                    this.log.debug(data.slug);
+                    this.log.debug(article);
                     article.title = data.title;
                 }
                 if(typeof data.headline !== "undefined") {

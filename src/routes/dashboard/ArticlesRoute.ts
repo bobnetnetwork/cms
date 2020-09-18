@@ -11,12 +11,13 @@ export class ArticlesRoute extends Route {
         super("ArticlesRouter");
         this.getArticles();
         this.getArticle();
+        this.postArticle();
     }
 
     public async getArticles(): Promise<void> {
         this.router.get("/", async (req: Request, res: Response) => {
             try {
-                const url: string = 'http://10.9.110.111:9421/api/v01/content/articles';
+                const url: string = 'http://localhost:9421/api/v01/content/articles';
                 const response = await axios.get(url);
                 const articles:[Article] = response.data.content;
                 res.render("articles", { articles});
@@ -31,7 +32,7 @@ export class ArticlesRoute extends Route {
     public async getArticle(): Promise<void> {
         this.router.get("/:slug", async (req: Request, res: Response) => {
             try {
-                const url: string = 'http://10.9.110.111:9421/api/v01/content/articles/' + req.params.slug;
+                const url: string = 'http://localhost:9421/api/v01/content/articles/' + req.params.slug;
                 const response = await axios.get(url);
                 const article = response.data.content;
                 res.render('article', {article});
@@ -40,6 +41,24 @@ export class ArticlesRoute extends Route {
                 this.log.error(e.message);
                 this.log.debug(e.stack);
             }
+        });
+    }
+
+    public async postArticle(): Promise<void> {
+        this.router.post("/:slug", async (req: Request, res: Response) => {
+            const url: string = 'http://localhost:9421/api/v01/content/articles/';
+            const response = await axios.get(url);
+            const article = response.data.content;
+            article.title = req.body.title;
+            console.log(req.body);
+            try{
+                const updateResponse = await axios.put(url, article);
+                console.log(updateResponse);
+                res.redirect("/articles/" + req.params.slug);
+            } catch(e) {
+                console.log(e);
+            }
+            
         });
     }
 
