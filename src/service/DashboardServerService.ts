@@ -11,7 +11,7 @@ export class DashboardServerService extends ServerService {
         super("DashboardServerService", app);
         this.app.engine('mustache', mustacheExpress());
         this.app.set('views', path.resolve()+ '\\src\\views\\dashboard');
-        this.app.use(express.static(path.resolve()+ '\\src\\views\\dashboard\\assets'));
+        this.app.use(express.static(path.resolve()+ '\\node_modules\\admin-lte'));
         this.app.set('view engine', 'mustache');
         this.setRouters();
     }
@@ -26,13 +26,13 @@ export class DashboardServerService extends ServerService {
 
     public setRouters(): void {
         this.app.use(DashboardRoutesEnum.ARTICLES,  new ArticlesRoute().getRouter());
-        this.app.use(DashboardRoutesEnum.CATEGORIES);
+        /*this.app.use(DashboardRoutesEnum.CATEGORIES);
         this.app.use(DashboardRoutesEnum.TAGS);
         this.app.use(DashboardRoutesEnum.PAGES);
         this.app.use(DashboardRoutesEnum.MEDIA);
         this.app.use(DashboardRoutesEnum.USERS);
         this.app.use(DashboardRoutesEnum.ROLES);
-        this.app.use(DashboardRoutesEnum.SETTINGS);
+        this.app.use(DashboardRoutesEnum.SETTINGS);*/
     }
 
 }
