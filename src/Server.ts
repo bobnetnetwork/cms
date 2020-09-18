@@ -25,7 +25,7 @@ class Server {
 
     private app: Express = express();
 
-    
+
 
     private serverType!: string;
 
@@ -45,7 +45,7 @@ class Server {
             process.exit(1);
         }
 
-        
+
 
         this.init();
     }
@@ -72,7 +72,7 @@ class Server {
             default:
                 this.log.error("Nem megfelelő szervertípús!"); // TODO: átírni
         }
-        
+
     }
 
     private initBackend() {
@@ -98,8 +98,8 @@ class Server {
 
         this.app.use(session(sessionOptions));
 
-        //this.app.use(new ErrorMiddleware().getHandler());
-        //this.app.use(new NotFoundHandler().getHandler());
+        // this.app.use(new ErrorMiddleware().getHandler());
+        // this.app.use(new NotFoundHandler().getHandler());
 
         this.app.use(fileUpload({
             createParentPath: true,

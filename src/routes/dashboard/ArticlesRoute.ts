@@ -58,7 +58,7 @@ export class ArticlesRoute extends Route {
             } catch(e) {
                 console.log(e);
             }
-            
+
         });
     }
 
