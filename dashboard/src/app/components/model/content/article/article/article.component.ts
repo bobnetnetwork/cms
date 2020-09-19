@@ -63,6 +63,7 @@ export class ArticleComponent implements OnInit {
   delete() {
     this.service.deleteArticle(this.article.slug).subscribe(res => {
       console.log('Delete log: ', res);
+      window.location.href = "/articles";
     });
   }
 }
