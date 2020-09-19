@@ -31,7 +31,7 @@ const routes: Routes = [
   {path: 'users/:username', component: UserComponent},
   {path: 'roles', component: RolesComponent},
   {path: 'roles/:roleslug', component: RoleComponent},
-  {path: 'options', component: OptionsComponent}
+  {path: 'settings', component: OptionsComponent}
 ];
 
 @NgModule({
