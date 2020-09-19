@@ -8,7 +8,7 @@ import { Article } from '../../../../model/content/Article';
 })
 export class ArticleService {
 
-  private url = 'http://172.18.0.3:9421/api/v01/content/articles/';
+  private url = 'http://172.17.0.4:9421/api/v01/content/articles/';
 
   constructor(private http: HttpClient) { }
 
