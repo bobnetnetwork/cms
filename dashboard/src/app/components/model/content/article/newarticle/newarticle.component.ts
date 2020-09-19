@@ -29,7 +29,8 @@ export class NewarticleComponent implements OnInit {
   private generateForm() {
     this.articleForm = new FormGroup({
       title: new FormControl(),
-      content: new FormControl()
+      content: new FormControl(),
+      headline: new FormControl()
     });
   }
 
@@ -47,6 +48,7 @@ export class NewarticleComponent implements OnInit {
     this.article = new Article();    
     this.article.title = this.articleForm.get('title').value;
     this.article.content = this.articleForm.get('content').value;
+    this.article.headline = this.articleForm.get('headline').value;
     this.service.insertArticle(this.article).subscribe(res => {
       console.log('Update log: ', res);
       this.msg = res as ArticleMessage;
