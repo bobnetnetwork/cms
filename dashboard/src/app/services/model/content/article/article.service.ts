@@ -20,8 +20,8 @@ export class ArticleService {
     return this.http.get(this.url + slug);
   }
 
-  insertArticle(article: Article): Observable<Article> {
-    return this.http.post<Article>(this.url, article);
+  insertArticle(article: Article) {
+    return this.http.post(this.url, article);
   }
 
   updateArticle(article: Article) {
