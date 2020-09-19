@@ -15,6 +15,14 @@ import { PageComponent } from './components/model/content/page/page/page.compone
 import { NewarticleComponent } from './components/model/content/article/newarticle/newarticle.component';
 import { NewpageComponent } from './components/model/content/page/newpage/newpage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CategoriesComponent } from './components/model/content/category/categories/categories.component';
+import { CategoryComponent } from './components/model/content/category/category/category.component';
+import { TagsComponent } from './components/model/content/tag/tags/tags.component';
+import { UsersComponent } from './components/model/administration/user/users/users.component';
+import { UserComponent } from './components/model/administration/user/user/user.component';
+import { RolesComponent } from './components/model/administration/role/roles/roles.component';
+import { RoleComponent } from './components/model/administration/role/role/role.component';
+import { OptionsComponent } from './components/model/administration/options/options/options.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +36,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PagesComponent,
     PageComponent,
     NewarticleComponent,
-    NewpageComponent
+    NewpageComponent,
+    CategoriesComponent,
+    CategoryComponent,
+    TagsComponent,
+    UsersComponent,
+    UserComponent,
+    RolesComponent,
+    RoleComponent,
+    OptionsComponent
   ],
   imports: [
     BrowserModule,
