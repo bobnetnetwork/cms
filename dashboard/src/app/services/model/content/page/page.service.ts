@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Page } from '../../../../model/content/Page';
 import { Observable } from 'rxjs';
+import { BackendConfigService } from '../../../tool/backendconfig/backendconfig.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageService {
 
-  private url = 'http://10.9.110.111:9421/api/v01/content/page/';
+  private url = new BackendConfigService().getPagesUrl();
 
   constructor(private http: HttpClient) { }
 

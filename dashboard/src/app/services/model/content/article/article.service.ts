@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Article } from '../../../../model/content/Article';
+import { BackendConfigService} from '../../../tool/backendconfig/backendconfig.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
 
-  private url = 'http://172.17.0.4:9421/api/v01/content/articles/';
+  private url = new BackendConfigService().getArticlesUrl();
 
   constructor(private http: HttpClient) { }
 
