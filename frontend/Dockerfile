@@ -1,4 +1,5 @@
-FROM node:14
+# STage 1
+FROM node:14 As builder
 # Env
 ENV TIME_ZONE=Europe/Budapest
 ENV APP_PORT=9422
@@ -19,20 +20,26 @@ RUN npm i -g @angular/cli
 RUN npm install -g typescript
 
 #Add App user
-RUN adduser --disabled-password frontend
+#RUN adduser --disabled-password frontend
 
 # Copy all other source code to work directory
 COPY . /usr/src/app
 
 RUN chown -R frontend:frontend /usr/src/app
-USER frontend
+#USER frontend
 
 # Install all Packages
 RUN npm install
 
 RUN npm run build
 
+# Stage 2
+FROM nginx:1.17.1-alpine
+COPY --from=builder /usr/src/app/dist/cms-frontend /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/
+
 EXPOSE $APP_PORT
 
 # Start
-CMD [ "ng", "serve" ]
+#CMD [ "ng", "serve" ]
