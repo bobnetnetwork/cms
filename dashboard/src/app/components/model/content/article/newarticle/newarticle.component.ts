@@ -22,7 +22,7 @@ export class NewarticleComponent implements OnInit {
   article: Article;
   articleForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private service: ArticleService, private formBuilder: FormBuilder) { 
+  constructor(private route: ActivatedRoute, private service: ArticleService, private formBuilder: FormBuilder) {
      this.generateForm();
   }
 
@@ -44,17 +44,17 @@ export class NewarticleComponent implements OnInit {
   }
 
   publish() {
-    console.log("New Post creating...");
-    this.article = new Article();    
+    console.log('New Post creating...');
+    this.article = new Article();
     this.article.title = this.articleForm.get('title').value;
     this.article.content = this.articleForm.get('content').value;
     this.article.headline = this.articleForm.get('headline').value;
     this.service.insertArticle(this.article).subscribe(res => {
       console.log('Update log: ', res);
       this.msg = res as ArticleMessage;
-      console.log("success: ", this.msg.success);
-      if(this.msg.success){
-        window.location.href="/articles/" + this.msg.content.slug;
+      console.log('success: ', this.msg.success);
+      if (this.msg.success){
+        window.location.href = '/articles/' + this.msg.content.slug;
       } else {
 
       }
