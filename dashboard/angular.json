@@ -21,7 +21,12 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                  "glob": "**/*.*",
+                  "input": "node_modules/admin-lte",
+                  "output": "admin-lte/"
+              }
             ],
             "styles": [
               "src/styles.css"
