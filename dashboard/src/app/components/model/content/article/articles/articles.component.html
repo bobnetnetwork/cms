@@ -27,20 +27,19 @@
         <div class="card" width="100%">
           <div class="card-header">
             <h3 class="card-title">
-            <a href="/new-article">Add New Article</a>
+              <a href="/new-article">Add New Article</a>
             </h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table class="table table-bordered">
-              <caption></caption>
+            <table id="articles" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Headline</th>
-                  <th scope="col">AddedAt</th>
-                  <th scope="col">Author</th>
-                  <th scope="col">Status</th>
+                  <th>Title</th>
+                  <th>Headline</th>
+                  <th>AddedAt</th>
+                  <th>Author</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -57,6 +56,15 @@
                   </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th>Title</th>
+                  <th>Headline</th>
+                  <th>AddedAt</th>
+                  <th>Author</th>
+                  <th>Status</th>
+                </tr>
+              </tfoot>
             </table>
           </div>
           <!-- /.card-body -->
@@ -77,4 +85,17 @@
   </section>
   <!-- /.content -->
 </div>
+<script>
+  $(function () {
+    $('#articles').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
 
