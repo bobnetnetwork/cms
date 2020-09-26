@@ -49,7 +49,12 @@
                   <td>{{article.headline}}</td>
                   <td>{{article.addedAt | date: "yyyy-MM-dd HH:MM"}}</td>
                   <td></td>
-                  <td>{{article.status}}</td>
+                  <td>
+                    <span *ngIf="article.status==='published'" class="badge badge-success">{{article.status}}</span>
+                    <span *ngIf="article.status==='draft'" class="badge badge-info">{{article.status}}</span>
+                    <span *ngIf="article.status==='under lectoring'" class="badge badge-warning">{{article.status}}</span>
+                    <span *ngIf="article.status==='rejected'" class="badge badge-danger">{{article.status}}</span>
+                  </td>
                 </tr>
               </tbody>
             </table>

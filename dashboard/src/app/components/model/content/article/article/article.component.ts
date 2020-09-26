@@ -45,6 +45,20 @@ export class ArticleComponent implements OnInit {
 
   }
 
+  underLectoring() {
+    this.article.status = "under lectoring";
+    this.service.updateArticle(this.article).subscribe(res => {
+      console.log('Update log: ', res);
+    });
+  }
+
+  reject() {
+    this.article.status = "rejected";
+    this.service.updateArticle(this.article).subscribe(res => {
+      console.log('Update log: ', res);
+    });
+  }
+
   saveAsDraft() {
     console.log('Saved Draft!');
     console.log(this.articleForm);
