@@ -62,7 +62,9 @@
                             <!-- /.card-header -->
                             <div class="card-body pad">
                                 <div class="mb-3">
-                                  <editor formControlName="content" apiKey="74ciurskyz2w8er9eijk7qjw0etzspd9xu03qp59924hp4u6" [init]="{
+                                  <editor formControlName="content"  [init]="{
+                                   base_url: '/tinymce',
+                                   suffix: '.min',
                                    plugins: ['advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table paste code help wordcount'],
                                    toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
                                   }"></editor>
