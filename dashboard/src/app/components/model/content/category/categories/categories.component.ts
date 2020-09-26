@@ -22,11 +22,7 @@ export class CategoriesComponent implements OnInit {
   categories: Category[];
 
   constructor(private service: CategoryService) {
-    this.service.getAllCategories().subscribe( res => {
-      this.msg = res as CategoryMessage;
-      this.categories = this.msg.content;
-      this.generateForm();
-    });
+    this.getCategories();
   }
 
   ngOnInit(): void {
@@ -40,16 +36,20 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
+  private getCategories(): void {
+    this.service.getAllCategories().subscribe( res => {
+      this.msg = res as CategoryMessage;
+      this.categories = this.msg.content;
+      this.generateForm();
+    });
+  }
+
   addNew(): void {
     this.category.name = this.categoryForm.get('name').value;
     this.category.description = this.categoryForm.get('description').value;
     this.service.insertCategory(this.category).subscribe( res => {
       console.log('Category insert log: ', res);
-      this.service.getAllCategories().subscribe( res => {
-        this.msg = res as CategoryMessage;
-        this.categories = this.msg.content;
-        this.generateForm();
-      });
+      this.getCategories();
     });
 
   }
