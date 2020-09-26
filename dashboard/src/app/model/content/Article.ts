@@ -13,4 +13,5 @@ export class Article {
   addedAt?: Date;
   tags?: Observable<Tag>;
   categories?: Observable<Category>;
+  status?: string;
 }

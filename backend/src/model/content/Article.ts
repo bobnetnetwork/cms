@@ -33,6 +33,9 @@ export class Article extends Typegoose {
 
     @prop()
     public categories?: Ref<Category>;
+
+    @prop()
+    public status?: string;
 }
 
 export type ArticleType = {
@@ -45,6 +48,7 @@ export type ArticleType = {
     addedAt?: Date,
     tags?: Ref<Tag>,
     categories?: Ref<Category>,
+    status?: string,
 }
 
 export const ArticleModel = new Article().getModelForClass(Article);
