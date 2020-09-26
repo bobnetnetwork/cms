@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 export class ArticleMessage {
   content: Article[];
-  message: String;
+  message: string;
 }
 
 @Component({
@@ -33,7 +33,7 @@ export class ArticleComponent implements OnInit {
 
   }
 
-  private generateForm() {
+  private generateForm(): void {
     this.articleForm = new FormGroup({
       title: new FormControl(this.article.title),
       content: new FormControl(this.article.content),
@@ -45,21 +45,21 @@ export class ArticleComponent implements OnInit {
 
   }
 
-  underLectoring() {
+  underLectoring(): void {
     this.article.status = 'under lectoring';
     this.service.updateArticle(this.article).subscribe(res => {
       console.log('Update log: ', res);
     });
   }
 
-  reject() {
+  reject(): void {
     this.article.status = 'rejected';
     this.service.updateArticle(this.article).subscribe(res => {
       console.log('Update log: ', res);
     });
   }
 
-  saveAsDraft() {
+  saveAsDraft(): void {
     console.log('Saved Draft!');
     console.log(this.articleForm);
     console.log('Title: ', this.articleForm.get('title').value);
@@ -69,17 +69,17 @@ export class ArticleComponent implements OnInit {
     });
   }
 
-  publish() {
+  publish(): void {
     this.article.title = this.articleForm.get('title').value;
     this.article.content = this.articleForm.get('content').value;
     this.article.headline = this.articleForm.get('headline').value;
+    this.article.status = 'published';
     this.service.updateArticle(this.article).subscribe(res => {
       console.log('Update log: ', res);
     });
-    this.article.status = 'published';
   }
 
-  delete() {
+  delete(): void {
     this.service.deleteArticle(this.article.slug).subscribe(res => {
       console.log('Delete log: ', res);
       window.location.href = '/articles';
