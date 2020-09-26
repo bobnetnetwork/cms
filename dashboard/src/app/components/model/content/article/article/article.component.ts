@@ -46,14 +46,14 @@ export class ArticleComponent implements OnInit {
   }
 
   underLectoring() {
-    this.article.status = "under lectoring";
+    this.article.status = 'under lectoring';
     this.service.updateArticle(this.article).subscribe(res => {
       console.log('Update log: ', res);
     });
   }
 
   reject() {
-    this.article.status = "rejected";
+    this.article.status = 'rejected';
     this.service.updateArticle(this.article).subscribe(res => {
       console.log('Update log: ', res);
     });
@@ -63,7 +63,7 @@ export class ArticleComponent implements OnInit {
     console.log('Saved Draft!');
     console.log(this.articleForm);
     console.log('Title: ', this.articleForm.get('title').value);
-    this.article.status = "draft";
+    this.article.status = 'draft';
     this.service.updateArticle(this.article).subscribe(res => {
       console.log('Update log: ', res);
     });
@@ -76,7 +76,7 @@ export class ArticleComponent implements OnInit {
     this.service.updateArticle(this.article).subscribe(res => {
       console.log('Update log: ', res);
     });
-    this.article.status = "published";
+    this.article.status = 'published';
   }
 
   delete() {
