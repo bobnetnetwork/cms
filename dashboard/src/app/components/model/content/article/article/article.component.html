@@ -167,10 +167,8 @@
                             <!-- /.card-header -->
                             <div class="card-body pad">
                                 <div class="mb-3">
-                                    <select class="form-control" name="categories" searchable="Search here..">
-
-                                            <option value="one">One</option>
-                                            <option value="two">Two</option>
+                                    <select class="form-control" formControlName="categories" name="categories" searchable="Search here..">
+                                            <option *ngFor="let category1 of categories" value="{{category1.slug}}">{{category1.name}}</option>
                                     </select>
                                 </div>
                             </div>
