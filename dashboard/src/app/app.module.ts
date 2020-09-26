@@ -23,6 +23,7 @@ import { UserComponent } from './components/model/administration/user/user/user.
 import { RolesComponent } from './components/model/administration/role/roles/roles.component';
 import { RoleComponent } from './components/model/administration/role/role/role.component';
 import { OptionsComponent } from './components/model/administration/options/options/options.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { OptionsComponent } from './components/model/administration/options/opti
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

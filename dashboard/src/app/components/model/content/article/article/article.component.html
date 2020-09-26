@@ -62,9 +62,10 @@
                             <!-- /.card-header -->
                             <div class="card-body pad">
                                 <div class="mb-3">
-                                    <textarea name="content" formControlName="content" class="form-control" style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
-
-                                    </textarea>
+                                  <editor formControlName="content" apiKey="74ciurskyz2w8er9eijk7qjw0etzspd9xu03qp59924hp4u6" [init]="{
+                                   plugins: ['advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table paste code help wordcount'],
+                                   toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+                                  }"></editor>
                                 </div>
                             </div>
                         </div>
