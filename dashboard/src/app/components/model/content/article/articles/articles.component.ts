@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticleService } from '../../../../../services/model/content/article/article.service';
+import { ArticleService } from 'src/app/services/model/content/article/article.service';
 import { HttpClient } from '@angular/common/http';
-import { Article } from '../../../../../model/content/Article';
-
-export class ArticleMessage {
-  content: Article[];
-  message: String;
-}
+import {Article, ArticlesMessage} from 'src/app/model/content/Article';
 
 @Component({
   selector: 'app-article',
@@ -17,11 +12,11 @@ export class ArticleMessage {
 export class ArticlesComponent implements OnInit {
 
   articles: Article[];
-  msg: ArticleMessage;
+  msg: ArticlesMessage;
 
   constructor(private service: ArticleService) {
     this.service.getAllArticles().subscribe(res => {
-      this.msg = res as ArticleMessage;
+      this.msg = res as ArticlesMessage;
       this.articles = this.msg.content;
     });
   }

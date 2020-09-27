@@ -1,26 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Article } from 'src/app/model/content/Article';
+import {Article, ArticleMessage} from 'src/app/model/content/Article';
 import { ArticleService } from 'src/app/services/model/content/article/article.service';
-import { Category } from 'src/app/model/content/Category';
+import {CategoriesMessage, Category, CategoryMessage} from 'src/app/model/content/Category';
 import { CategoryService } from 'src/app/services/model/content/category/category.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { map } from 'rxjs/operators';
-
-export class ArticleMessage {
-  content: Article[];
-  message: string;
-}
-
-export class CategoriesMessage {
-  content: Category[];
-  message: string;
-}
-
-export class CategoryMessage {
-  content: Category;
-  message: string;
-}
 
 @Component({
   selector: 'app-singlearticle',

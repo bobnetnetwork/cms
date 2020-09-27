@@ -15,3 +15,14 @@ export class Article {
   categories?: Category[];
   status?: string;
 }
+
+export class ArticlesMessage {
+  content: Article[];
+  message: string;
+}
+
+export class ArticleMessage {
+  content: Article;
+  message: string;
+  success: boolean;
+}

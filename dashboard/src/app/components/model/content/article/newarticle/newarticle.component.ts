@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Article } from 'src/app/model/content/Article';
+import {Article, ArticleMessage} from 'src/app/model/content/Article';
 import { ArticleService } from 'src/app/services/model/content/article/article.service';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-
-export class ArticleMessage {
-  content: Article;
-  message: String;
-  success: Boolean;
-}
 
 @Component({
   selector: 'app-newarticle',

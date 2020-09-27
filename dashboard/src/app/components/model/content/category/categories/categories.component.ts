@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { Category } from 'src/app/model/content/Category';
+import { FormGroup, FormControl } from '@angular/forms';
+import {CategoriesMessage, Category} from 'src/app/model/content/Category';
 import { CategoryService } from 'src/app/services/model/content/category/category.service';
-
-export class CategoryMessage {
-  content: Category[];
-  message: string;
-}
-
 
 @Component({
   selector: 'app-categories',
@@ -16,7 +10,7 @@ export class CategoryMessage {
 })
 export class CategoriesComponent implements OnInit {
 
-  private msg: CategoryMessage;
+  private msg: CategoriesMessage;
   category: Category;
   categoryForm: FormGroup;
   categories: Category[];
@@ -38,7 +32,7 @@ export class CategoriesComponent implements OnInit {
 
   private getCategories(): void {
     this.service.getAllCategories().subscribe( res => {
-      this.msg = res as CategoryMessage;
+      this.msg = res as CategoriesMessage;
       this.categories = this.msg.content;
       this.generateForm();
     });
