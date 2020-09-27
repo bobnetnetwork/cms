@@ -27,6 +27,7 @@ export class ArticlesService extends ContentService{
         article.content = data.content;
         article.featuredImage = data.featuredImage;
         article.author = data.author;
+        article.status = data.status;
 
         if(typeof data.title !== "undefined") {
             article.slug = slugify.createSlug(data.title);
@@ -75,6 +76,9 @@ export class ArticlesService extends ContentService{
                 }
                 if(typeof data.categories !== "undefined") {
                     article.categories = data.categories;
+                }
+                if(typeof data.status !== "undefined") {
+                    article.status = data.status;
                 }
 
                 article.save((err1: Error, updateArticle: InstanceType<Article>) => {

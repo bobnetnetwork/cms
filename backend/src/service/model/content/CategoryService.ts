@@ -14,7 +14,7 @@ export class CategoryService extends ContentService {
 
     protected async isContainAllRequiredData(data: CategoryType, callback: (result: boolean) => void): Promise<void> {
         let result: boolean;
-        result = (typeof data.name !== "undefined" && typeof data.slug !== "undefined");
+        result = (typeof data.name !== "undefined");
         callback(result);
     }
 

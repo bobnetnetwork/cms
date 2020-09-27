@@ -2,11 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from 'src/app/model/content/Article';
 import { ArticleService } from 'src/app/services/model/content/article/article.service';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { Category } from 'src/app/model/content/Category';
+import { CategoryService } from 'src/app/services/model/content/category/category.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { map } from 'rxjs/operators';
 
 export class ArticleMessage {
   content: Article[];
-  message: String;
+  message: string;
+}
+
+export class CategoriesMessage {
+  content: Category[];
+  message: string;
+}
+
+export class CategoryMessage {
+  content: Category;
+  message: string;
 }
 
 @Component({
@@ -18,26 +31,40 @@ export class ArticleComponent implements OnInit {
 
   private slug: string;
   private msg: ArticleMessage;
+  private cmsg: CategoriesMessage;
+  private c2msg: CategoryMessage;
   article: Article;
   articleForm: FormGroup;
+  categories: Category[];
 
-  constructor(private route: ActivatedRoute, private service: ArticleService, private formBuilder: FormBuilder) {
-
+  constructor(private route: ActivatedRoute, private service: ArticleService, private categoryService: CategoryService) {
     this.slug = this.route.snapshot.paramMap.get('articleslug');
+    this.getArticle();
+    this.getCategories();
+  }
+
+  private getArticle(): void{
     this.service.getArticle(this.slug).subscribe(res => {
       console.log(res);
       this.msg = res as ArticleMessage;
       this.article = this.msg.content as Article;
       this.generateForm();
     });
-
   }
 
-  private generateForm() {
+  private getCategories(): void {
+    this.categoryService.getAllCategories().subscribe( res => {
+      this.cmsg = res as CategoriesMessage;
+      this.categories = this.cmsg.content;
+    });
+  }
+
+  private generateForm(): void {
     this.articleForm = new FormGroup({
       title: new FormControl(this.article.title),
       content: new FormControl(this.article.content),
-      headline: new FormControl(this.article.headline)
+      headline: new FormControl(this.article.headline),
+      categories: new FormControl()
     });
   }
 
@@ -45,25 +72,46 @@ export class ArticleComponent implements OnInit {
 
   }
 
-  saveAsDraft() {
-    console.log('Saved Draft!');
-    console.log(this.articleForm);
-    console.log('Title: ', this.articleForm.get('title').value);
+  underLectoring(): void {
+    this.article.status = 'under lectoring';
+    this.updateArticle();
   }
 
-  publish() {
-    this.article.title = this.articleForm.get('title').value;
-    this.article.content = this.articleForm.get('content').value;
-    this.article.headline = this.articleForm.get('headline').value;
-    this.service.updateArticle(this.article).subscribe(res => {
-      console.log('Update log: ', res);
-    });
+  reject(): void {
+    this.article.status = 'rejected';
+    this.updateArticle();
   }
 
-  delete() {
+  saveAsDraft(): void {
+    this.article.status = 'draft';
+    this.updateArticle();
+  }
+
+  publish(): void {
+    this.article.status = 'published';
+    this.updateArticle();
+  }
+
+  delete(): void {
     this.service.deleteArticle(this.article.slug).subscribe(res => {
       console.log('Delete log: ', res);
       window.location.href = '/articles';
+    });
+  }
+
+  private updateArticle(): void {
+    this.article.title = this.articleForm.get('title').value;
+    this.article.content = this.articleForm.get('content').value;
+    this.article.headline = this.articleForm.get('headline').value;
+    const catSlug: string = this.articleForm.get('categories').value;
+    this.categoryService.getCategoy(catSlug).subscribe( res => {
+      this.c2msg = res as CategoryMessage;
+      console.log(res);
+      this.article.categories = [this.c2msg.content];
+      console.log(this.article.categories);
+      this.service.updateArticle(this.article).subscribe(res1 => {
+        console.log('Update log: ', res1);
+      });
     });
   }
 }

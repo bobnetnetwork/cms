@@ -62,9 +62,12 @@
                             <!-- /.card-header -->
                             <div class="card-body pad">
                                 <div class="mb-3">
-                                    <textarea name="content" formControlName="content" class="form-control" style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
-
-                                    </textarea>
+                                  <editor formControlName="content"  [init]="{
+                                   base_url: '/tinymce',
+                                   suffix: '.min',
+                                   plugins: ['advlist autolink lists link image charmap print preview anchor', 'searchreplace visualblocks code fullscreen', 'insertdatetime media table paste code help wordcount'],
+                                   toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help'
+                                  }"></editor>
                                 </div>
                             </div>
                         </div>
@@ -89,6 +92,7 @@
                                     <div class="mb-3">
                                         <p><strong>Author: </strong>Valaki</p>
                                         <p><strong>AddedAt: </strong>{{article.addedAt | date: "yyyy-MM-dd HH:MM"}}</p>
+                                        <p><strong>Status: </strong>{{article.status}}</p>
                                         <button (click)="saveAsDraft()" class="btn btn-info btn-icon-split">
                                           <span class="icon text-white-50">
                                             <em class="fas fa-info-circle"></em>
@@ -100,6 +104,18 @@
                                             <em class="fas fa-check"></em>
                                           </span>
                                           <span class="text">Publish</span>
+                                        </button>
+                                        <button (click)="underLectoring()" class="btn btn-warning btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <em class="fas fa-chechk"></em>
+                                            </span>
+                                            <span class="text">Under Lectoring</span>
+                                        </button>
+                                        <button (click)="reject()" class="btn btn-danger bnt-icon-split">
+                                            <span class="icon text-white-50">
+                                                <em class="fas fa-chechk"></em>
+                                            </span>
+                                            <span class="text">Reject</span>
                                         </button>
                                         <button (click)="delete()" class="btn btn-danger btn-icon-split">
                                           <span class="icon text-white-50">
@@ -154,10 +170,8 @@
                             <!-- /.card-header -->
                             <div class="card-body pad">
                                 <div class="mb-3">
-                                    <select class="form-control" name="categories" searchable="Search here..">
-
-                                            <option value="one">One</option>
-                                            <option value="two">Two</option>
+                                    <select class="form-control" formControlName="categories" name="categories" searchable="Search here..">
+                                            <option *ngFor="let category1 of categories" value="{{category1.slug}}">{{category1.name}}</option>
                                     </select>
                                 </div>
                             </div>

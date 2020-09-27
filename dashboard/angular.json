@@ -26,12 +26,13 @@
                   "glob": "**/*.*",
                   "input": "node_modules/admin-lte",
                   "output": "admin-lte/"
-              }
+              },
+              { "glob": "**/*", "input": "node_modules/tinymce", "output": "/tinymce/" }
             ],
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["node_modules/tinymce/tinymce.min.js"]
           },
           "configurations": {
             "production": {

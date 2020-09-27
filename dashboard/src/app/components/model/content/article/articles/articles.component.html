@@ -27,19 +27,19 @@
         <div class="card" width="100%">
           <div class="card-header">
             <h3 class="card-title">
-            <a href="/new-article">Add New Article</a>
+              <a href="/new-article">Add New Article</a>
             </h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-            <table class="table table-bordered">
-              <caption></caption>
+            <table id="articles" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Headline</th>
-                  <th scope="col">AddedAt</th>
-                  <th scope="col">Author</th>
+                  <th>Title</th>
+                  <th>Headline</th>
+                  <th>AddedAt</th>
+                  <th>Author</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -48,8 +48,23 @@
                   <td>{{article.headline}}</td>
                   <td>{{article.addedAt | date: "yyyy-MM-dd HH:MM"}}</td>
                   <td></td>
+                  <td>
+                    <span *ngIf="article.status==='published'" class="badge badge-success">{{article.status}}</span>
+                    <span *ngIf="article.status==='draft'" class="badge badge-info">{{article.status}}</span>
+                    <span *ngIf="article.status==='under lectoring'" class="badge badge-warning">{{article.status}}</span>
+                    <span *ngIf="article.status==='rejected'" class="badge badge-danger">{{article.status}}</span>
+                  </td>
                 </tr>
               </tbody>
+              <tfoot>
+                <tr>
+                  <th>Title</th>
+                  <th>Headline</th>
+                  <th>AddedAt</th>
+                  <th>Author</th>
+                  <th>Status</th>
+                </tr>
+              </tfoot>
             </table>
           </div>
           <!-- /.card-body -->
@@ -70,4 +85,17 @@
   </section>
   <!-- /.content -->
 </div>
+<script>
+  $(function () {
+    $('#articles').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
 
