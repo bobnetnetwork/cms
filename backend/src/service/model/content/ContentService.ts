@@ -22,7 +22,7 @@ export abstract class ContentService implements IModelService {
     }
 
     public async findAll(callback: (result: ResultMessageType) => void): Promise<void> {
-        this.model.find({}, (err: Error, contents: InstanceType<any>[]) => {
+        await this.model.find({}).sort({addedAt: 'desc'}).exec((err: Error, contents: InstanceType<any>[]) => {
             if(err) {
                 const result = new ErrorResultMessage(err, err.message.toString());
                 callback(result.getMessage());
